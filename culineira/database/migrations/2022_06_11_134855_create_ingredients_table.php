@@ -13,15 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('ingredients', function (Blueprint $table) {
             $table->id();
-            $table->string('username', 20);
-            $table->string('email', 40);
-            $table->string('password', 20);
-            $table->string('description', 200);
-            $table->string('country', 20);
-
-            // $table->rememberToken();
+            $table->foreignId('recipe_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('ingredients_name', 30);
+            $table->string('ingredients_type', 20);
+            $table->string('ingredients_vol', 30);
+            $table->longText('ingredients_desc');
             $table->timestamps();
         });
     }
@@ -33,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('ingredients');
     }
 };
