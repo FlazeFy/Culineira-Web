@@ -172,6 +172,17 @@ a[data-toggle="collapse"] {
 
 .footer p {
   color: rgba(255, 255, 255, 0.5); }
+
+/*profil container side bar*/
+.p-4.pt-5 .container-fluid.p-2.pt-3.rounded-3{
+  transition: width 2s, height 2s, transform 1s;
+  background:#2F4858;
+  will-change: transform;
+}
+.p-4.pt-5 .container-fluid.p-2.pt-3.rounded-3:hover{
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
 		</style>
 
     </head>
@@ -179,7 +190,25 @@ a[data-toggle="collapse"] {
 		<div class="wrapper d-flex align-items-stretch">
 			<nav id="sidebar">
 				<div class="p-4 pt-5">
-		  		<a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo.jpg);"></a>
+          <div class='container-fluid p-2 pt-3 rounded-3' title='Click to open profile' type='button'>
+            <img class="img logo rounded-circle mb-3" src="{{asset('assets/image/users/user_flazefy.jpg')}}" alt='user_flazefy'
+              style='display: block; margin-left: auto; margin-right: auto;'>
+            <h5 class="text-center" style='color:white;'>@flazefy</h5>
+            <div class='row' style='justify-content:center;'>
+              <div class='col-md-3'>
+                  <a style='font-size:15px; font-weight:bold; text-align:center;'>25</a>
+                  <p style='font-size:12px;'>Following</p>
+              </div>
+              <div class='col-md-3'>
+                  <a style='font-size:15px; font-weight:bold; text-align:center;'>300</a>
+                  <p style='font-size:12px;'>Followers</p>
+              </div>
+              <div class='col-md-3'>
+                  <a style='font-size:15px; font-weight:bold; text-align:center;'>3</a>
+                  <p style='font-size:12px;'>Recipes</p>
+              </div>
+            </div>
+          </div>
 	        <ul class="list-unstyled components mb-5">
 	            <li class="active">
 	                <a href="#"><i class="fa-solid fa-book"></i> Recipes</a>
@@ -194,8 +223,8 @@ a[data-toggle="collapse"] {
                     <a href="#"><i class="fa-solid fa-user"></i> Profile</a>
 	            </li>
 	        </ul>
-                <button class="btn btn-danger">Sign-Out</button>
-	            </div>
+          <button class="btn btn-danger">Sign-Out</button>
+        </div>
     	</nav>
 
         <!-- Page Content  -->
@@ -212,7 +241,7 @@ a[data-toggle="collapse"] {
                 <i class="fa fa-bars"></i>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" style='background:white;'>
               <ul class="nav navbar-nav ml-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="#">Global</a>
@@ -231,44 +260,50 @@ a[data-toggle="collapse"] {
           </div>
         </nav>
 
-        <h2 class="mb-2">Main Course</h2>
-        <p class="fs-8">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <div class="row">
-            <div class="card w-25 p-2 border m-3">
-                <img src="{{asset('assets/image/recipes/MieGorengBakso_flazefy.png')}}" alt='MieGorengBakso_flazefy'
-					style='border-radius:4px; margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
-                <h5 style='font-size:16px; text-align:center;'>Mie Goreng Bakso</h5>
-                <div class='container' style='background:#f0f0f0; padding:5px;'>
-                    <div class='row' style='justify-content:center;'>
-                        <div class='col-md-5'>
-                            <a style='font-size:12px; color:#5cb85c;'>Beginner</a>
-                        </div>
-                        <div class='col-md-5'>
-                            <a style='font-size:12px;'>Main Course</a>
-                        </div>
-                    </div>
-                </div>
-                <div class='container mt-2'>
-                    <div class='row' style='justify-content:center;'>
+        <div class='container-fluid' style='width:100%; max-height: calc(90vh - 140px); overflow-x: auto; background:white;'>
+          <h2 class="mb-2">Main Course</h2>
+          <div class="fs-8" style='font-size:14px; color:#808080; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical;'
+            ><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p></div>
+            <div class="row">
+              @foreach($recipe as $data)
+              <div class="card w-25 p-2 border m-3" style='min-width:250px;'>
+                  <img src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
+                    style='border-radius:4px; margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
+                  <h5 style='font-size:16px; text-align:center;'>{{$data->recipe_name}}</h5>
+                  <div class='container' style='background:#f0f0f0; padding:5px;'>
+                      <div class='row' style='justify-content:center; width:110%;'>
+                          <div class='col-md-5'>
+                              <a style='font-size:12px; color:#5cb85c;'>{{$data->recipe_level}}</a>
+                          </div>
+                          <div class='col-md-5'>
+                              <a style='font-size:12px;'>{{$data->recipe_type}}</a>
+                          </div>
+                      </div>
+                  </div>
+                  <div class='container mt-2'>
+                      <div class='row' style='justify-content:center; width:110%;'>
                         <div class='col-md-3'>
-                            <a style='font-size:15px; font-weight:bold; text-align:center;'>25</a>
+                            <a style='font-size:15px; font-weight:bold; text-align:center;'>{{$data->recipe_time_spend}}</a>
                             <p style='font-size:12px;'>min</p>
                         </div>
                         <div class='col-md-3'>
-                            <a style='font-size:15px; font-weight:bold; text-align:center;'>300</a>
+                            <a style='font-size:15px; font-weight:bold; text-align:center;'>{{$data->recipe_calorie}}</a>
                             <p style='font-size:12px;'>cal</p>
                         </div>
                         <div class='col-md-4'>
-                            <i class="fa-solid fa-bowl-food fa-lg" style='text-align:center;'></i>
-                            <p style='font-size:12px; justify-content:center;'>noodle</p>
+                            <p style='font-size:12px; justify-content:center; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical;'>{{$data->recipe_main_ing}}</p>
                         </div>
-                    </div>
-                </div>
-                <button class='btn btn-primary'><i class="fa-solid fa-arrow-right"></i> Cook Now</button>
+                      </div>
+                  </div>
+                  <button class='btn btn-primary'><i class="fa-solid fa-arrow-right"></i> Cook Now</button>
+              </div>
+              @endforeach
             </div>
+
+
         </div>
       </div>
-		</div>
+    </div>
 
     <script>
         (function($) {

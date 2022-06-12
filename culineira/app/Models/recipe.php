@@ -7,5 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class recipe extends Model
 {
-    use HasFactory;
+    //use HasFactory;
+
+    protected $table = 'recipes';
+    protected $primaryKey = 'id';
+    protected $fillable = ['user_id', 'recipe_name', 'recipe_calorie', 'recipe_desc', 'recipe_country', 'recipe_type', 'recipe_time_spend', 'recipe_main_ing', 'recipe_level', 'created_at', 'updated_at'];
+
 }
