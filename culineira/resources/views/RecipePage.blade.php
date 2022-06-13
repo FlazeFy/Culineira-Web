@@ -211,7 +211,7 @@ a[data-toggle="collapse"] {
             @foreach($user as $data)
                 @if($data->username == 'flazefy')
                 <div class='container-fluid p-2 pt-3 rounded-3' title='Click to open profile' type='button'>
-                    <img class="img logo rounded-circle mb-3" src="{{asset('assets/image/users/user_flazefy.jpg')}}" alt='user_flazefy'
+                    <img class="img logo rounded-circle mb-3" src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data->username;?>.jpg" alt='<?php echo $data->username.".jpg";?>'
                     style='display: block; margin-left: auto; margin-right: auto;'>
                     <h5 class="text-center" style='color:color:#2F4858;'>@<span>{{$data->username}}</span></h5>
                     <div class='row' style='justify-content:center;'>
@@ -275,7 +275,7 @@ a[data-toggle="collapse"] {
                                     <a class="nav-link" href="" role="button" data-bs-toggle="collapse" data-bs-target="#myrecipesCollapse" aria-expanded="false" aria-controls="CollapseExample2">My Recipes</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="" role="button" data-bs-toggle="collapse" data-bs-target="#aboutlCollapse" aria-expanded="false" aria-controls="CollapseExample2">About</a>
+                                    <a class="nav-link" href="" role="button" data-bs-toggle="collapse" data-bs-target="#aboutCollapse" aria-expanded="false" aria-controls="CollapseExample2">About</a>
                                 </li>
                             </ul>
                         </div>
@@ -284,132 +284,183 @@ a[data-toggle="collapse"] {
 
                 <div class="collapse show" id="globalCollapse" data-bs-parent="#accordionRecipe">
                     <div class='container-fluid mb-3' style='background:white;'>
-                        <h2 class="mb-2">Main Course</h2>
+                        <h3 class="mb-2">New Recipes this week</h3>
+                        <div class="row" style='overflow-x: scroll; width:auto; height:130px;'><!--Row must support horizontal scroll without multiple line-->
+                            <div class="card" style='min-width:100px; width:120px; border:none; background:transparent;' type='button'>
+                                <img src="http://127.0.0.1:8000/assets/image/icon/CreateNewRecipe.png" alt='CreateNewRecipe.png'
+                                    style='border-radius:100%; margin-top:10px; width:80px; box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 15px; background:#EB7336; display: block; margin-left: auto; margin-right: auto;'>
+                                <img src="http://127.0.0.1:8000/assets/image/icon/Add.png" alt='Add.png'
+                                    style='border-radius:100%; margin-top:-40px; width:40px; background:white; box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 15px;'>
+                                <a style='font-size:11px; white-space: nowrap;  display: block; margin-left: auto; margin-right: auto;'>New Recipe</a>
+                            </div>
+                        @foreach($recipe as $data)
+                            @foreach($user as $data2)
+                            @if($data->user_id == $data2->id)
+                            @if(strtotime($data->created_at) > strtotime('-7 day'))
+                            <div class="card" style='min-width:100px; width:120px; border:none; background:transparent;' type='button'>
+                                <img src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
+                                    style='border-radius:100%; margin-top:-10px; width:100px; display: block; margin-left: auto; margin-right: auto;'>
+                                <img src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data2->username;?>.jpg" alt='<?php echo $data2->username.".jpg";?>' title='<?php echo $data2->username;?>'
+                                    style='border-radius:100%; margin-top:-40px; width:40px; border:3px solid #eb7336; box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 15px;'>
+                                <a style='font-size:11px; white-space: nowrap;  display: block; margin-left: auto; margin-right: auto;'>{{$data->recipe_name}}</a>
+                            </div>
+                            @endif
+                            @endif
+                            @endforeach
+                        @endforeach
+                        </div>
+                    </div>
+                    <div class='container-fluid mb-3' style='background:white;'>
+                        <h3 class="mb-2">Main Course</h3>
                         <div class="fs-8" style='font-size:14px; color:#808080; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical;'
                             ><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                         </div>
                         <div class="row">
                         @foreach($recipe as $data)
                             @if($data->recipe_type == 'Main Course')
-                            <div class="card w-25 p-2 border m-3" style='min-width:250px;'>
-                                <img src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
-                                    style='border-radius:4px; margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
-                                <h5 style='font-size:16px; text-align:center;'>{{$data->recipe_name}}</h5>
-                                <div class='container' style='background:#f0f0f0; padding:5px;'>
-                                    <div class='row' style='justify-content:center; width:110%;'>
-                                        <div class='col-md-5'>
-                                            <a style='font-size:12px; color:#5cb85c;'>{{$data->recipe_level}}</a>
-                                        </div>
-                                        <div class='col-md-5'>
-                                            <a style='font-size:12px;'>{{$data->recipe_type}}</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class='container mt-2'>
-                                    <div class='row' style='justify-content:center; width:110%;'>
-                                        <div class='col-md-3'>
-                                            <a style='font-size:15px; font-weight:bold; text-align:center;'>{{$data->recipe_time_spend}}</a>
-                                            <p style='font-size:12px;'>min</p>
-                                        </div>
-                                        <div class='col-md-3'>
-                                            <a style='font-size:15px; font-weight:bold; text-align:center;'>{{$data->recipe_calorie}}</a>
-                                            <p style='font-size:12px;'>cal</p>
-                                        </div>
-                                        <div class='col-md-4'>
-                                            <p style='font-size:12px; justify-content:center; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical;'>{{$data->recipe_main_ing}}</p>
+                                @foreach($user as $data2)
+                                @if($data->user_id == $data2->id)
+                                <div class="card w-25 p-2 border m-3" style='min-width:250px;'>
+                                    <img src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
+                                        style='border-radius:4px; margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
+                                    <img src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data2->username;?>.jpg" alt='<?php echo $data2->username.".jpg";?>' title='<?php echo $data2->username;?>'
+                                        style='border-radius:100%; margin-top:-40px; margin-left:20px; width:40px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
+                                    <img src="http://127.0.0.1:8000/assets/image/country/<?php echo $data->recipe_country;?>.png" alt='<?php echo $data->recipe_country.".png";?>' title='<?php echo $data->recipe_country;?>'
+                                        style='border-radius:100%; width:40px; margin-top:30px; margin-left:200px; position:absolute; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
+                                    <h5 style='font-size:16px; text-align:center;'>{{$data->recipe_name}}</h5>
+                                    <div class='container' style='background:#f0f0f0; padding:5px;'>
+                                        <div class='row' style='justify-content:center; width:110%;'>
+                                            <div class='col-md-5'>
+                                                <a style='font-size:12px; color:#5cb85c;'>{{$data->recipe_level}}</a>
+                                            </div>
+                                            <div class='col-md-5'>
+                                                <a style='font-size:12px;'>{{$data->recipe_type}}</a>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class='container mt-2'>
+                                        <div class='row' style='justify-content:center; width:110%;'>
+                                            <div class='col-md-3'>
+                                                <a style='font-size:15px; font-weight:bold; text-align:center;'>{{$data->recipe_time_spend}}</a>
+                                                <p style='font-size:12px;'>min</p>
+                                            </div>
+                                            <div class='col-md-3'>
+                                                <a style='font-size:15px; font-weight:bold; text-align:center;'>{{$data->recipe_calorie}}</a>
+                                                <p style='font-size:12px;'>cal</p>
+                                            </div>
+                                            <div class='col-md-4'>
+                                                <p style='font-size:12px; justify-content:center; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical;'>{{$data->recipe_main_ing}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class='btn btn-primary'><i class="fa-solid fa-arrow-right"></i> Cook Now</button>
                                 </div>
-                                <button class='btn btn-primary'><i class="fa-solid fa-arrow-right"></i> Cook Now</button>
-                            </div>
+                                @endif
+                                @endforeach
                             @endif
                         @endforeach
                         </div>
                     </div><!--End of container-->
 
                     <div class='container-fluid mb-3' style='background:white;'>
-                        <h2 class="mb-2">Appetizer</h2>
+                        <h3 class="mb-2">Appetizer</h3>
                         <div class="fs-8" style='font-size:14px; color:#808080; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical;'
                             ><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                         </div>
                         <div class="row">
                         @foreach($recipe as $data)
                             @if($data->recipe_type == 'Appetizer')
-                            <div class="card w-25 p-2 border m-3" style='min-width:250px;'>
-                                <img src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
-                                    style='border-radius:4px; margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
-                                <h5 style='font-size:16px; text-align:center;'>{{$data->recipe_name}}</h5>
-                                <div class='container' style='background:#f0f0f0; padding:5px;'>
-                                    <div class='row' style='justify-content:center; width:110%;'>
-                                        <div class='col-md-5'>
-                                            <a style='font-size:12px; color:#5cb85c;'>{{$data->recipe_level}}</a>
-                                        </div>
-                                        <div class='col-md-5'>
-                                            <a style='font-size:12px;'>{{$data->recipe_type}}</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class='container mt-2'>
-                                    <div class='row' style='justify-content:center; width:110%;'>
-                                        <div class='col-md-3'>
-                                            <a style='font-size:15px; font-weight:bold; text-align:center;'>{{$data->recipe_time_spend}}</a>
-                                            <p style='font-size:12px;'>min</p>
-                                        </div>
-                                        <div class='col-md-3'>
-                                            <a style='font-size:15px; font-weight:bold; text-align:center;'>{{$data->recipe_calorie}}</a>
-                                            <p style='font-size:12px;'>cal</p>
-                                        </div>
-                                        <div class='col-md-4'>
-                                            <p style='font-size:12px; justify-content:center; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical;'>{{$data->recipe_main_ing}}</p>
+                                @foreach($user as $data2)
+                                @if($data->user_id == $data2->id)
+                                <div class="card w-25 p-2 border m-3" style='min-width:250px;'>
+                                    <img src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
+                                        style='border-radius:4px; margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
+                                    <img src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data2->username;?>.jpg" alt='<?php echo $data2->username.".jpg";?>' title='<?php echo $data2->username;?>'
+                                        style='border-radius:100%; margin-top:-40px; margin-left:20px; width:40px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
+                                    <img src="http://127.0.0.1:8000/assets/image/country/<?php echo $data->recipe_country;?>.png" alt='<?php echo $data->recipe_country.".png";?>' title='<?php echo $data->recipe_country;?>'
+                                        style='border-radius:100%; width:40px; margin-top:30px; margin-left:200px; position:absolute; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
+                                    <h5 style='font-size:16px; text-align:center;'>{{$data->recipe_name}}</h5>
+                                    <div class='container' style='background:#f0f0f0; padding:5px;'>
+                                        <div class='row' style='justify-content:center; width:110%;'>
+                                            <div class='col-md-5'>
+                                                <a style='font-size:12px; color:#5cb85c;'>{{$data->recipe_level}}</a>
+                                            </div>
+                                            <div class='col-md-5'>
+                                                <a style='font-size:12px;'>{{$data->recipe_type}}</a>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class='container mt-2'>
+                                        <div class='row' style='justify-content:center; width:110%;'>
+                                            <div class='col-md-3'>
+                                                <a style='font-size:15px; font-weight:bold; text-align:center;'>{{$data->recipe_time_spend}}</a>
+                                                <p style='font-size:12px;'>min</p>
+                                            </div>
+                                            <div class='col-md-3'>
+                                                <a style='font-size:15px; font-weight:bold; text-align:center;'>{{$data->recipe_calorie}}</a>
+                                                <p style='font-size:12px;'>cal</p>
+                                            </div>
+                                            <div class='col-md-4'>
+                                                <p style='font-size:12px; justify-content:center; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical;'>{{$data->recipe_main_ing}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class='btn btn-primary'><i class="fa-solid fa-arrow-right"></i> Cook Now</button>
                                 </div>
-                                <button class='btn btn-primary'><i class="fa-solid fa-arrow-right"></i> Cook Now</button>
-                            </div>
+                                @endif
+                                @endforeach
                             @endif
                         @endforeach
                         </div>
                     </div><!--End of container-->
 
                     <div class='container-fluid mb-3' style='background:white;'>
-                        <h2 class="mb-2">Desert</h2>
+                        <h3 class="mb-2">Desert</h3>
                         <div class="fs-8" style='font-size:14px; color:#808080; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical;'
                             ><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                         </div>
                         <div class="row">
                         @foreach($recipe as $data)
                             @if($data->recipe_type == 'Desert')
-                            <div class="card w-25 p-2 border m-3" style='min-width:250px;'>
-                                <img src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
-                                    style='border-radius:4px; margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
-                                <h5 style='font-size:16px; text-align:center;'>{{$data->recipe_name}}</h5>
-                                <div class='container' style='background:#f0f0f0; padding:5px;'>
-                                    <div class='row' style='justify-content:center; width:110%;'>
-                                        <div class='col-md-5'>
-                                            <a style='font-size:12px; color:#5cb85c;'>{{$data->recipe_level}}</a>
-                                        </div>
-                                        <div class='col-md-5'>
-                                            <a style='font-size:12px;'>{{$data->recipe_type}}</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class='container mt-2'>
-                                    <div class='row' style='justify-content:center; width:110%;'>
-                                        <div class='col-md-3'>
-                                            <a style='font-size:15px; font-weight:bold; text-align:center;'>{{$data->recipe_time_spend}}</a>
-                                            <p style='font-size:12px;'>min</p>
-                                        </div>
-                                        <div class='col-md-3'>
-                                            <a style='font-size:15px; font-weight:bold; text-align:center;'>{{$data->recipe_calorie}}</a>
-                                            <p style='font-size:12px;'>cal</p>
-                                        </div>
-                                        <div class='col-md-4'>
-                                            <p style='font-size:12px; justify-content:center; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical;'>{{$data->recipe_main_ing}}</p>
+                                @foreach($user as $data2)
+                                @if($data->user_id == $data2->id)
+                                <div class="card w-25 p-2 border m-3" style='min-width:250px;'>
+                                    <img src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
+                                        style='border-radius:4px; margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
+                                    <img src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data2->username;?>.jpg" alt='<?php echo $data2->username.".jpg";?>' title='<?php echo $data2->username;?>'
+                                        style='border-radius:100%; margin-top:-40px; margin-left:20px; width:40px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
+                                    <img src="http://127.0.0.1:8000/assets/image/country/<?php echo $data->recipe_country;?>.png" alt='<?php echo $data->recipe_country.".png";?>' title='<?php echo $data->recipe_country;?>'
+                                        style='border-radius:100%; width:40px; margin-top:30px; margin-left:200px; position:absolute; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
+                                    <h5 style='font-size:16px; text-align:center;'>{{$data->recipe_name}}</h5>
+                                    <div class='container' style='background:#f0f0f0; padding:5px;'>
+                                        <div class='row' style='justify-content:center; width:110%;'>
+                                            <div class='col-md-5'>
+                                                <a style='font-size:12px; color:#5cb85c;'>{{$data->recipe_level}}</a>
+                                            </div>
+                                            <div class='col-md-5'>
+                                                <a style='font-size:12px;'>{{$data->recipe_type}}</a>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class='container mt-2'>
+                                        <div class='row' style='justify-content:center; width:110%;'>
+                                            <div class='col-md-3'>
+                                                <a style='font-size:15px; font-weight:bold; text-align:center;'>{{$data->recipe_time_spend}}</a>
+                                                <p style='font-size:12px;'>min</p>
+                                            </div>
+                                            <div class='col-md-3'>
+                                                <a style='font-size:15px; font-weight:bold; text-align:center;'>{{$data->recipe_calorie}}</a>
+                                                <p style='font-size:12px;'>cal</p>
+                                            </div>
+                                            <div class='col-md-4'>
+                                                <p style='font-size:12px; justify-content:center; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical;'>{{$data->recipe_main_ing}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class='btn btn-primary'><i class="fa-solid fa-arrow-right"></i> Cook Now</button>
                                 </div>
-                                <button class='btn btn-primary'><i class="fa-solid fa-arrow-right"></i> Cook Now</button>
-                            </div>
+                                @endif
+                                @endforeach
                             @endif
                         @endforeach
                         </div>
@@ -418,7 +469,21 @@ a[data-toggle="collapse"] {
 
                 <div class="collapse" id="favoritesCollapse" data-bs-parent="#accordionRecipe">
                     <div class='container-fluid mb-3' style='background:white;'>
-                        <h2 class="mb-2">Favorites</h2>
+                        <h3 class="mb-2">Favorites</h3>
+
+                    </div><!--End of container-->
+                </div><!--End of collapse-->
+
+                <div class="collapse" id="myrecipesCollapse" data-bs-parent="#accordionRecipe">
+                    <div class='container-fluid mb-3' style='background:white;'>
+                        <h3 class="mb-2">My Recipes</h3>
+
+                    </div><!--End of container-->
+                </div><!--End of collapse-->
+
+                <div class="collapse" id="aboutCollapse" data-bs-parent="#accordionRecipe">
+                    <div class='container-fluid mb-3' style='background:white;'>
+                        <h3 class="mb-2">About</h3>
 
                     </div><!--End of container-->
                 </div><!--End of collapse-->
