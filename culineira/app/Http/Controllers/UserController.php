@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\recipe;
 use App\Models\user;
 
-class RecipeController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +14,7 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        $user = user::all();
-        $recipe = recipe::all();
-        return view ('RecipePage')->with('recipe', $recipe)->with('user', $user);
+       //
     }
 
     /**
