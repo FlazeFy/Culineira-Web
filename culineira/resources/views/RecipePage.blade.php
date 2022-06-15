@@ -33,6 +33,11 @@
                 --background3: #3A3B3C;
                 --background4: #5e5d5d;
             }
+            /* Modal Setting*/
+            .modal-content{
+                background-color: var(--background3);
+                border:none;
+            }
             p {
                 color: gray;
             }
@@ -43,6 +48,9 @@
                 font-weight: normal;
                 color: var(--text);
                 background: var(--background);
+            }
+            .col-md-3 {
+                color: var(--text2);
             }
             a {
                 -webkit-transition: .3s all ease;
@@ -62,6 +70,13 @@
                 -webkit-transition: .3s all ease;
                 -o-transition: .3s all ease;
                 transition: .3s all ease;
+            }
+            #addRecipeButton{
+                border-radius:100%;
+                margin-top:-40px;
+                width:40px;
+                background:var(--background3);
+                box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 15px;
             }
             button:hover, button:focus {
                 text-decoration: none !important;
@@ -354,11 +369,10 @@
                     <div class='container-fluid mb-3'>
                         <h3 class="mb-2">New Recipes this week</h3>
                         <div class="row" style='overflow-x: scroll; width:auto; height:130px;'><!--Row must support horizontal scroll without multiple line-->
-                            <div class="card border-gray" style='min-width:100px; width:120px; border:none; background:transparent;' type='button'>
+                            <div class="card border-gray" style='min-width:100px; width:120px; border:none; background:transparent;' type='button' data-bs-toggle="modal" data-bs-target="#createInstantRecipe">
                                 <img src="http://127.0.0.1:8000/assets/image/icon/CreateNewRecipe.png" alt='CreateNewRecipe.png'
                                     style='border-radius:100%; margin-top:10px; width:80px; box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 15px; background:#EB7336; display: block; margin-left: auto; margin-right: auto;'>
-                                <img src="http://127.0.0.1:8000/assets/image/icon/Add.png" alt='Add.png'
-                                    style='border-radius:100%; margin-top:-40px; width:40px; background:white; box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 15px;'>
+                                <img src="http://127.0.0.1:8000/assets/image/icon/Add.png" alt='Add.png' id="addRecipeButton">
                                 <a style='font-size:11px; white-space: nowrap;  display: block; margin-left: auto; margin-right: auto;'>New Recipe</a>
                             </div>
                         @foreach($recipe as $data)
@@ -485,13 +499,13 @@
                     </div><!--End of container-->
 
                     <div class='container-fluid mb-3'>
-                        <h3 class="mb-2">Desert</h3>
+                        <h3 class="mb-2">Desserts</h3>
                         <div class="fs-8" style='font-size:14px; color:#808080; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical;'
                             ><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                         </div>
                         <div class="row">
                         @foreach($recipe as $data)
-                            @if($data->recipe_type == 'Desert')
+                            @if($data->recipe_type == 'Desserts')
                                 @foreach($user as $data2)
                                 @if($data->user_id == $data2->id)
                                 <div class="card border-gray w-25 p-2 border m-3" style='min-width:250px;'>
@@ -563,6 +577,99 @@
         </div>
     </div>
 
+    <!--Create instant recipe modal-->
+    <div class="modal fade" id="createInstantRecipe" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content p-2">
+        <div class="modal-header">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5 class="modal-title" id="exampleModalLabel">Add New Recipe</h5>
+                </div>
+                <div class="col-md-4 mb-2">
+                    <select class="form-select" name="recipe_type" required>
+                        <option selected value="1">Main Course</option>
+                        <option value="2">Intermediate</option>
+                        <option value="3">Desserts</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <input class="form-control" name="recipe_country" type="text" placeholder="Indonesia" required></input>
+                </div>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-1 pt-2">
+                    <label class="form-label">Name</label>
+                </div>
+                <div class="col-md-4 m-1">
+                    <input class="form-control" name="recipe_name" type="text" placeholder="Pizza" required></input>
+                </div>
+                <div class="col-md-1 pt-2">
+                    <label class="form-label">Level</label>
+                </div>
+                <div class="col-md-3 m-1">
+                    <select class="form-select" name="recipe_level" required>
+                        <option selected value="1">Beginner</option>
+                        <option value="2">Intermediate</option>
+                        <option value="3">Expert</option>
+                    </select>
+                </div>
+                <div class="col-md-2 pt-2">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="recipe_halal" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Halal
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 p-2">
+                    <div class="container-fluid p-0">
+                        <label class="form-label" name="recipe_time_spend">Time Spend / Calorie <i class="fa-solid fa-circle-question" type="button"></i></label>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <input class="form-control" type="number" name="recipe_time_spend" placeholder="30" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label pt-2">Minutes</label>
+                            </div>
+                            <div class="col-md-3">
+                                <input class="form-control" type="number" name="recipe_calorie" placeholder="150" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label pt-2">Cal</label>
+                            </div>
+                        </div>
+                    </div>
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" name="recipe_desc" rows="5" required placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing... "></textarea>
+                    <label class="form-label mt-2">Image <i class="fa-solid fa-circle-question" type="button"></i></label>
+                    <input class="form-control" type="file" id="formFile" onchange="preview()" required>
+                </div>
+                <div class="col-md-6 p-2">
+                    <label class="form-label">Main Ingredients <i class="fa-solid fa-circle-question" type="button"></i></label>
+                    <textarea class="form-control" rows="3" name="recipe_main_ing" placeholder="Beef, Tomato, ..."></textarea>
+                    <label class="form-label">Preview</label>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <img id="frame" src="http://127.0.0.1:8000/assets/NoImage.png" class="img-fluid" style="width:200px; border-radius:100%; border:3px solid #EB7736;"/>
+                        </div>
+                        <div class="col-md-5">
+                            <button onclick="clearImage()" class="btn btn-danger mt-3 w-100"><i class="fa-solid fa-trash"></i> Reset</button>
+                            <button type="button" class="btn btn-success mt-2 w-100" type="submit"><i class="fa-solid fa-plus"></i> Post </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+
     <script>
         //Darkmode setting.
         function getTheme() {
@@ -602,6 +709,15 @@
             theme = newTheme;
         }
         }, 1000);
+
+        //Image upload preview.
+        function preview() {
+            frame.src = URL.createObjectURL(event.target.files[0]);
+        }
+        function clearImage() {
+            document.getElementById('formFile').value = null;
+            frame.src = "http://127.0.0.1:8000/assets/NoImage.png";
+        }
 
         //Sidebar setting.
         (function($) {
