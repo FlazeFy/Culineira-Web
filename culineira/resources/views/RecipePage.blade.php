@@ -3,7 +3,7 @@
     <head>
     <title>Culineira | Recipes</title>
     <!--Meta tags-->
-    <meta charset="utf-8">
+    <meta charset="utf-8" name="color-scheme" content="light dark">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!--CDN Bootstrap CSS-->
@@ -16,222 +16,287 @@
         <!--Source file.-->
 
 		<style>
-				body {
-  font-family: "Poppins", Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.8;
-  font-weight: normal;
-  background: #fff4eb;
-  color: gray; }
+            /*Main style*/
+            body.Light {
+                --text: #414141;
+                --text2: #2F4858;
+                --background: #fff4eb;
+                --background2: white;
+                --background3: white;
+                --background4: #f0f0f0;
+            }
+            body.Dark {
+                --text: whitesmoke;
+                --text2: whitesmoke;
+                --background: #18191A;
+                --background2: #18191A;
+                --background3: #3A3B3C;
+                --background4: #5e5d5d;
+            }
+            p {
+                color: gray;
+            }
+            body {
+                font-family: "Poppins", Arial, sans-serif;
+                font-size: 14px;
+                line-height: 1.8;
+                font-weight: normal;
+                color: var(--text);
+                background: var(--background);
+            }
+            a {
+                -webkit-transition: .3s all ease;
+                -o-transition: .3s all ease;
+                transition: .3s all ease;
+                color: grey;
+                text-decoration: none;
+            }
+            a:hover, a:focus {
+                text-decoration: none !important;
+                outline: none !important;
+                -webkit-box-shadow: none;
+                box-shadow: none;
+            }
 
-a {
-  -webkit-transition: .3s all ease;
-  -o-transition: .3s all ease;
-  transition: .3s all ease;
-  color: #f8b739;
-  text-decoration: none;
-}
-  a:hover, a:focus {
-    text-decoration: none !important;
-    outline: none !important;
-    -webkit-box-shadow: none;
-    box-shadow: none; }
+            button {
+                -webkit-transition: .3s all ease;
+                -o-transition: .3s all ease;
+                transition: .3s all ease;
+            }
+            button:hover, button:focus {
+                text-decoration: none !important;
+                outline: none !important;
+                -webkit-box-shadow: none !important;
+                box-shadow: none !important;
+            }
+            .container-fluid.mb-3{
+                background: var(--background2);
+            }
+            .card.border-gray{
+                background: var(--background3);
+            }
+            .container-fluid.mb-3 #headingCard{
+                background: var(--background4);
+                border-radius:6px;
+            }
+            h1, h2, h3, h4, h5,
+            .h1, .h2, .h3, .h4, .h5 {
+                line-height: 1.5;
+                font-weight: 400;
+                font-family: "Poppins", Arial, sans-serif;
+                color: var(--text);
+            }
 
-button {
-  -webkit-transition: .3s all ease;
-  -o-transition: .3s all ease;
-  transition: .3s all ease; }
-  button:hover, button:focus {
-    text-decoration: none !important;
-    outline: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important; }
+            .ftco-section {
+                padding: 7em 0;
+            }
 
-h1, h2, h3, h4, h5,
-.h1, .h2, .h3, .h4, .h5 {
-  line-height: 1.5;
-  font-weight: 400;
-  font-family: "Poppins", Arial, sans-serif;
-  color: #000; }
+            .ftco-no-pt {
+                padding-top: 0;
+            }
 
-.ftco-section {
-  padding: 7em 0; }
+            .ftco-no-pb {
+                padding-bottom: 0;
+            }
 
-.ftco-no-pt {
-  padding-top: 0; }
+            .heading-section {
+                font-size: 28px;
+                color: #000;
+            }
+            .heading-section small {
+                font-size: 18px;
+            }
 
-.ftco-no-pb {
-  padding-bottom: 0; }
+            .img {
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center center;
+            }
 
-.heading-section {
-  font-size: 28px;
-  color: #000; }
-  .heading-section small {
-    font-size: 18px; }
+            .navbar {
+                padding: 15px 10px;
+                background: #fff;
+                border: none;
+                border-radius: 0;
+                margin-bottom: 40px;
+                -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+                box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+            }
 
-.img {
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center; }
+            .navbar-btn {
+                -webkit-box-shadow: none;
+                box-shadow: none;
+                outline: none !important;
+                border: none;
+            }
 
-.navbar {
-  padding: 15px 10px;
-  background: #fff;
-  border: none;
-  border-radius: 0;
-  margin-bottom: 40px;
-  -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); }
+            .line {
+                width: 100%;
+                height: 1px;
+                border-bottom: 1px dashed #ddd;
+                margin: 40px 0;
+            }
 
-.navbar-btn {
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  outline: none !important;
-  border: none; }
+            .wrapper {
+                width: 100%;
+            }
 
-.line {
-  width: 100%;
-  height: 1px;
-  border-bottom: 1px dashed #ddd;
-  margin: 40px 0; }
+            #sidebar {
+                min-width: 300px;
+                max-width: 300px;
+                background: var(--background3);
+                color: #fff;
+                -webkit-transition: all 0.3s;
+                -o-transition: all 0.3s;
+                transition: all 0.3s;
+            }
+            #sidebar.active {
+                margin-left: -300px;
+            }
+            #sidebar .logo {
+                display: block;
+                width: 120px;
+                height: 120px;
+                margin: 0 auto;
+            }
+            #sidebar .logo span {
+                display: block;
+            }
+            #sidebar ul.components {
+                padding: 0;
+            }
+            #sidebar ul li {
+                font-size: 16px;
+                padding:4px;
+            }
+            #sidebar ul li > ul {
+                margin-left: 10px;
+            }
+            #sidebar ul li > ul li {
+                font-size: 14px;
+            }
+            #sidebar ul li a {
+                padding: 10px;
+                display: block;
+                color: var(--text2);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            #sidebar ul li:hover {
+                background: var(--background4);
+                border-radius: 6px;
+                color: whitesmoke;
+            }
+            #sidebar ul li.active > a {
+                background: transparent;
+                border-left: 4px solid var(--text2);
+            }
+            @media (max-width: 991.98px) {
+                #sidebar {
+                margin-left: -300px; }
+                #sidebar.active {
+                margin-left: 0; }
+            }
 
-.wrapper {
-  width: 100%; }
+            a[data-toggle="collapse"] {
+                position: relative;
+            }
 
-#sidebar {
-  min-width: 300px;
-  max-width: 300px;
-  background: white;
-  color: #fff;
-  -webkit-transition: all 0.3s;
-  -o-transition: all 0.3s;
-  transition: all 0.3s; }
-  #sidebar.active {
-    margin-left: -300px; }
-  #sidebar .logo {
-    display: block;
-    width: 120px;
-    height: 120px;
-    margin: 0 auto; }
-    #sidebar .logo span {
-      display: block; }
-  #sidebar ul.components {
-    padding: 0; }
-  #sidebar ul li {
-    font-size: 16px;
-    padding:4px;
-     }
-    #sidebar ul li > ul {
-      margin-left: 10px; }
-      #sidebar ul li > ul li {
-        font-size: 14px; }
-    #sidebar ul li a {
-      padding: 10px;
-      display: block;
-      color:#2F4858;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
-      #sidebar ul li:hover {
-        background: #F0F0F0;
-        border-radius: 6px;
-        color: whitesmoke;
-      }
-    #sidebar ul li.active > a {
-      background: transparent;
-      border-left: 4px solid #2F4858;
-    }
-  @media (max-width: 991.98px) {
-    #sidebar {
-      margin-left: -300px; }
-      #sidebar.active {
-        margin-left: 0; } }
+            .dropdown-toggle::after {
+                display: block;
+                position: absolute;
+                top: 50%;
+                right: 0;
+                -webkit-transform: translateY(-50%);
+                -ms-transform: translateY(-50%);
+                transform: translateY(-50%);
+            }
 
-a[data-toggle="collapse"] {
-  position: relative; }
+            @media (max-width: 991.98px) {
+            #sidebarCollapse span {
+                display: none; } }
 
-.dropdown-toggle::after {
-  display: block;
-  position: absolute;
-  top: 50%;
-  right: 0;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%); }
+            #content {
+                width: 100%;
+                padding: 0;
+                min-height: 100vh;
+                -webkit-transition: all 0.3s;
+                -o-transition: all 0.3s;
+                transition: all 0.3s;
+            }
 
-@media (max-width: 991.98px) {
-  #sidebarCollapse span {
-    display: none; } }
-
-#content {
-  width: 100%;
-  padding: 0;
-  min-height: 100vh;
-  -webkit-transition: all 0.3s;
-  -o-transition: all 0.3s;
-  transition: all 0.3s; }
-
-.btn.btn-primary {
-  background: #eb7336;
-  border-color: #eb7336; }
+            .btn.btn-primary {
+                background: #eb7336;
+                border-color: #eb7336;
+            }
 
 
-.footer p {
-  color: rgba(255, 255, 255, 0.5); }
+            .footer p {
+                color: rgba(255, 255, 255, 0.5);
+            }
 
-/*profil container side bar*/
-.p-4.pt-2 .container-fluid.p-2.pt-3.rounded-3{
-  transition: width 2s, height 2s, transform 1s;
-  margin-top:-10px;
-  background:white;
-  will-change: transform;
-  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
-  margin-bottom:15px;
-}
-.p-4.pt-2 .container-fluid.p-2.pt-3.rounded-3:hover{
-  transform: scale(1.05);
-  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
-}
-.navbar-light .navbar-nav .nav-item .nav-link{
-    color:white;
-}
-.navbar-light .navbar-nav .nav-item.active .nav-link{
-    bottom:3px;
-    font-weight:500;
-    position: relative;
-}
+            /*Profil container sidebar.*/
+            .p-4.pt-2 .container-fluid.p-2.pt-3.rounded-3{
+                transition: width 2s, height 2s, transform 1s;
+                margin-top:-10px;
+                background: var(--background4);
+                will-change: transform;
+                box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+                margin-bottom:15px;
+            }
+            .p-4.pt-2 .container-fluid.p-2.pt-3.rounded-3:hover{
+                transform: scale(1.05);
+                box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+            }
+            .navbar-light .navbar-nav .nav-item .nav-link{
+                color:white;
+            }
+            .navbar-light .navbar-nav .nav-item.active .nav-link{
+                bottom:3px;
+                font-weight:500;
+                position: relative;
+            }
 		</style>
 
     </head>
-    <body>
+    <body class="light">
+    <script>
+      const theme = localStorage.getItem('theme') || 'light';
+      document.body.className = theme;
+    </script>
 		<div class="wrapper d-flex align-items-stretch">
+
+        <!--Sidebar.-->
         <nav id="sidebar">
             <div class="p-4 pt-2">
-            <img class="w-100" src="{{asset('assets/Culineira_FullLogo.png')}}" alt='user_flazefy'
-                style='display: block; margin-left: auto; margin-right: auto;'>
-
-            @foreach($user as $data)
-                @if($data->username == 'flazefy')
-                <div class='container-fluid p-2 pt-3 rounded-3' title='Click to open profile' type='button'>
-                    <img class="img logo rounded-circle mb-3" src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data->username;?>.jpg" alt='<?php echo $data->username.".jpg";?>'
+                <img class="w-100" src="{{asset('assets/Culineira_FullLogo.png')}}" alt='user_flazefy'
                     style='display: block; margin-left: auto; margin-right: auto;'>
-                    <h5 class="text-center" style='color:color:#2F4858;'>@<span>{{$data->username}}</span></h5>
-                    <div class='row' style='justify-content:center;'>
-                        <div class='col-md-3'>
-                            <a style='font-size:15px; font-weight:bold; color:#2F4858; text-align:center;'>25</a>
-                            <p style='font-size:12px; color:#2F4858;'>Following</p>
-                        </div>
-                        <div class='col-md-3'>
-                            <a style='font-size:15px; font-weight:bold; color:#2F4858; text-align:center;'>300</a>
-                            <p style='font-size:12px; color:#2F4858;'>Followers</p>
-                        </div>
-                        <div class='col-md-3'>
-                            <a style='font-size:15px; font-weight:bold; color:#2F4858; text-align:center;'>3</a>
-                            <p style='font-size:12px; color:#2F4858;'>Recipes</p>
+
+                <!--Profil section.-->
+                @foreach($user as $data)
+                    @if($data->username == 'flazefy')
+                    <div class='container-fluid p-2 pt-3 rounded-3' title='Click to open profile' type='button'>
+                        <img class="img logo rounded-circle mb-3" src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data->username;?>.jpg" alt='<?php echo $data->username.".jpg";?>'
+                        style='display: block; margin-left: auto; margin-right: auto;'>
+                        <h5 class="text-center" style='color:color:#2F4858;'>@<span>{{$data->username}}</span></h5>
+                        <div class='row' style='justify-content:center;'>
+                            <div class='col-md-3'>
+                                <a style='font-size:15px; font-weight:bold; text-align:center;'>25</a>
+                                <a style='font-size:12px;'>Following</a>
+                            </div>
+                            <div class='col-md-3'>
+                                <a style='font-size:15px; font-weight:bold; text-align:center;'>300</a>
+                                <a style='font-size:12px;'>Followers</a>
+                            </div>
+                            <div class='col-md-3'>
+                                <a style='font-size:15px; font-weight:bold; text-align:center;'>3</a>
+                                <a style='font-size:12px;'>Recipes</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                @endif
-            @endforeach
+                    @endif
+                @endforeach
 
+                <!--Main Navbar.-->
                 <ul class="list-unstyled components mb-3">
                     <li class="active">
                         <a href="#"><i class="fa-solid fa-book"></i> Recipes</a>
@@ -246,13 +311,15 @@ a[data-toggle="collapse"] {
                         <a href="#"><i class="fa-solid fa-user"></i> Profile</a>
                     </li>
                 </ul>
-            <button class="btn btn-danger" style='margin-top:-15px;'>Sign-Out</button>
+                <button class="btn btn-danger" style='margin-top:-10px;'>Sign-Out</button>
+                <button class="btn btn-primary" style='margin-top:-10px;' id="theme-toggle"><span id="theme"></span> Mode</button>
             </div>
     	</nav>
 
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5" style='width:100%; max-height: calc(90vh - 140px); overflow-x: auto;'>
             <div class="accordion" id="accordionRecipe">
+                <!--Secondary Navbar.-->
                 <nav class="navbar navbar-expand-lg navbar-light" style='background: rgba(60, 60, 60, 0.4); position:sticky; top: 0; z-index:100;'>
                     <div class="container-fluid">
                         <button type="button" id="sidebarCollapse" class="btn btn-primary">
@@ -283,10 +350,11 @@ a[data-toggle="collapse"] {
                 </nav>
 
                 <div class="collapse show" id="globalCollapse" data-bs-parent="#accordionRecipe">
-                    <div class='container-fluid mb-3' style='background:white;'>
+                    <!--New Recipes.-->
+                    <div class='container-fluid mb-3'>
                         <h3 class="mb-2">New Recipes this week</h3>
                         <div class="row" style='overflow-x: scroll; width:auto; height:130px;'><!--Row must support horizontal scroll without multiple line-->
-                            <div class="card" style='min-width:100px; width:120px; border:none; background:transparent;' type='button'>
+                            <div class="card border-gray" style='min-width:100px; width:120px; border:none; background:transparent;' type='button'>
                                 <img src="http://127.0.0.1:8000/assets/image/icon/CreateNewRecipe.png" alt='CreateNewRecipe.png'
                                     style='border-radius:100%; margin-top:10px; width:80px; box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 15px; background:#EB7336; display: block; margin-left: auto; margin-right: auto;'>
                                 <img src="http://127.0.0.1:8000/assets/image/icon/Add.png" alt='Add.png'
@@ -297,7 +365,7 @@ a[data-toggle="collapse"] {
                             @foreach($user as $data2)
                             @if($data->user_id == $data2->id)
                             @if(strtotime($data->created_at) > strtotime('-7 day'))
-                            <div class="card" style='min-width:100px; width:120px; border:none; background:transparent;' type='button'>
+                            <div class="card border-gray" style='min-width:100px; width:120px; border:none; background:transparent;' type='button'>
                                 <img src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
                                     style='border-radius:100%; margin-top:-10px; width:100px; display: block; margin-left: auto; margin-right: auto;'>
                                 <img src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data2->username;?>.jpg" alt='<?php echo $data2->username.".jpg";?>' title='<?php echo $data2->username;?>'
@@ -310,7 +378,9 @@ a[data-toggle="collapse"] {
                         @endforeach
                         </div>
                     </div>
-                    <div class='container-fluid mb-3' style='background:white;'>
+
+                    <!--Recipe type.-->
+                    <div class='container-fluid mb-3'>
                         <h3 class="mb-2">Main Course</h3>
                         <div class="fs-8" style='font-size:14px; color:#808080; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical;'
                             ><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -320,7 +390,7 @@ a[data-toggle="collapse"] {
                             @if($data->recipe_type == 'Main Course')
                                 @foreach($user as $data2)
                                 @if($data->user_id == $data2->id)
-                                <div class="card w-25 p-2 border m-3" style='min-width:250px;'>
+                                <div class="card border-gray w-25 p-2 border m-3" style='min-width:250px;'>
                                     <img src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
                                         style='border-radius:4px; margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
                                     <img src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data2->username;?>.jpg" alt='<?php echo $data2->username.".jpg";?>' title='<?php echo $data2->username;?>'
@@ -328,7 +398,7 @@ a[data-toggle="collapse"] {
                                     <img src="http://127.0.0.1:8000/assets/image/country/<?php echo $data->recipe_country;?>.png" alt='<?php echo $data->recipe_country.".png";?>' title='<?php echo $data->recipe_country;?>'
                                         style='border-radius:100%; width:40px; margin-top:30px; margin-left:200px; position:absolute; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
                                     <h5 style='font-size:16px; text-align:center;'>{{$data->recipe_name}}</h5>
-                                    <div class='container' style='background:#f0f0f0; padding:5px;'>
+                                    <div class='container' id='headingCard' style='padding:5px;'>
                                         <div class='row' style='justify-content:center; width:110%;'>
                                             <div class='col-md-5'>
                                                 <a style='font-size:12px; color:#5cb85c;'>{{$data->recipe_level}}</a>
@@ -362,7 +432,7 @@ a[data-toggle="collapse"] {
                         </div>
                     </div><!--End of container-->
 
-                    <div class='container-fluid mb-3' style='background:white;'>
+                    <div class='container-fluid mb-3'>
                         <h3 class="mb-2">Appetizer</h3>
                         <div class="fs-8" style='font-size:14px; color:#808080; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical;'
                             ><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -372,7 +442,7 @@ a[data-toggle="collapse"] {
                             @if($data->recipe_type == 'Appetizer')
                                 @foreach($user as $data2)
                                 @if($data->user_id == $data2->id)
-                                <div class="card w-25 p-2 border m-3" style='min-width:250px;'>
+                                <div class="card border-gray w-25 p-2 border m-3" style='min-width:250px;'>
                                     <img src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
                                         style='border-radius:4px; margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
                                     <img src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data2->username;?>.jpg" alt='<?php echo $data2->username.".jpg";?>' title='<?php echo $data2->username;?>'
@@ -380,7 +450,7 @@ a[data-toggle="collapse"] {
                                     <img src="http://127.0.0.1:8000/assets/image/country/<?php echo $data->recipe_country;?>.png" alt='<?php echo $data->recipe_country.".png";?>' title='<?php echo $data->recipe_country;?>'
                                         style='border-radius:100%; width:40px; margin-top:30px; margin-left:200px; position:absolute; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
                                     <h5 style='font-size:16px; text-align:center;'>{{$data->recipe_name}}</h5>
-                                    <div class='container' style='background:#f0f0f0; padding:5px;'>
+                                    <div class='container' id='headingCard' style='padding:5px;'>
                                         <div class='row' style='justify-content:center; width:110%;'>
                                             <div class='col-md-5'>
                                                 <a style='font-size:12px; color:#5cb85c;'>{{$data->recipe_level}}</a>
@@ -414,7 +484,7 @@ a[data-toggle="collapse"] {
                         </div>
                     </div><!--End of container-->
 
-                    <div class='container-fluid mb-3' style='background:white;'>
+                    <div class='container-fluid mb-3'>
                         <h3 class="mb-2">Desert</h3>
                         <div class="fs-8" style='font-size:14px; color:#808080; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical;'
                             ><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -424,7 +494,7 @@ a[data-toggle="collapse"] {
                             @if($data->recipe_type == 'Desert')
                                 @foreach($user as $data2)
                                 @if($data->user_id == $data2->id)
-                                <div class="card w-25 p-2 border m-3" style='min-width:250px;'>
+                                <div class="card border-gray w-25 p-2 border m-3" style='min-width:250px;'>
                                     <img src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
                                         style='border-radius:4px; margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
                                     <img src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data2->username;?>.jpg" alt='<?php echo $data2->username.".jpg";?>' title='<?php echo $data2->username;?>'
@@ -432,7 +502,7 @@ a[data-toggle="collapse"] {
                                     <img src="http://127.0.0.1:8000/assets/image/country/<?php echo $data->recipe_country;?>.png" alt='<?php echo $data->recipe_country.".png";?>' title='<?php echo $data->recipe_country;?>'
                                         style='border-radius:100%; width:40px; margin-top:30px; margin-left:200px; position:absolute; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
                                     <h5 style='font-size:16px; text-align:center;'>{{$data->recipe_name}}</h5>
-                                    <div class='container' style='background:#f0f0f0; padding:5px;'>
+                                    <div class='container' id='headingCard' style='padding:5px;'>
                                         <div class='row' style='justify-content:center; width:110%;'>
                                             <div class='col-md-5'>
                                                 <a style='font-size:12px; color:#5cb85c;'>{{$data->recipe_level}}</a>
@@ -468,21 +538,21 @@ a[data-toggle="collapse"] {
                 </div><!--End of collapse-->
 
                 <div class="collapse" id="favoritesCollapse" data-bs-parent="#accordionRecipe">
-                    <div class='container-fluid mb-3' style='background:white;'>
+                    <div class='container-fluid mb-3'>
                         <h3 class="mb-2">Favorites</h3>
 
                     </div><!--End of container-->
                 </div><!--End of collapse-->
 
                 <div class="collapse" id="myrecipesCollapse" data-bs-parent="#accordionRecipe">
-                    <div class='container-fluid mb-3' style='background:white;'>
+                    <div class='container-fluid mb-3'>
                         <h3 class="mb-2">My Recipes</h3>
 
                     </div><!--End of container-->
                 </div><!--End of collapse-->
 
                 <div class="collapse" id="aboutCollapse" data-bs-parent="#accordionRecipe">
-                    <div class='container-fluid mb-3' style='background:white;'>
+                    <div class='container-fluid mb-3'>
                         <h3 class="mb-2">About</h3>
 
                     </div><!--End of container-->
@@ -494,6 +564,46 @@ a[data-toggle="collapse"] {
     </div>
 
     <script>
+        //Darkmode setting.
+        function getTheme() {
+            return localStorage.getItem('theme') || 'Light';
+        }
+        function saveTheme(theme) {
+            localStorage.setItem('theme', theme);
+        }
+
+        const colorScheme = document.querySelector('meta[name="color-scheme"]');
+        function applyTheme(theme) {
+            document.body.className = theme;
+            colorScheme.content = theme;
+        }
+
+        function rotateTheme(theme) {
+        if (theme === 'Light') {
+            return 'Dark'
+        }
+            return 'Light';
+        }
+
+        const themeDisplay = document.getElementById('theme');
+        const themeToggler = document.getElementById('theme-toggle');
+
+        setTimeout(() => {
+        let theme = getTheme();
+        applyTheme(theme);
+        themeDisplay.innerText = theme;
+
+        themeToggler.onclick = () => {
+            const newTheme = rotateTheme(theme);
+            applyTheme(newTheme);
+            themeDisplay.innerText = newTheme;
+            saveTheme(newTheme);
+
+            theme = newTheme;
+        }
+        }, 1000);
+
+        //Sidebar setting.
         (function($) {
 
         "use strict";
@@ -514,6 +624,8 @@ a[data-toggle="collapse"] {
 
         })(jQuery);
     </script>
+
+    <!--Others CDN.-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
