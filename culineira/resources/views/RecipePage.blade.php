@@ -21,9 +21,11 @@
                 --text: #414141;
                 --text2: #2F4858;
                 --background: #fff4eb;
-                --background2: white;
-                --background3: white;
+                --background2: white; /*For container*/
+                --background3: white; /*For container*/
                 --background4: #f0f0f0;
+                --background5: #CED4DA; /*For input border*/
+                --background6: #F0F0F0;
             }
             body.Dark {
                 --text: whitesmoke;
@@ -32,6 +34,18 @@
                 --background2: #18191A;
                 --background3: #3A3B3C;
                 --background4: #5e5d5d;
+                --background6: #3A3B3C;
+            }
+
+            .form-control{
+                background: var(--background3);
+                border-color: #CED4DA;
+                color: var(--text);
+            }
+            .form-select{
+                background: var(--background3);
+                border-color: #CED4DA;
+                color: var(--text);
             }
             /* Modal Setting*/
             .modal-content{
@@ -94,6 +108,7 @@
                 background: var(--background4);
                 border-radius:6px;
             }
+
             h1, h2, h3, h4, h5,
             .h1, .h2, .h3, .h4, .h5 {
                 line-height: 1.5;
@@ -270,6 +285,88 @@
                 font-weight:500;
                 position: relative;
             }
+
+            /*Navigation.*/
+			.nav-pills-custom .nav-link {
+				color: var(--text2);
+				background: var(--background4);
+				position: relative;
+                font-size:14px;
+			}
+			.nav-pills-custom .nav-link:hover {
+				color: white;
+				background: #e8a382;
+				position: relative;
+			}
+			.nav-pills-custom .nav-link.active {
+				color: white;
+				background: #EB7336;
+			}
+			@media (min-width: 992px) {
+				.nav-pills-custom .nav-link::before {
+					content: '';
+					display: block;
+					border-top: 8px solid transparent;
+					border-left: 10px solid #EB7336;
+					border-bottom: 8px solid transparent;
+					position: absolute;
+					top: 50%;
+					right: -10px;
+					transform: translateY(-50%);
+					opacity: 0;
+				}
+			}
+			.nav-pills-custom .nav-link.active::before {
+				opacity: 1;
+			}
+			.nav-link.scrollto.rounded{
+				font-size:14px;
+				background:#00a34d;
+			}
+            .tab-content .tab-pane.fade.shadow.rounded.show.active.p-2{
+                background: var(--background2);
+            }
+            .tab-pane.fade.shadow.rounded h5{
+                color:var(--text2);
+            }
+
+            /*Autocomplete search*/
+			.autocomplete {
+                position: relative;
+                display: inline-block;
+			}
+
+			.autocomplete-items {
+				position: absolute;
+				border-bottom: none;
+				border-top: none;
+				z-index: 99;
+				/*position the autocomplete items to be the same width as the container:*/
+				top: 100%;
+				left: 0;
+				right: 0;
+				border-radius:5px;
+			}
+
+			.autocomplete-items div {
+				padding: 10px;
+				cursor: pointer;
+				background-color: var(--background6);
+				border-bottom: 1px solid transparent;
+				border-radius:5px;
+			}
+
+			/*when hovering an item:*/
+			.autocomplete-items div:hover {
+				background-color: #EB7336;
+				color: #ffffff;
+			}
+
+			/*when navigating through the items using the arrow keys:*/
+			.autocomplete-active {
+				background-color: #EB7336 !important;
+				color: #ffffff;
+			}
 		</style>
 
     </head>
@@ -351,9 +448,6 @@
                                     <a class="nav-link" href="" role="button" data-bs-toggle="collapse" data-bs-target="#globalCollapse" aria-expanded="false" aria-controls="CollapseExample2" >Global</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="" role="button" data-bs-toggle="collapse" data-bs-target="#favoritesCollapse" aria-expanded="false" aria-controls="CollapseExample2">Favorites</a>
-                                </li>
-                                <li class="nav-item">
                                     <a class="nav-link" href="" role="button" data-bs-toggle="collapse" data-bs-target="#myrecipesCollapse" aria-expanded="false" aria-controls="CollapseExample2">My Recipes</a>
                                 </li>
                                 <li class="nav-item">
@@ -366,6 +460,46 @@
 
                 <div class="collapse show" id="globalCollapse" data-bs-parent="#accordionRecipe">
                     <!--New Recipes.-->
+                    <div class='container-fluid mb-1 bg-transparent' style='margin-top:-30px;'>
+                        <div class='row'>
+                            <div class='col-sm-4'>
+                                <form autocomplete="off" action="" method="POST">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text"><button class="btn btn-primary p-1" style="height:30px; width:30px;"><i class="fa-solid fa-magnifying-glass fa-xs"></i></button></span>
+                                    <input type="text" class="form-control" id="searchInput" name="search" placeholder="recipe, @creator, or #community" aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+                                </form>
+                            </div>
+                            <div class='col-sm-2 mt-1'>
+                                <select class="form-select" aria-label="Default select example">
+                                    <option value="Oriental">Oriental</option>
+                                    <option value="Middle Eastern">Middle Eastern</option>
+                                    <option value="Continental">Continental</option>
+                                    <option value="Indian">Indian</option>
+                                    <option value="Chinese">Chinese</option>
+                                    <option value="Korean & Japanese">Korean & Japanese</option>
+                                </select>
+                            </div>
+                            <div class='col-sm-2 mt-1'>
+                                <select class="form-select" aria-label="Default select example">
+                                    <option value="Beginner">Beginner</option>
+                                    <option value="Intermediate">Intermediate</option>
+                                    <option value="Expert">Expert</option>
+                                </select>
+                            </div>
+                            <div class='col-sm-2 mt-1'>
+                                <select class="form-select" aria-label="Default select example">
+                                    <option value="20">< 20 min</option>
+                                    <option value="<45">< 45 min</option>
+                                    <option value=">45">> 45 min</option>
+                                </select>
+                            </div>
+                            <div class='col-sm-2 mt-1'>
+                                <button class="btn btn-primary"><i class="fa-solid fa-filter"></i> Filter</button>
+                            </div>
+                        </div>
+                        <a class="text-secondary">Filtered by : </a>
+                    </div>
                     <div class='container-fluid mb-3'>
                         <h3 class="mb-2">New Recipes this week</h3>
                         <div class="row" style='overflow-x: scroll; width:auto; height:130px;'><!--Row must support horizontal scroll without multiple line-->
@@ -551,16 +685,59 @@
                     </div><!--End of container-->
                 </div><!--End of collapse-->
 
-                <div class="collapse" id="favoritesCollapse" data-bs-parent="#accordionRecipe">
-                    <div class='container-fluid mb-3'>
-                        <h3 class="mb-2">Favorites</h3>
-
-                    </div><!--End of container-->
-                </div><!--End of collapse-->
-
                 <div class="collapse" id="myrecipesCollapse" data-bs-parent="#accordionRecipe">
                     <div class='container-fluid mb-3'>
                         <h3 class="mb-2">My Recipes</h3>
+                        <section class="py-2 header">
+                            <div class="container py-2">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <!--Tabs nav.-->
+                                        <div class="nav flex-column nav-pills nav-pills-custom" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                            <a class="nav-link mb-3 p-3 shadow active" id="v-pills-home-tab" data-bs-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">
+                                            <span class="font-weight-bold small text-uppercase"> My Recipes</span></a>
+                                            <a class="nav-link mb-3 p-3 shadow" id="v-pills-profile-tab" data-bs-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">
+                                            <span class="font-weight-bold small text-uppercase"> Favorites</span></a>
+                                            <a class="nav-link mb-3 p-3 shadow" id="v-pills-messages-tab" data-bs-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">
+                                            <span class="font-weight-bold small text-uppercase"> Create Recipe</span></a>
+                                            <a class="nav-link mb-3 p-3 shadow" id="v-pills-settings-tab" data-bs-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">
+                                            <span class="font-weight-bold small text-uppercase"> Collaboration</span></a>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-10">
+                                        <form method="post" class="signin-form" action="landing/newUser" enctype="multipart/form-data">
+                                        <div class="tab-content" id="v-pills-tabContent">
+                                            <!--My Recipes.-->
+                                            <div class="tab-pane fade rounded show active p-2" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                                                <h5>My Recipes</h5>
+
+                                            </div>
+
+                                            <!--Favorites.-->
+                                            <div class="tab-pane fade rounded p-2" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                                                <h5>Favorites</h5>
+
+                                            </div>
+
+                                            <!--Create New Recipe.-->
+                                            <div class="tab-pane fade rounded p-2" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                                                <h5>Create Recipe</h5>
+
+                                            </div>
+
+                                            <!--Collaboration.-->
+                                            <div class="tab-pane fade rounded p-2" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                                                <h5>Collaboration</h5>
+
+                                            </div>
+
+                                            </form>
+                                        </div><!--End of tab content.-->
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
 
                     </div><!--End of container-->
                 </div><!--End of collapse-->
@@ -581,6 +758,8 @@
     <div class="modal fade" id="createInstantRecipe" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content p-2">
+        <form action="/recipe/store" method="POST" enctype="multipart/form-data">
+        @csrf
         <div class="modal-header">
             <div class="row">
                 <div class="col-md-4">
@@ -588,9 +767,9 @@
                 </div>
                 <div class="col-md-4 mb-2">
                     <select class="form-select" name="recipe_type" required>
-                        <option selected value="1">Main Course</option>
-                        <option value="2">Intermediate</option>
-                        <option value="3">Desserts</option>
+                        <option selected value="Main Course">Main Course</option>
+                        <option value="Appetizer">Appetizer</option>
+                        <option value="Desserts">Desserts</option>
                     </select>
                 </div>
                 <div class="col-md-4">
@@ -619,7 +798,8 @@
                 </div>
                 <div class="col-md-2 pt-2">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="recipe_halal" id="flexCheckDefault">
+                        <!--name="recipe_halal"-->
+                        <input class="form-check-input" type="checkbox" id="flexCheckDefault">
                         <label class="form-check-label" for="flexCheckDefault">
                             Halal
                         </label>
@@ -648,7 +828,7 @@
                     <label class="form-label">Description</label>
                     <textarea class="form-control" name="recipe_desc" rows="5" required placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing... "></textarea>
                     <label class="form-label mt-2">Image <i class="fa-solid fa-circle-question" type="button"></i></label>
-                    <input class="form-control" type="file" id="formFile" onchange="preview()" required>
+                    <input class="form-control" type="file" id="formFile" onchange="preview()" name="recipe_image" required>
                 </div>
                 <div class="col-md-6 p-2">
                     <label class="form-label">Main Ingredients <i class="fa-solid fa-circle-question" type="button"></i></label>
@@ -660,12 +840,13 @@
                         </div>
                         <div class="col-md-5">
                             <button onclick="clearImage()" class="btn btn-danger mt-3 w-100"><i class="fa-solid fa-trash"></i> Reset</button>
-                            <button type="button" class="btn btn-success mt-2 w-100" type="submit"><i class="fa-solid fa-plus"></i> Post </button>
+                            <button class="btn btn-success mt-2 w-100" type="submit" value="Save"><i class="fa-solid fa-plus"></i> Post </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        </form>
         </div>
     </div>
     </div>
@@ -739,6 +920,79 @@
         });
 
         })(jQuery);
+
+        //Search input.
+        function autocomplete(inp, arr) {
+			var currentFocus;
+
+			inp.addEventListener("input", function(e) {
+				var a, b, i, val = this.value;
+				closeAllLists();
+				if (!val) { return false;}
+				currentFocus = -1;
+				a = document.createElement("DIV");
+				a.setAttribute("id", this.id + "autocomplete-list");
+				a.setAttribute("class", "autocomplete-items");
+				this.parentNode.appendChild(a);
+				for (i = 0; i < arr.length; i++) {
+					if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+						b = document.createElement("DIV");
+						b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+						b.innerHTML += arr[i].substr(val.length);
+						b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+						b.addEventListener("click", function(e) {
+							inp.value = this.getElementsByTagName("input")[0].value;
+							closeAllLists();
+						});
+						a.appendChild(b);
+					}
+				}
+			});
+			inp.addEventListener("keydown", function(e) {
+				var x = document.getElementById(this.id + "autocomplete-list");
+				if (x) x = x.getElementsByTagName("div");
+				if (e.keyCode == 40) {
+					currentFocus++;
+					addActive(x);
+				} else if (e.keyCode == 38) {
+					currentFocus--;
+					addActive(x);
+				} else if (e.keyCode == 13) {
+					e.preventDefault();
+					if (currentFocus > -1) {
+						if (x) x[currentFocus].click();
+					}
+				}
+			});
+			function addActive(x) {
+				if (!x) return false;
+				removeActive(x);
+				if (currentFocus >= x.length) currentFocus = 0;
+				if (currentFocus < 0) currentFocus = (x.length - 1);
+				x[currentFocus].classList.add("autocomplete-active");
+			}
+			function removeActive(x) {
+				for (var i = 0; i < x.length; i++) {
+				x[i].classList.remove("autocomplete-active");
+				}
+			}
+			function closeAllLists(elmnt) {
+				var x = document.getElementsByClassName("autocomplete-items");
+				for (var i = 0; i < x.length; i++) {
+				if (elmnt != x[i] && elmnt != inp) {
+					x[i].parentNode.removeChild(x[i]);
+				}
+				}
+			}
+			document.addEventListener("click", function (e) {
+				closeAllLists(e.target);
+			});
+		}
+		var recipeName = [
+            @foreach($recipe as $data)<?php echo "'"; echo $data['recipe_name']; echo "',"; ?>@endforeach
+            @foreach($user as $data)<?php echo "'@"; echo $data['username']; echo "',"; ?>@endforeach
+        ];
+		autocomplete(document.getElementById("searchInput"), recipeName);
     </script>
 
     <!--Others CDN.-->

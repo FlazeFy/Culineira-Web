@@ -14,8 +14,10 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/', function () {
-    return view('RecipePage');
-});
+// Route::get('/', function () {
+//     return view('RecipePage');
+// });
 
-Route::resource('/recipe', RecipeController::class);
+//Route::resource('/recipe', RecipeController::class);
+Route::get('/recipe', [RecipeController::class, 'index']);
+Route::post('/recipe/store', [RecipeController::class, 'store']);
