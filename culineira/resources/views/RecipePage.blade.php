@@ -26,6 +26,7 @@
                 --background4: #f0f0f0;
                 --background5: #CED4DA; /*For input border*/
                 --background6: #F0F0F0;
+                --background7: transparent; /*For modal, dropdown, popover border*/
             }
             body.Dark {
                 --text: whitesmoke;
@@ -35,6 +36,14 @@
                 --background3: #3A3B3C;
                 --background4: #5e5d5d;
                 --background6: #3A3B3C;
+                --background7: #EB7336;
+            }
+            .dropdown-menu{
+                background: var(--background4);
+                border: 2px solid var(--background7);
+            }
+            .dropdown-item .btn.btn-light{
+                color: var(--text);
             }
 
             .form-control{
@@ -45,6 +54,12 @@
             .form-select{
                 background: var(--background3);
                 border-color: #CED4DA;
+                color: var(--text);
+            }
+            thead{
+                color: var(--text);
+            }
+            td h6{
                 color: var(--text);
             }
             /* Modal Setting*/
@@ -289,7 +304,7 @@
             /*Navigation.*/
 			.nav-pills-custom .nav-link {
 				color: var(--text2);
-				background: var(--background4);
+				background: var(--background3);
 				position: relative;
                 font-size:14px;
 			}
@@ -509,21 +524,21 @@
                                 <img src="http://127.0.0.1:8000/assets/image/icon/Add.png" alt='Add.png' id="addRecipeButton">
                                 <a style='font-size:11px; white-space: nowrap;  display: block; margin-left: auto; margin-right: auto;'>New Recipe</a>
                             </div>
-                        @foreach($recipe as $data)
-                            @foreach($user as $data2)
-                            @if($data->user_id == $data2->id)
-                            @if(strtotime($data->created_at) > strtotime('-7 day'))
-                            <div class="card border-gray" style='min-width:100px; width:120px; border:none; background:transparent;' type='button'>
-                                <img src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
-                                    style='border-radius:100%; margin-top:-10px; width:100px; display: block; margin-left: auto; margin-right: auto;'>
-                                <img src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data2->username;?>.jpg" alt='<?php echo $data2->username.".jpg";?>' title='<?php echo $data2->username;?>'
-                                    style='border-radius:100%; margin-top:-40px; width:40px; border:3px solid #eb7336; box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 15px;'>
-                                <a style='font-size:11px; white-space: nowrap;  display: block; margin-left: auto; margin-right: auto;'>{{$data->recipe_name}}</a>
-                            </div>
-                            @endif
-                            @endif
+                            @foreach($recipe as $data)
+                                @foreach($user as $data2)
+                                @if($data->user_id == $data2->id)
+                                @if(strtotime($data->created_at) > strtotime('-7 day'))
+                                <div class="card border-gray" style='min-width:100px; width:120px; border:none; background:transparent;' type='button'>
+                                    <img src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
+                                        style='border-radius:100%; margin-top:-10px; width:100px; display: block; margin-left: auto; margin-right: auto;'>
+                                    <img src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data2->username;?>.jpg" alt='<?php echo $data2->username.".jpg";?>' title='<?php echo $data2->username;?>'
+                                        style='border-radius:100%; margin-top:-40px; width:40px; border:3px solid #eb7336; box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 15px;'>
+                                    <a style='font-size:11px; white-space: nowrap;  display: block; margin-left: auto; margin-right: auto;'>{{$data->recipe_name}}</a>
+                                </div>
+                                @endif
+                                @endif
+                                @endforeach
                             @endforeach
-                        @endforeach
                         </div>
                     </div>
 
@@ -706,12 +721,62 @@
                                     </div>
 
                                     <div class="col-md-10">
-                                        <form method="post" class="signin-form" action="landing/newUser" enctype="multipart/form-data">
                                         <div class="tab-content" id="v-pills-tabContent">
                                             <!--My Recipes.-->
                                             <div class="tab-pane fade rounded show active p-2" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                                                 <h5>My Recipes</h5>
-
+                                                <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                    <th scope="col">Image</th>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Info</th>
+                                                    <th scope="col">Description</th>
+                                                    <th scope="col">Version</th>
+                                                    <th scope="col"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($user as $data2)
+                                                    @foreach($recipe as $data)
+                                                        @if(($data->user_id == $data2->id)&&($data2->username == 'flazefy'))
+                                                            <tr>
+                                                                <td><img src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
+                                                                    style='border-radius:4px; width:80px;'></td>
+                                                                <td><h6 style='font-size:12px;'>{{$data->recipe_name}}</h6></td>
+                                                                <td>
+                                                                    <h6 style='font-size:12px;'>Level : <span class='text-muted'>{{$data->recipe_level}}</span></h6>
+                                                                    <h6 style='font-size:12px;'>Time Spend : <span class='text-muted'>{{$data->recipe_time_spend}}</span></h6>
+                                                                    <h6 style='font-size:12px;'>Calorie : <span class='text-muted'>{{$data->recipe_calorie}}</span></h6>
+                                                                    <h6 style='font-size:12px;'>Main Ing : <span class='text-muted'>{{$data->recipe_main_ing}}</span></h6>
+                                                                </td>
+                                                                <td><p><?php echo nl2br($data->recipe_desc); ?></p></td>
+                                                                <td>
+                                                                    <h6 style='font-size:12px;'>Created : <p class='text-muted'>{{$data->created_at}}</span></p>
+                                                                    <h6 style='font-size:12px;'>Last Updated : <p class='text-muted'>{{$data->updated_at}}</span></p>
+                                                                </td>
+                                                                <td>
+                                                                    <div class='row w-100'>
+                                                                        <div class='col-md-6'>
+                                                                            <button class='btn btn-success' type='submit'><i class="fa-solid fa-pen-to-square"></i></button>
+                                                                        </div>
+                                                                        <div class='col-md-6'>
+                                                                            <button class='btn btn-danger' data-bs-toggle="modal" data-bs-target="#deleteRecipeModal"><i class="fa-solid fa-trash-can"></i></button>
+                                                                        </div>
+                                                                    </div>
+                                                                    <button class='btn btn-primary dropdown-toggle mt-2' type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-gear"></i> Visibility</button>
+                                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                                        <li><a class="dropdown-item"><button type='submit' class='btn btn-light bg-transparent border-0'>Private</button></a></li>
+                                                                        <li><a class="dropdown-item"><button type='submit' class='btn btn-light bg-transparent border-0'>Public</button></a></li>
+                                                                        <li><a class="dropdown-item"><button type='submit' class='btn btn-light bg-transparent border-0'>Restricted</button></a></li>
+                                                                    </ul>
+                                                                </td>
+                                                            </tr>
+                                                        @endif
+                                                    @endforeach
+                                                @endforeach
+                                                </tbody>
+                                                </table>
                                             </div>
 
                                             <!--Favorites.-->
@@ -849,6 +914,33 @@
         </form>
         </div>
     </div>
+    </div>
+
+    <!--Delete Recipe Modal-->
+    <div class="modal fade" id="deleteRecipeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Warning</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/recipe/...">
+                    <h6 class="text-center">Are you sure want to delete this recipe?<h6>
+                    <div class="row w-100 mb-2">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-5">
+                            <input required class="form-control" name="validation" type="text" placeholder="'pizza'"></input>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-danger" type="submit">Yes</button>
+                        </div>
+                    </div>
+                    <p class="text-secondary text-center mt-2" style="font-size:12px;"><i class="fa-solid fa-circle-info"></i> Please type the same recipe name for validation</p>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
