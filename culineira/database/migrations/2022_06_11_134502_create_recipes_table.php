@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('recipe_country', 20);
             $table->string('recipe_type', 20);
             $table->integer('recipe_time_spend');
-            $table->string('recipe_main_ing', 20);
-            $table->string('recipe_level', 10);
+            $table->string('recipe_main_ing', 30);
+            $table->string('recipe_level', 20);
             $table->timestamps();
         });
     }

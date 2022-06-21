@@ -21,3 +21,4 @@ use App\Http\Controllers\UserController;
 //Route::resource('/recipe', RecipeController::class);
 Route::get('/recipe', [RecipeController::class, 'index']);
 Route::post('/recipe/store', [RecipeController::class, 'store']);
+Route::post('/recipe/update/{id}', [RecipeController::class, 'update']);

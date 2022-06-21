@@ -95,7 +95,18 @@ class RecipeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        recipe::where('id', $id)->update([
+            'recipe_calorie' => $request-> recipe_calorie,
+            'recipe_desc' => $request-> recipe_desc,
+            'recipe_country' => $request-> recipe_country,
+            'recipe_type' => $request-> recipe_type,
+            'recipe_time_spend' => $request-> recipe_time_spend,
+            'recipe_main_ing' => $request->recipe_main_ing,
+            'recipe_level' => $request->recipe_level,
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        return redirect('/recipe')->with('flash_message', 'Recipe updated!');
     }
 
     /**

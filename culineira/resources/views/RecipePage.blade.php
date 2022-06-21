@@ -582,7 +582,7 @@
                                                 <p style='font-size:12px;'>cal</p>
                                             </div>
                                             <div class='col-md-4'>
-                                                <p style='font-size:12px; justify-content:center; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical;'>{{$data->recipe_main_ing}}</p>
+                                                <p style='font-size:12px; justify-content:center; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical;'>{{$data->recipe_main_ing}}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -634,7 +634,7 @@
                                                 <p style='font-size:12px;'>cal</p>
                                             </div>
                                             <div class='col-md-4'>
-                                                <p style='font-size:12px; justify-content:center; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical;'>{{$data->recipe_main_ing}}</p>
+                                                <p style='font-size:12px; justify-content:center; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical;'>{{$data->recipe_main_ing}}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -686,7 +686,7 @@
                                                 <p style='font-size:12px;'>cal</p>
                                             </div>
                                             <div class='col-md-4'>
-                                                <p style='font-size:12px; justify-content:center; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical;'>{{$data->recipe_main_ing}}</p>
+                                                <p style='font-size:12px; justify-content:center; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical;'>{{$data->recipe_main_ing}}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -724,14 +724,26 @@
                                         <div class="tab-content" id="v-pills-tabContent">
                                             <!--My Recipes.-->
                                             <div class="tab-pane fade rounded show active p-2" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                                                <h5>My Recipes</h5>
+                                                <a class="text-secondary">
+                                                    <?php
+                                                        $i = 0;
+                                                        foreach($user as $data2){
+                                                            foreach($recipe as $data){
+                                                                if(($data->user_id == $data2->id)&&($data2->username == 'flazefy')){
+                                                                    $i++;
+                                                                }
+                                                            }
+                                                        }
+                                                        echo "Showing ".$i." result";
+                                                    ?>
+                                                </a>
                                                 <table class="table">
                                                 <thead>
                                                     <tr>
                                                     <th scope="col">Image</th>
                                                     <th scope="col">Name</th>
                                                     <th scope="col">Info</th>
-                                                    <th scope="col">Description</th>
+                                                    <th scope="col" class="w-25">Description</th>
                                                     <th scope="col">Version</th>
                                                     <th scope="col"></th>
                                                     </tr>
@@ -746,11 +758,11 @@
                                                                 <td><h6 style='font-size:12px;'>{{$data->recipe_name}}</h6></td>
                                                                 <td>
                                                                     <h6 style='font-size:12px;'>Level : <span class='text-muted'>{{$data->recipe_level}}</span></h6>
-                                                                    <h6 style='font-size:12px;'>Time Spend : <span class='text-muted'>{{$data->recipe_time_spend}}</span></h6>
-                                                                    <h6 style='font-size:12px;'>Calorie : <span class='text-muted'>{{$data->recipe_calorie}}</span></h6>
-                                                                    <h6 style='font-size:12px;'>Main Ing : <span class='text-muted'>{{$data->recipe_main_ing}}</span></h6>
+                                                                    <h6 style='font-size:12px;'>Time Spend : <span class='text-muted'>{{$data->recipe_time_spend}} min</span></h6>
+                                                                    <h6 style='font-size:12px;'>Calorie : <span class='text-muted'>{{$data->recipe_calorie}} cal</span></h6>
+                                                                    <h6 style='font-size:12px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical;'>Main Ing : <span class='text-muted'>{{$data->recipe_main_ing}}</span></h6>
                                                                 </td>
-                                                                <td><p><?php echo nl2br($data->recipe_desc); ?></p></td>
+                                                                <td><p style="overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 4; line-clamp: 4; -webkit-box-orient: vertical;"><?php echo nl2br($data->recipe_desc); ?></p></td>
                                                                 <td>
                                                                     <h6 style='font-size:12px;'>Created : <p class='text-muted'>{{$data->created_at}}</span></p>
                                                                     <h6 style='font-size:12px;'>Last Updated : <p class='text-muted'>{{$data->updated_at}}</span></p>
@@ -758,7 +770,7 @@
                                                                 <td>
                                                                     <div class='row w-100'>
                                                                         <div class='col-md-6'>
-                                                                            <button class='btn btn-success' type='submit'><i class="fa-solid fa-pen-to-square"></i></button>
+                                                                            <button class='btn btn-success' data-bs-toggle="modal" data-bs-target="#editRecipe<?php echo "_".$data->id; ?>"><i class="fa-solid fa-pen-to-square"></i></button>
                                                                         </div>
                                                                         <div class='col-md-6'>
                                                                             <button class='btn btn-danger' data-bs-toggle="modal" data-bs-target="#deleteRecipeModal"><i class="fa-solid fa-trash-can"></i></button>
@@ -856,9 +868,9 @@
                 </div>
                 <div class="col-md-3 m-1">
                     <select class="form-select" name="recipe_level" required>
-                        <option selected value="1">Beginner</option>
-                        <option value="2">Intermediate</option>
-                        <option value="3">Expert</option>
+                        <option selected value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Expert">Expert</option>
                     </select>
                 </div>
                 <div class="col-md-2 pt-2">
@@ -915,6 +927,109 @@
         </div>
     </div>
     </div>
+
+    <!--Edit recipe modal-->
+    @foreach($user as $data2)
+        @foreach($recipe as $data)
+            @if(($data->user_id == $data2->id)&&($data2->username == 'flazefy'))
+                <div class="modal fade" id="editRecipe<?php echo "_".$data->id; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content p-2">
+                    <form action="/recipe/update/<?php echo $data->id; ?>" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-header">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h5 class="modal-title" id="exampleModalLabel">Edit Recipe</h5>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <select class="form-select" name="recipe_type" required>
+                                    <option <?php if($data->recipe_type == "Main Course"){echo" selected ";} ?> value="Main Course">Main Course</option>
+                                    <option <?php if($data->recipe_type == "Appetizer"){echo" selected ";} ?> value="Appetizer">Appetizer</option>
+                                    <option <?php if($data->recipe_type == "Desserts"){echo" selected ";} ?> value="Desserts">Desserts</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <input class="form-control" name="recipe_country" type="text" value="<?php echo $data->recipe_country; ?>" required></input>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-1 pt-2">
+                                <label class="form-label">Name</label>
+                            </div>
+                            <div class="col-md-4 m-1">
+                                <input class="form-control" disabled name="recipe_name" type="text" value="<?php echo $data->recipe_name; ?>" required></input>
+                            </div>
+                            <div class="col-md-1 pt-2">
+                                <label class="form-label">Level</label>
+                            </div>
+                            <div class="col-md-3 m-1">
+                                <select class="form-select" name="recipe_level" required>
+                                    <option <?php if($data->recipe_level == "Beginner"){echo" selected ";} ?> value="Beginner">Beginner</option>
+                                    <option <?php if($data->recipe_level == "Intermediate"){echo" selected ";} ?> value="Intermediate">Intermediate</option>
+                                    <option <?php if($data->recipe_level == "Expert"){echo" selected ";} ?> value="Expert">Expert</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 pt-2">
+                                <div class="form-check">
+                                    <!--name="recipe_halal"-->
+                                    <input class="form-check-input" type="checkbox" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        Halal
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 p-2">
+                                <div class="container-fluid p-0">
+                                    <label class="form-label" name="recipe_time_spend">Time Spend / Calorie <i class="fa-solid fa-circle-question" type="button"></i></label>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <input class="form-control" type="number" name="recipe_time_spend" value="<?php echo $data->recipe_time_spend; ?>" required>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label pt-2">Minutes</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input class="form-control" type="number" name="recipe_calorie" value="<?php echo $data->recipe_calorie; ?>" required>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label pt-2">Cal</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label class="form-label">Description</label>
+                                <textarea class="form-control" name="recipe_desc" rows="5" required><?php echo $data->recipe_desc; ?></textarea>
+                                <label class="form-label mt-2">Image <i class="fa-solid fa-circle-question" type="button"></i></label>
+                                <input class="form-control" type="file" id="formFileEdit" onchange="previewEdit()" name="recipe_image">
+                            </div>
+                            <div class="col-md-6 p-2">
+                                <label class="form-label">Main Ingredients <i class="fa-solid fa-circle-question" type="button"></i></label>
+                                <textarea class="form-control" rows="3" name="recipe_main_ing"><?php echo $data->recipe_main_ing; ?></textarea>
+                                <label class="form-label">Preview</label>
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <img id="frame2" src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" class="img-fluid" style="width:200px; border-radius:100%; border:3px solid #EB7736;"/>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <button onclick="clearImageEdit()" class="btn btn-danger mt-3 w-100"><i class="fa-solid fa-trash"></i> Reset</button>
+                                        <button class="btn btn-success mt-2 w-100" type="submit" value="Save"><i class="fa-solid fa-plus"></i> Post </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                    </div>
+                </div>
+                </div>
+            @endif
+        @endforeach
+    @endforeach
 
     <!--Delete Recipe Modal-->
     <div class="modal fade" id="deleteRecipeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -987,9 +1102,16 @@
         function preview() {
             frame.src = URL.createObjectURL(event.target.files[0]);
         }
+        function previewEdit() {
+            frame2.src = URL.createObjectURL(event.target.files[0]);
+        }
         function clearImage() {
             document.getElementById('formFile').value = null;
             frame.src = "http://127.0.0.1:8000/assets/NoImage.png";
+        }
+        function clearImageEdit() {
+            document.getElementById('formFileEdit').value = null;
+            frame2.src = "http://127.0.0.1:8000/assets/NoImage.png";
         }
 
         //Sidebar setting.
