@@ -58,6 +58,7 @@ class RecipeController extends Controller
             'recipe_time_spend' => $request-> recipe_time_spend,
             'recipe_main_ing' => $request->recipe_main_ing,
             'recipe_level' => $request->recipe_level,
+            'recipe_visibility' => $request->recipe_visibility,
             'created_at' => date("Y-m-d h:m:i"),
             'updated_at' => date("Y-m-d h:m:i"),
         ]);
@@ -108,6 +109,15 @@ class RecipeController extends Controller
 
         return redirect('/recipe')->with('flash_message', 'Recipe updated!');
     }
+    public function updateVisibility(Request $request, $id)
+    {
+        recipe::where('id', $id)->update([
+            'recipe_visibility' => $request-> visibility,
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        return redirect('/recipe')->with('flash_message', 'Recipe updated!');
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -115,8 +125,15 @@ class RecipeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+
+    public function destroy(Request $request, $id)
     {
-        //
+        if($request->validation == $request->recipe_name){
+            recipe::destroy($id);
+            return redirect('/recipe')->with('flash_message', 'Recipe deleted!');
+        } else {
+            return redirect('/recipe')->with('flash_message', 'Delete failed, please input same recipe name!');
+
+        }
     }
 }

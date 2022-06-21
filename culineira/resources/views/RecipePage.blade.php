@@ -550,7 +550,7 @@
                         </div>
                         <div class="row">
                         @foreach($recipe as $data)
-                            @if($data->recipe_type == 'Main Course')
+                            @if(($data->recipe_type == 'Main Course')&&($data->recipe_visibility != 'Private'))
                                 @foreach($user as $data2)
                                 @if($data->user_id == $data2->id)
                                 <div class="card border-gray w-25 p-2 border m-3" style='min-width:250px;'>
@@ -602,7 +602,7 @@
                         </div>
                         <div class="row">
                         @foreach($recipe as $data)
-                            @if($data->recipe_type == 'Appetizer')
+                            @if(($data->recipe_type == 'Appetizer')&&($data->recipe_visibility != 'Private'))
                                 @foreach($user as $data2)
                                 @if($data->user_id == $data2->id)
                                 <div class="card border-gray w-25 p-2 border m-3" style='min-width:250px;'>
@@ -654,7 +654,7 @@
                         </div>
                         <div class="row">
                         @foreach($recipe as $data)
-                            @if($data->recipe_type == 'Desserts')
+                            @if(($data->recipe_type == 'Desserts')&&($data->recipe_visibility != 'Private'))
                                 @foreach($user as $data2)
                                 @if($data->user_id == $data2->id)
                                 <div class="card border-gray w-25 p-2 border m-3" style='min-width:250px;'>
@@ -773,14 +773,31 @@
                                                                             <button class='btn btn-success' data-bs-toggle="modal" data-bs-target="#editRecipe<?php echo "_".$data->id; ?>"><i class="fa-solid fa-pen-to-square"></i></button>
                                                                         </div>
                                                                         <div class='col-md-6'>
-                                                                            <button class='btn btn-danger' data-bs-toggle="modal" data-bs-target="#deleteRecipeModal"><i class="fa-solid fa-trash-can"></i></button>
+                                                                            <button class='btn btn-danger' data-bs-toggle="modal" data-bs-target="#deleteRecipe<?php echo "_".$data->id; ?>"><i class="fa-solid fa-trash-can"></i></button>
                                                                         </div>
                                                                     </div>
-                                                                    <button class='btn btn-primary dropdown-toggle mt-2' type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-gear"></i> Visibility</button>
-                                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                                        <li><a class="dropdown-item"><button type='submit' class='btn btn-light bg-transparent border-0'>Private</button></a></li>
-                                                                        <li><a class="dropdown-item"><button type='submit' class='btn btn-light bg-transparent border-0'>Public</button></a></li>
-                                                                        <li><a class="dropdown-item"><button type='submit' class='btn btn-light bg-transparent border-0'>Restricted</button></a></li>
+                                                                    <button class='btn btn-primary dropdown-toggle mt-2' type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-eye"></i> <?php echo $data->recipe_visibility; ?></button>
+                                                                    <ul class="dropdown-menu p-2" aria-labelledby="dropdownMenuButton1">
+                                                                        <form action="/recipe/updateVisibility/<?php echo $data->id; ?>" method="POST">
+                                                                        @csrf
+                                                                        <fieldset>
+                                                                            <div class="form-check">
+                                                                                <input <?php if($data->recipe_visibility == "Public"){echo "checked";} ?> class="form-check-input" type="radio" name="visibility" value="Public" checked="checked">
+                                                                                <label class="form-check-label" for="flexRadioDefault1">Public</label>
+                                                                            </div>
+
+                                                                            <div class="form-check">
+                                                                                <input <?php if($data->recipe_visibility == "Private"){echo "checked";} ?> class="form-check-input" type="radio" name="visibility" value="Private">
+                                                                                <label class="form-check-label" for="flexRadioDefault1">Private</label>
+                                                                            </div>
+
+                                                                            <div class="form-check">
+                                                                                <input <?php if($data->recipe_visibility == "Restricted"){echo "checked";} ?> class="form-check-input" type="radio" name="visibility" value="Restricted">
+                                                                                <label class="form-check-label" for="flexRadioDefault1">Restricted</label>
+                                                                            </div>
+                                                                        </fieldset>
+                                                                        <button class="btn btn-success" type="submit"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                                                                        </form>
                                                                     </ul>
                                                                 </td>
                                                             </tr>
@@ -916,6 +933,12 @@
                             <img id="frame" src="http://127.0.0.1:8000/assets/NoImage.png" class="img-fluid" style="width:200px; border-radius:100%; border:3px solid #EB7736;"/>
                         </div>
                         <div class="col-md-5">
+                            <label class="form-label">Visibility <i class="fa-solid fa-circle-question" type="button"></i></label>
+                            <select class="form-select" name="recipe_visibility" required>
+                                <option selected value="Public">Public</option>
+                                <option value="Private">Private</option>
+                                <option value="Restricted">Restricted</option>
+                            </select>
                             <button onclick="clearImage()" class="btn btn-danger mt-3 w-100"><i class="fa-solid fa-trash"></i> Reset</button>
                             <button class="btn btn-success mt-2 w-100" type="submit" value="Save"><i class="fa-solid fa-plus"></i> Post </button>
                         </div>
@@ -1017,7 +1040,7 @@
                                     </div>
                                     <div class="col-md-5">
                                         <button onclick="clearImageEdit()" class="btn btn-danger mt-3 w-100"><i class="fa-solid fa-trash"></i> Reset</button>
-                                        <button class="btn btn-success mt-2 w-100" type="submit" value="Save"><i class="fa-solid fa-plus"></i> Post </button>
+                                        <button class="btn btn-success mt-2 w-100" type="submit" value="Save"><i class="fa-solid fa-floppy-disk"></i> Save </button>
                                     </div>
                                 </div>
                             </div>
@@ -1031,32 +1054,41 @@
         @endforeach
     @endforeach
 
-    <!--Delete Recipe Modal-->
-    <div class="modal fade" id="deleteRecipeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Warning</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form method="post" action="/recipe/...">
-                    <h6 class="text-center">Are you sure want to delete this recipe?<h6>
-                    <div class="row w-100 mb-2">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-5">
-                            <input required class="form-control" name="validation" type="text" placeholder="'pizza'"></input>
-                        </div>
-                        <div class="col-md-3">
-                            <button class="btn btn-danger" type="submit">Yes</button>
+    @foreach($user as $data2)
+        @foreach($recipe as $data)
+            @if(($data->user_id == $data2->id)&&($data2->username == 'flazefy'))
+                <!--Delete Recipe Modal-->
+                <div class="modal fade" id="deleteRecipe<?php echo "_".$data->id; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Warning</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="/recipe/destroy/<?php echo $data->id; ?>" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <h6 class="text-center">Are you sure want to delete this recipe?<h6>
+                                <div class="row w-100 mb-2">
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-5">
+                                        <input hidden class="form-control" name="recipe_name" type="text" value="<?php echo $data->recipe_name; ?>"></input>
+                                        <input required class="form-control" name="validation" type="text" placeholder="'pizza'"></input>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button class="btn btn-danger" type="submit">Yes</button>
+                                    </div>
+                                </div>
+                                <p class="text-secondary text-center mt-2" style="font-size:12px;"><i class="fa-solid fa-circle-info"></i> Please type the same recipe name for validation</p>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                    <p class="text-secondary text-center mt-2" style="font-size:12px;"><i class="fa-solid fa-circle-info"></i> Please type the same recipe name for validation</p>
-                    </form>
                 </div>
-            </div>
-        </div>
-    </div>
+                @endif
+        @endforeach
+    @endforeach
+
 
     <script>
         //Darkmode setting.
