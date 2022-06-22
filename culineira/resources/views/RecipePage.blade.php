@@ -9,13 +9,30 @@
     <!--CDN Bootstrap CSS-->
     <link rel="icon" type="image/png" href="http://127.0.0.1:8000/assets/Culineira_Logo.png"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">		<link href='https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css' rel='stylesheet'>
-		<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-        <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-		<script src="https://kit.fontawesome.com/12801238e9.js" crossorigin="anonymous"></script>
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/12801238e9.js" crossorigin="anonymous"></script>
+    <script href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css"></script>
+    <!-- Jquery -->
+    <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <!-- Jquery DataTables -->
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <!-- Bootstrap dataTables Javascript -->
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+    </script>
 
         <!--Source file.-->
 
 		<style>
+            :root {
+                --prm-color: #EB7336;
+                --prm-gray: #b1b1b1;
+            }
             /*Main style*/
             body.Light {
                 --text: #414141;
@@ -38,6 +55,61 @@
                 --background6: #3A3B3C;
                 --background7: #EB7336;
             }
+            .steps {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 2rem;
+                position: relative;
+            }
+
+            .step-button {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                border: none;
+                background-color: var(--prm-gray);
+                transition: .4s;
+            }
+
+            .step-button[aria-expanded="true"] {
+                width: 60px;
+                height: 60px;
+                background-color: var(--prm-color);
+                color: #fff;
+            }
+
+            .done {
+                background-color: var(--prm-color);
+                color: #fff;
+            }
+
+            .step-item {
+                z-index: 10;
+                text-align: center;
+            }
+
+            #progress {
+            -webkit-appearance:none;
+                position: absolute;
+                width: 95%;
+                z-index: 5;
+                height: 10px;
+                margin-left: 18px;
+                margin-bottom: 18px;
+            }
+
+            /* to customize progress bar */
+            #progress::-webkit-progress-value {
+                background-color: var(--prm-color);
+                transition: .5s ease;
+            }
+
+            #progress::-webkit-progress-bar {
+                background-color: var(--prm-gray);
+
+            }
+
             .dropdown-menu{
                 background: var(--background4);
                 border: 2px solid var(--background7);
@@ -122,6 +194,9 @@
             .container-fluid.mb-3 #headingCard{
                 background: var(--background4);
                 border-radius:6px;
+            }
+            .card.border-0{
+                background: var(--background2);
             }
 
             h1, h2, h3, h4, h5,
@@ -724,25 +799,12 @@
                                         <div class="tab-content" id="v-pills-tabContent">
                                             <!--My Recipes.-->
                                             <div class="tab-pane fade rounded show active p-2" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                                                <a class="text-secondary">
-                                                    <?php
-                                                        $i = 0;
-                                                        foreach($user as $data2){
-                                                            foreach($recipe as $data){
-                                                                if(($data->user_id == $data2->id)&&($data2->username == 'flazefy')){
-                                                                    $i++;
-                                                                }
-                                                            }
-                                                        }
-                                                        echo "Showing ".$i." result";
-                                                    ?>
-                                                </a>
-                                                <table class="table">
+                                                <table class="table table-paginate" id="example" cellspacing="0" width="100%">
                                                 <thead>
                                                     <tr>
                                                     <th scope="col">Image</th>
-                                                    <th scope="col">Name</th>
-                                                    <th scope="col">Info</th>
+                                                    <th scope="col" style='width:150px;'>Name</th>
+                                                    <th scope="col" style='width:180px;'>Info</th>
                                                     <th scope="col" class="w-25">Description</th>
                                                     <th scope="col">Version</th>
                                                     <th scope="col"></th>
@@ -816,8 +878,196 @@
 
                                             <!--Create New Recipe.-->
                                             <div class="tab-pane fade rounded p-2" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-                                                <h5>Create Recipe</h5>
+                                                <div class="accordion" id="accordionExample">
+                                                    <div class="steps">
+                                                        <progress id="progress" value=0 max=100 ></progress>
+                                                        <div class="step-item">
+                                                            <button class="step-button text-center" type="button" data-bs-toggle="collapse"
+                                                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">1</button>
+                                                            <div class="step-title">Preparation</div>
+                                                        </div>
+                                                        <div class="step-item">
+                                                            <button class="step-button text-center collapsed" type="button" data-bs-toggle="collapse"
+                                                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">2</button>
+                                                            <div class="step-title">Recipe Overview</div>
+                                                        </div>
+                                                        <div class="step-item">
+                                                            <button class="step-button text-center collapsed" type="button" data-bs-toggle="collapse"
+                                                                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">3</button>
+                                                            <div class="step-title">Dependencies</div>
+                                                        </div>
+                                                        <div class="step-item">
+                                                            <button class="step-button text-center collapsed" type="button" data-bs-toggle="collapse"
+                                                                data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">4
+                                                            </button>
+                                                            <div class="step-title">Finalization</div>
+                                                        </div>
+                                                    </div>
 
+                                                    <div class="card border-0">
+                                                        <div  id="headingOne">
+                                                        </div>
+
+                                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                                            data-bs-parent="#accordionExample">
+                                                            <div class="card-body">
+                                                                <div class="row mb-2">
+                                                                    <div class="col-md-3">
+                                                                    <img id="frame3" src="http://127.0.0.1:8000/assets/storyset/Preparation.png" class="img-fluid" style="width:200px;"/>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <a class="text-secondary">Welcome to create recipes. In this feature you can make your own recipe with your creativity. With dependencies, you recipes can track organize and make it easier for others to learn your recipes.</a><br>
+                                                                        <a class="text-secondary">Before that, please read and accept this terms and condition :</a>
+                                                                        <div class="form-check mt-2">
+                                                                            <input class="form-check-input" type="checkbox" id="flexCheckDefault">
+                                                                            <label class="form-check-label" for="flexCheckDefault">
+                                                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card border-0">
+                                                        <div  id="headingTwo"></div>
+                                                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                                            <div class="card-body">
+                                                                <div class="row mb-2">
+                                                                    <div class="col-md-3">
+                                                                    <img id="frame3" src="http://127.0.0.1:8000/assets/storyset/Overview.png" class="img-fluid" style="width:200px;"/>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <a class="text-secondary">In this steps. You must define your recipe overview such as recipe name, type, country, time spend & calorie, main ingredients, short description, visibility, and of course your recipe photo.</a>
+                                                                    </div>
+                                                                </div>
+                                                                <form action="/recipe/store" method="POST" enctype="multipart/form-data">
+                                                                    @csrf
+                                                                    <div class="row">
+                                                                        <div class="col-md-4 mb-2">
+                                                                            <select class="form-select" name="recipe_type" required>
+                                                                                <option selected value="Main Course">Main Course</option>
+                                                                                <option value="Appetizer">Appetizer</option>
+                                                                                <option value="Desserts">Desserts</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="col-md-4">
+                                                                            <input class="form-control" name="recipe_country" type="text" placeholder="Indonesia" required></input>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <div class="col-md-1 pt-2">
+                                                                            <label class="form-label">Name</label>
+                                                                        </div>
+                                                                        <div class="col-md-4 m-1">
+                                                                            <input class="form-control" name="recipe_name" type="text" placeholder="Pizza" required></input>
+                                                                        </div>
+                                                                        <div class="col-md-1 pt-2">
+                                                                            <label class="form-label">Level</label>
+                                                                        </div>
+                                                                        <div class="col-md-3 m-1">
+                                                                            <select class="form-select" name="recipe_level" required>
+                                                                                <option selected value="Beginner">Beginner</option>
+                                                                                <option value="Intermediate">Intermediate</option>
+                                                                                <option value="Expert">Expert</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="col-md-2 pt-2">
+                                                                            <div class="form-check">
+                                                                                <!--name="recipe_halal"-->
+                                                                                <input class="form-check-input" type="checkbox" id="flexCheckDefault">
+                                                                                <label class="form-check-label" for="flexCheckDefault">
+                                                                                    Halal
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-md-6 p-2">
+                                                                            <div class="container-fluid p-0">
+                                                                                <label class="form-label" name="recipe_time_spend">Time Spend / Calorie <i class="fa-solid fa-circle-question" type="button"></i></label>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-3">
+                                                                                        <input class="form-control" type="number" name="recipe_time_spend" placeholder="30" required>
+                                                                                    </div>
+                                                                                    <div class="col-md-3">
+                                                                                        <label class="form-label pt-2">Minutes</label>
+                                                                                    </div>
+                                                                                    <div class="col-md-3">
+                                                                                        <input class="form-control" type="number" name="recipe_calorie" placeholder="150" required>
+                                                                                    </div>
+                                                                                    <div class="col-md-3">
+                                                                                        <label class="form-label pt-2">Cal</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <label class="form-label">Description</label>
+                                                                            <textarea class="form-control" name="recipe_desc" rows="5" required placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing... "></textarea>
+                                                                            <label class="form-label mt-2">Image <i class="fa-solid fa-circle-question" type="button"></i></label>
+                                                                            <input class="form-control" type="file" id="formFileEdit2" onchange="previewEdit2()" name="recipe_image" required>
+                                                                        </div>
+                                                                        <div class="col-md-6 p-2">
+                                                                            <label class="form-label">Main Ingredients <i class="fa-solid fa-circle-question" type="button"></i></label>
+                                                                            <textarea class="form-control" rows="3" name="recipe_main_ing" placeholder="Beef, Tomato, ..."></textarea>
+                                                                            <label class="form-label">Preview</label>
+                                                                            <div class="row">
+                                                                                <div class="col-md-7">
+                                                                                    <img id="frame3" src="http://127.0.0.1:8000/assets/NoImage.png" class="img-fluid" style="width:200px; border-radius:100%; border:3px solid #EB7736;"/>
+                                                                                </div>
+                                                                                <div class="col-md-5">
+                                                                                    <label class="form-label">Visibility <i class="fa-solid fa-circle-question" type="button"></i></label>
+                                                                                    <select class="form-select" name="recipe_visibility" required>
+                                                                                        <option selected value="Public">Public</option>
+                                                                                        <option value="Private">Private</option>
+                                                                                        <option value="Restricted">Restricted</option>
+                                                                                    </select>
+                                                                                    <button onclick="clearImageEdit2()" class="btn btn-danger mt-3 w-100"><i class="fa-solid fa-trash"></i> Reset</button>
+                                                                                    <button class="btn btn-success mt-2 w-100" type="submit" value="Save"><i class="fa-solid fa-plus"></i> Post </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card border-0">
+                                                        <div  id="headingThree"></div>
+                                                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                                                            data-bs-parent="#accordionExample">
+                                                            <div class="card-body">
+                                                                <div class="row mb-2">
+                                                                    <div class="col-md-3">
+                                                                    <img id="frame3" src="http://127.0.0.1:8000/assets/storyset/Dependencies.png" class="img-fluid" style="width:200px;"/>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <a class="text-secondary">Now, you can add your ingredient, tips, and the steps.</a>
+                                                                        <a class="text-secondary">Note : You can still modify this in the future. But there's only 5 changes per recipe, so make sure you make the correct one</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card border-0">
+                                                        <div  id="headingFour"></div>
+                                                        <div id="collapseFour" class="collapse" aria-labelledby="headingFour"
+                                                            data-bs-parent="#accordionExample">
+                                                            <div class="card-body">
+                                                                <div class="row mb-2">
+                                                                    <div class="col-md-3">
+                                                                    <img id="frame3" src="http://127.0.0.1:8000/assets/storyset/Finalization.png" class="img-fluid" style="width:200px;"/>
+                                                                    </div>
+                                                                    <div class="col-md-8">
+                                                                        <a class="text-secondary">Finaly, after all of that. Now you can publish your recipe. And also you can add your video toturial if you want too.</a>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <!--Collaboration.-->
@@ -826,7 +1076,6 @@
 
                                             </div>
 
-                                            </form>
                                         </div><!--End of tab content.-->
                                     </div>
                                 </div>
@@ -1130,12 +1379,34 @@
         }
         }, 1000);
 
+        //Stepper Create Recipe
+        const stepButtons = document.querySelectorAll('.step-button');
+        const progress = document.querySelector('#progress');
+
+        Array.from(stepButtons).forEach((button,index) => {
+            button.addEventListener('click', () => {
+                progress.setAttribute('value', index * 100 /(stepButtons.length - 1) );//there are 3 buttons. 2 spaces.
+
+                stepButtons.forEach((item, secindex)=>{
+                    if(index > secindex){
+                        item.classList.add('done');
+                    }
+                    if(index < secindex){
+                        item.classList.remove('done');
+                    }
+                })
+            })
+        });
+
         //Image upload preview.
         function preview() {
             frame.src = URL.createObjectURL(event.target.files[0]);
         }
         function previewEdit() {
             frame2.src = URL.createObjectURL(event.target.files[0]);
+        }
+        function previewEdit2() {
+            frame3.src = URL.createObjectURL(event.target.files[0]);
         }
         function clearImage() {
             document.getElementById('formFile').value = null;
@@ -1144,6 +1415,10 @@
         function clearImageEdit() {
             document.getElementById('formFileEdit').value = null;
             frame2.src = "http://127.0.0.1:8000/assets/NoImage.png";
+        }
+        function clearImageEdit2() {
+            document.getElementById('formFileEdit2').value = null;
+            frame3.src = "http://127.0.0.1:8000/assets/NoImage.png";
         }
 
         //Sidebar setting.
@@ -1242,10 +1517,8 @@
     </script>
 
     <!--Others CDN.-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="js/main.js"></script>
 
 	</body>
 </html>
