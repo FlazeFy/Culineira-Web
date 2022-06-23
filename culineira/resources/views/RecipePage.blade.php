@@ -1023,7 +1023,6 @@
                                                                                         <option value="Restricted">Restricted</option>
                                                                                     </select>
                                                                                     <button onclick="clearImageEdit2()" class="btn btn-danger mt-3 w-100"><i class="fa-solid fa-trash"></i> Reset</button>
-                                                                                    <button class="btn btn-success mt-2 w-100" type="submit" value="Save"><i class="fa-solid fa-plus"></i> Post </button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -1038,13 +1037,95 @@
                                                         <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
                                                             data-bs-parent="#accordionExample">
                                                             <div class="card-body">
+                                                                <div class="row mb-4">
+                                                                    <div class="col-md-8">
+                                                                        <a class="text-secondary">Next, you can make your ingredient with their value.</a>
+                                                                        <a class="text-secondary">Note : You can still modify this in the future. But there's only 3 changes per recipe, so make sure you make the correct one</a><br>
+                                                                        <button class="btn btn-primary" id="addIng">Add Ingredient</button>
+                                                                        <button class="btn btn-danger" id="removeIng">Reset All</button>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <img id="frame3" src="http://127.0.0.1:8000/assets/storyset/Ingredient.png" class="img-fluid" style="width:150px;"/>
+                                                                    </div>
+                                                                    <div class="card-holder m-2" style="max-height: calc(70vh - 130px); overflow-x: auto;" id="ingHolder">
+
+                                                                        <div class="card shadow border-0 w-100 mb-2">
+                                                                            <div class="card-body">
+                                                                                <div class="row">
+                                                                                    <div class="col-md-11">
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-7">
+                                                                                                <label class="form-label" for="flexCheckDefault">Ingredient Name</label>
+                                                                                                <input class="form-control" name="ingredient" type="text" placeholder="ex: 'Fermented Milk'" required></input>
+                                                                                            </div>
+                                                                                            <div class="col-md-5">
+                                                                                                <label class="form-label" for="flexCheckDefault">Value</label>
+                                                                                                <input class="form-control" name="ingredient" type="text" placeholder="ex: '500 ml'" required></input>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="row mt-2">
+                                                                                            <div class="col-md-2">
+                                                                                                <div class="form-check">
+                                                                                                    <input class="form-check-input" type="checkbox" id="flexCheckDefault">
+                                                                                                    <label class="form-check-label" for="flexCheckDefault">Optional</label>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-1">
+                                                                                        <i class="fa-solid fa-xmark fa-2xl" style='color:#b92c3a;'></i>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
                                                                 <div class="row mb-2">
                                                                     <div class="col-md-3">
-                                                                    <img id="frame3" src="http://127.0.0.1:8000/assets/storyset/Dependencies.png" class="img-fluid" style="width:200px;"/>
+                                                                    <img id="frame3" src="http://127.0.0.1:8000/assets/storyset/Steps.png" class="img-fluid" style="width:200px;"/>
                                                                     </div>
                                                                     <div class="col-md-8">
                                                                         <a class="text-secondary">Now, you can add your ingredient, tips, and the steps.</a>
-                                                                        <a class="text-secondary">Note : You can still modify this in the future. But there's only 5 changes per recipe, so make sure you make the correct one</a>
+                                                                        <a class="text-secondary">Note : You can still modify this in the future. But there's only 5 changes per recipe, so make sure you make the correct one</a><br>
+                                                                        <button class="btn btn-primary" id="addSteps">Add Steps</button>
+                                                                        <button class="btn btn-danger" id="removeSteps">Reset All</button>
+                                                                    </div>
+                                                                    <div class="card-holder m-2" id="stepsHolder">
+
+                                                                        <div class="card shadow border-0 w-100 mb-2">
+                                                                            <div class="card-body">
+                                                                                <div class="row">
+                                                                                    <div class="col-md-11">
+                                                                                        <a style="color:#EB7336;">Steps #1</a>
+                                                                                        <textarea class="form-control" name="steps" rows="3" required placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing... "></textarea>
+                                                                                        <div class="row mt-2">
+                                                                                            <div class="col-md-2">
+                                                                                                <div class="form-check">
+                                                                                                    <input class="form-check-input" type="checkbox" id="flexCheckDefault">
+                                                                                                    <label class="form-check-label" for="flexCheckDefault">Optional</label>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-md-3">
+                                                                                                <div class="form-check form-switch">
+                                                                                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" data-bs-toggle="collapse" href="#switchAddImgRecipe" role="button">
+                                                                                                    <label class="form-check-label" for="flexSwitchCheckChecked">With Image</label>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-md-7">
+                                                                                                <div class="collapse" id="switchAddImgRecipe">
+                                                                                                    <input class="form-control" type="file" id="formFileEditStep" onchange="previewEditStep()" name="recipe_image">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-1">
+                                                                                        <i class="fa-solid fa-xmark fa-2xl" style='color:#b92c3a;'></i>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1338,7 +1419,6 @@
         @endforeach
     @endforeach
 
-
     <script>
         //Darkmode setting.
         function getTheme() {
@@ -1423,24 +1503,19 @@
 
         //Sidebar setting.
         (function($) {
-
         "use strict";
-
         var fullHeight = function() {
-
             $('.js-fullheight').css('height', $(window).height());
             $(window).resize(function(){
                 $('.js-fullheight').css('height', $(window).height());
             });
-
         };
         fullHeight();
-
         $('#sidebarCollapse').on('click', function () {
         $('#sidebar').toggleClass('active');
         });
-
         })(jQuery);
+
 
         //Search input.
         function autocomplete(inp, arr) {
@@ -1519,7 +1594,31 @@
     <!--Others CDN.-->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            //Steps controls.
+            i = 1;
+            $("#addSteps").on('click', function () {
+                i++;
+                $('#stepsHolder').append(
+                    '<div class="card shadow border-0 w-100 mb-2"><div class="card-body"><div class="row"><div class="col-md-11"><a style="color:#EB7336;">Steps #' + i + '</a><textarea class="form-control" name="steps" rows="3" required placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing... "></textarea><div class="row mt-2"><div class="col-md-2"><div class="form-check"><input class="form-check-input" type="checkbox" id="flexCheckDefault"><label class="form-check-label" for="flexCheckDefault">Optional</label></div></div><div class="col-md-3"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" data-bs-toggle="collapse" href="#switchAddImgRecipe' + i + '" role="button"><label class="form-check-label" for="flexSwitchCheckChecked">With Image</label></div></div><div class="col-md-7"><div class="collapse" id="switchAddImgRecipe' + i + '"><input class="form-control" type="file" id="formFileEditStep" onchange="previewEditStep()" name="recipe_image"></div></div></div></div><div class="col-md-1"><i class="fa-solid fa-xmark fa-2xl" style="color:#b92c3a;"></i></div></div></div></div>');
 
+            })
+            $("#removeSteps").click(function(){
+                i = 0;
+                $("#stepsHolder").empty();
+            });
+
+            $('#addIng').on('click', function () {
+                $('#ingHolder').append(
+                    '<div class="card shadow border-0 w-100 mb-2"><div class="card-body"><div class="row"><div class="col-md-11"><div class="row"><div class="col-md-7"><label class="form-label" for="flexCheckDefault">Ingredient Name</label><input class="form-control" name="ingredient" type="text" placeholder="ex: "Fermented Milk"" required></input></div><div class="col-md-5"><label class="form-label" for="flexCheckDefault">Value</label><input class="form-control" name="ingredient" type="text" placeholder="ex: "500 ml"" required></input></div></div><div class="row mt-2"><div class="col-md-2"><div class="form-check"><input class="form-check-input" type="checkbox" id="flexCheckDefault"><label class="form-check-label" for="flexCheckDefault">Optional</label></div></div></div></div><div class="col-md-1"><i class="fa-solid fa-xmark fa-2xl" style="color:#b92c3a;"></i></div></div></div></div>');
+
+            })
+            $("#removeIng").click(function(){
+                $("#ingHolder").empty();
+            });
+        });
+    </script>
 	</body>
 </html>
 
