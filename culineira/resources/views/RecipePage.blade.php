@@ -420,6 +420,41 @@
                 color:var(--text2);
             }
 
+            /*Navigation modal.*/
+			.flex-row.nav-pills.nav-pills-custom .nav-link {
+				color: var(--text2);
+				background: var(--background3);
+				position: relative;
+                width: 150px;
+                font-size:14px;
+			}
+			.flex-row.nav-pills.nav-pills-custom .nav-link:hover {
+				color: white;
+				background: #e8a382;
+				position: relative;
+			}
+			.flex-row.nav-pills.nav-pills-custom .nav-link.active {
+				color: white;
+				background: #EB7336;
+			}
+			@media (min-width: 992px) {
+				.flex-row.nav-pills.nav-pills-custom .nav-link::before {
+					content: '';
+					display: block;
+					border-left: 8px solid transparent;
+					border-top: 10px solid #EB7336;
+					border-right: 8px solid transparent;
+					position: absolute;
+					top: 115%;
+					right: 40%;
+					transform: translateY(-50%);
+					opacity: 0;
+				}
+			}
+            .flex-row.nav-pills.nav-pills-custom .nav-link.active::before {
+				opacity: 1;
+			}
+
             /*Autocomplete search*/
 			.autocomplete {
                 position: relative;
@@ -838,7 +873,7 @@
                                                                             <button class='btn btn-danger' data-bs-toggle="modal" data-bs-target="#deleteRecipe<?php echo "_".$data->id; ?>"><i class="fa-solid fa-trash-can"></i></button>
                                                                         </div>
                                                                     </div>
-                                                                    <button class='btn btn-primary dropdown-toggle mt-2' type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-eye"></i> <?php echo $data->recipe_visibility; ?></button>
+                                                                    <button class='btn btn-primary dropdown-toggle mt-2 w-100' type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-eye"></i> <?php echo $data->recipe_visibility; ?></button>
                                                                     <ul class="dropdown-menu p-2" aria-labelledby="dropdownMenuButton1">
                                                                         <form action="/recipe/updateVisibility/<?php echo $data->id; ?>" method="POST">
                                                                         @csrf
@@ -861,6 +896,7 @@
                                                                         <button class="btn btn-success" type="submit"><i class="fa-solid fa-floppy-disk"></i> Save</button>
                                                                         </form>
                                                                     </ul>
+                                                                    <button class="btn btn-success mt-2 w-100" data-bs-toggle="modal" data-bs-target="#dependenciesRecipe<?php echo "_".$data->id; ?>"><i class="fa-solid fa-list-check"></i> Steps</button>
                                                                 </td>
                                                             </tr>
                                                         @endif
@@ -920,7 +956,7 @@
                                                                         <a class="text-secondary">Welcome to create recipes. In this feature you can make your own recipe with your creativity. With dependencies, you recipes can track organize and make it easier for others to learn your recipes.</a><br>
                                                                         <a class="text-secondary">Before that, please read and accept this terms and condition :</a>
                                                                         <div class="form-check mt-2">
-                                                                            <input class="form-check-input" type="checkbox" id="flexCheckDefault">
+                                                                            <input class="form-check-input" type="checkbox" id="flexCheckDefault" required>
                                                                             <label class="form-check-label" for="flexCheckDefault">
                                                                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                                                             </label>
@@ -1441,6 +1477,171 @@
         @endforeach
     @endforeach
 
+    <!--Dependencies recipe modal-->
+    @foreach($user as $data2)
+        @foreach($recipe as $data)
+            @if(($data->user_id == $data2->id)&&($data2->username == 'flazefy'))
+                <div class="modal fade" id="dependenciesRecipe<?php echo "_".$data->id; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content p-2">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Dependencies</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <section class="py-2 header">
+                            <div class="container py-2">
+                                <div class="row">
+                                    <!--Tabs nav.-->
+                                    <div class="nav flex-row nav-pills nav-pills-custom" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                        <a class="nav-link m-3 p-3 shadow active" id="v-pills-ingredients-tab" data-bs-toggle="pill" href="#v-pills-ingredients<?php echo "_".$data->id; ?>" role="tab" aria-controls="v-pills-ingredients" aria-selected="true">
+                                        <span class="font-weight-bold small text-uppercase"> Ingredients</span></a>
+                                        <a class="nav-link m-3 p-3 shadow" id="v-pills-steps-tab" data-bs-toggle="pill" href="#v-pills-steps<?php echo "_".$data->id; ?>" role="tab" aria-controls="v-pills-steps" aria-selected="true">
+                                        <span class="font-weight-bold small text-uppercase"> Steps</span></a>
+                                        <a class="nav-link m-3 p-3 shadow" id="v-pills-add-tab" data-bs-toggle="pill" href="#v-pills-add<?php echo "_".$data->id; ?>" role="tab" aria-controls="v-pills-add" aria-selected="true">
+                                        <span class="font-weight-bold small text-uppercase"> Add</span></a>
+                                    </div>
+
+                                    <div class="tab-content" id="v-pills-tabContent-Dependencies<?php echo "_".$data->id; ?>">
+                                        <!--Ingredients.-->
+                                        <div class="tab-pane fade rounded show active p-2" id="v-pills-ingredients<?php echo "_".$data->id; ?>" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                                            <h5>Ingredients</h5>
+                                            @foreach($ingredients as $dataIng)
+                                                @if($dataIng->recipe_id == $data->id)
+                                                    <p class="text-secondary"><?php echo $dataIng->ingredients_vol." ~ ".$dataIng->ingredients_name; ?></p>
+                                                @endif
+                                            @endforeach
+                                        </div>
+
+                                        <!--Ingredients.-->
+                                        <div class="tab-pane fade rounded p-2" id="v-pills-steps<?php echo "_".$data->id; ?>" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                                            <h5>Steps</h5>
+                                            <?php
+                                                $i = 1;
+                                                foreach($steps as $dataStp){
+                                                    if($dataStp->recipe_id == $data->id){
+                                                        echo"<p class='text-secondary'>".$i.". ".$dataStp->steps_body."</p>";
+                                                    }
+                                                }
+                                                $i++;
+                                            ?>
+                                        </div>
+
+                                        <!--Add.-->
+                                        <div class="tab-pane fade rounded p-2" id="v-pills-add<?php echo "_".$data->id; ?>" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                                            <h5>Add Dependencies</h5>
+                                            <form action="/recipe/storeDependencies" method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                            <div class="card-body">
+                                                <input class="form-control" name="recipe_id" value="<?php echo $data->id; ?>" hidden></input>
+                                                <div class="row mb-4">
+                                                    <div class="col-md-8">
+                                                        <a class="text-secondary">Next, you can make your ingredient with their value.</a>
+                                                        <a class="text-secondary">Note : You can still modify this in the future. But there's only 3 changes per recipe, so make sure you make the correct one</a><br>
+                                                        <a class="btn btn-primary" id="addIngModal">Add Ingredient</a>
+                                                        <a class="btn btn-danger" id="removeIngModal">Reset All</a>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <img id="frame3" src="http://127.0.0.1:8000/assets/storyset/Ingredient.png" class="img-fluid" style="width:110px;"/>
+                                                    </div>
+                                                    <div class="card-holder m-2" style="max-height: calc(70vh - 130px); overflow-x: auto;" id="ingHolderModal">
+
+                                                        <div class="card shadow border-0 w-100 mb-2">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-md-11">
+                                                                        <div class="row">
+                                                                            <div class="col-md-7">
+                                                                                <label class="form-label" for="flexCheckDefault">Ingredient Name</label>
+                                                                                <input class="form-control" name="ingredients_name" type="text" placeholder="ex: 'Fermented Milk'" required></input>
+                                                                            </div>
+                                                                            <div class="col-md-5">
+                                                                                <label class="form-label" for="flexCheckDefault">Value</label>
+                                                                                <input class="form-control" name="ingredients_vol" type="text" placeholder="ex: '500 ml'" required></input>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row mt-2">
+                                                                            <div class="col-md-2">
+                                                                                <div class="form-check">
+                                                                                    <input class="form-check-input" type="checkbox" id="flexCheckDefault">
+                                                                                    <label class="form-check-label" for="flexCheckDefault" name="ingredients_type">Optional</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-1">
+                                                                        <i class="fa-solid fa-xmark fa-2xl" style='color:#b92c3a;'></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div><!--End of card.-->
+
+                                                    </div><!--End of item holder.-->
+                                                </div>
+                                                <div class="row mb-2">
+                                                    <div class="col-md-3">
+                                                    <img id="frame3" src="http://127.0.0.1:8000/assets/storyset/Steps.png" class="img-fluid" style="width:200px;"/>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <a class="text-secondary">Now, you can add your ingredient, tips, and the steps.</a>
+                                                        <a class="text-secondary">Note : You can still modify this in the future. But there's only 5 changes per recipe, so make sure you make the correct one</a><br>
+                                                        <a class="btn btn-primary" id="addStepsModal">Add Steps</a>
+                                                        <a class="btn btn-danger" id="removeStepsModal">Reset All</a>
+                                                    </div>
+                                                    <div class="card-holder m-2" id="stepsHolderModal">
+
+                                                        <div class="card shadow border-0 w-100 mb-2">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-md-11">
+                                                                        <a style="color:#EB7336;">Steps #1</a>
+                                                                        <textarea class="form-control" name="steps_body" rows="3" required placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing... "></textarea>
+                                                                        <div class="row mt-2">
+                                                                            <div class="col-md-2">
+                                                                                <div class="form-check">
+                                                                                    <input class="form-check-input" type="checkbox" id="flexCheckDefault" name="steps_type">
+                                                                                    <label class="form-check-label" for="flexCheckDefault">Optional</label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-3">
+                                                                                <div class="form-check form-switch">
+                                                                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" data-bs-toggle="collapse" href="#switchAddImgRecipe" role="button">
+                                                                                    <label class="form-check-label" for="flexSwitchCheckChecked">With Image</label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-7">
+                                                                                <div class="collapse" id="switchAddImgRecipe">
+                                                                                    <input class="form-control" type="file" id="formFileEditStep" onchange="previewEditStep()" name="steps_image" accept="image/png, image/jpg, image/jpeg">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-1">
+                                                                        <i class="fa-solid fa-xmark fa-2xl" style='color:#b92c3a;'></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div><!--End of card.-->
+
+                                                    </div><!--End of item holder.-->
+                                                </div>
+                                                <button class="btn btn-success" type="submit" value="Save"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+
+                                            </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            @endif
+        @endforeach
+    @endforeach
+
     @foreach($user as $data2)
         @foreach($recipe as $data)
             @if(($data->user_id == $data2->id)&&($data2->username == 'flazefy'))
@@ -1654,7 +1855,8 @@
     <script>
         $(document).ready(function () {
             //Steps controls.
-            i = 1;
+            i = 1; j = 1;
+            //Add full recipe.
             $("#addSteps").on('click', function () {
                 i++;
                 $('#stepsHolder').append(
@@ -1668,11 +1870,32 @@
 
             $('#addIng').on('click', function () {
                 $('#ingHolder').append(
-                    '<div class="card shadow border-0 w-100 mb-2"><div class="card-body"><div class="row"><div class="col-md-11"><div class="row"><div class="col-md-7"><label class="form-label" for="flexCheckDefault">Ingredient Name</label><input class="form-control" name="ingredient" type="text" placeholder="ex: "Fermented Milk"" required></input></div><div class="col-md-5"><label class="form-label" for="flexCheckDefault">Value</label><input class="form-control" name="ingredient" type="text" placeholder="ex: "500 ml"" required></input></div></div><div class="row mt-2"><div class="col-md-2"><div class="form-check"><input class="form-check-input" type="checkbox" id="flexCheckDefault"><label class="form-check-label" for="flexCheckDefault">Optional</label></div></div></div></div><div class="col-md-1"><i class="fa-solid fa-xmark fa-2xl" style="color:#b92c3a;"></i></div></div></div></div>');
+                    '<div class="card shadow border-0 w-100 mb-2"><div class="card-body"><div class="row"><div class="col-md-11"><div class="row"><div class="col-md-7"><label class="form-label" for="flexCheckDefault">Ingredient Name</label><input class="form-control" name="ingredient" type="text" placeholder="ex: Fermented Milk" required></input></div><div class="col-md-5"><label class="form-label" for="flexCheckDefault">Value</label><input class="form-control" name="ingredient" type="text" placeholder="ex: 500 ml" required></input></div></div><div class="row mt-2"><div class="col-md-2"><div class="form-check"><input class="form-check-input" type="checkbox" id="flexCheckDefault"><label class="form-check-label" for="flexCheckDefault">Optional</label></div></div></div></div><div class="col-md-1"><i class="fa-solid fa-xmark fa-2xl" style="color:#b92c3a;"></i></div></div></div></div>');
 
             })
             $("#removeIng").click(function(){
                 $("#ingHolder").empty();
+            });
+
+            //Add dependencies only.
+            $("#addStepsModal").on('click', function () {
+                i++;
+                $('#stepsHolderModal').append(
+                    '<div class="card shadow border-0 w-100 mb-2"><div class="card-body"><div class="row"><div class="col-md-11"><a style="color:#EB7336;">Steps #' + i + '</a><textarea class="form-control" name="steps" rows="3" required placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing... "></textarea><div class="row mt-2"><div class="col-md-2"><div class="form-check"><input class="form-check-input" type="checkbox" id="flexCheckDefault"><label class="form-check-label" for="flexCheckDefault">Optional</label></div></div><div class="col-md-3"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" data-bs-toggle="collapse" href="#switchAddImgRecipe' + i + '" role="button"><label class="form-check-label" for="flexSwitchCheckChecked">With Image</label></div></div><div class="col-md-7"><div class="collapse" id="switchAddImgRecipe' + i + '"><input class="form-control" type="file" id="formFileEditStep" onchange="previewEditStep()" name="recipe_image" accept="image/png, image/jpg, image/jpeg"></div></div></div></div><div class="col-md-1"><i class="fa-solid fa-xmark fa-2xl" style="color:#b92c3a;"></i></div></div></div></div>');
+
+            })
+            $("#removeStepsModal").click(function(){
+                i = 0;
+                $("#stepsHolderModal").empty();
+            });
+
+            $('#addIngModal').on('click', function () {
+                $('#ingHolderModal').append(
+                    '<div class="card shadow border-0 w-100 mb-2"><div class="card-body"><div class="row"><div class="col-md-11"><div class="row"><div class="col-md-7"><label class="form-label" for="flexCheckDefault">Ingredient Name</label><input class="form-control" name="ingredient" type="text" placeholder="ex: Fermented Milk" required></input></div><div class="col-md-5"><label class="form-label" for="flexCheckDefault">Value</label><input class="form-control" name="ingredient" type="text" placeholder="ex: 500 ml" required></input></div></div><div class="row mt-2"><div class="col-md-2"><div class="form-check"><input class="form-check-input" type="checkbox" id="flexCheckDefault"><label class="form-check-label" for="flexCheckDefault">Optional</label></div></div></div></div><div class="col-md-1"><i class="fa-solid fa-xmark fa-2xl" style="color:#b92c3a;"></i></div></div></div></div>');
+
+            })
+            $("#removeIngModal").click(function(){
+                $("#ingHolderModal").empty();
             });
         });
     </script>

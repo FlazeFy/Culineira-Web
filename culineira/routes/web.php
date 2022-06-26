@@ -22,6 +22,7 @@ use App\Http\Controllers\UserController;
 Route::get('/recipe', [RecipeController::class, 'index']);
 Route::post('/recipe/store', [RecipeController::class, 'store']);
 Route::post('/recipe/storeFull', [RecipeController::class, 'storeFull']);
+Route::post('/recipe/storeDependencies', [RecipeController::class, 'storeDependencies']);
 Route::post('/recipe/update/{id}', [RecipeController::class, 'update']);
 Route::post('/recipe/updateVisibility/{id}', [RecipeController::class, 'updateVisibility']);
 Route::post('/recipe/destroy/{id}', [RecipeController::class, 'destroy']);

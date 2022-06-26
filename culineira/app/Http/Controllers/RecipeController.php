@@ -19,7 +19,9 @@ class RecipeController extends Controller
     {
         $user = user::all();
         $recipe = recipe::all();
-        return view ('RecipePage')->with('recipe', $recipe)->with('user', $user);
+        $steps = steps::all();
+        $ingredients = ingredients::all();
+        return view ('RecipePage')->with('recipe', $recipe)->with('user', $user)->with('steps', $steps)->with('ingredients', $ingredients);
     }
 
     /**
@@ -107,6 +109,40 @@ class RecipeController extends Controller
         //Ingredients data.
         steps::create([
             'recipe_id' => $recipeData->id,
+            'steps_body' => $request-> steps_body,
+            'steps_type' => $request-> steps_type,
+            'steps_image' => 'null',  //For testing
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        return redirect('/recipe')->with('flash_message', 'Recipe added!');
+    }
+
+    public function storeDependencies(Request $request)
+    {
+        // //validate image
+        // $this->validate($request, [
+        //     'recipe_image'     => 'required|image|mimes:jpeg,png,jpg|max:5000',
+        // ]);
+
+        // //upload image
+        // $image = $request->file('recipe_image');
+        // $image->storeAs('public/assets/image/recipes', $image->hashName());
+
+        //Ingredients data.
+        ingredients::create([
+            'recipe_id' => $request-> recipe_id,
+            'ingredients_name' => $request-> ingredients_name,
+            'ingredients_vol' => $request-> ingredients_vol,
+            'ingredients_type' => $request-> ingredients_type,
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        //Ingredients data.
+        steps::create([
+            'recipe_id' => $request-> recipe_id,
             'steps_body' => $request-> steps_body,
             'steps_type' => $request-> steps_type,
             'steps_image' => 'null',  //For testing
