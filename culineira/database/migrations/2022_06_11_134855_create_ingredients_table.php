@@ -17,9 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('recipe_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('ingredients_name', 30);
-            $table->string('ingredients_type', 20);
             $table->string('ingredients_vol', 30);
-            $table->longText('ingredients_desc');
+            $table->string('ingredients_type', 20);
             $table->timestamps();
         });
     }

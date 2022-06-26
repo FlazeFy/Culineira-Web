@@ -876,7 +876,7 @@
 
                                             </div>
 
-                                            <!--Create New Recipe.-->
+                                            <!--Create Full New Recipe.-->
                                             <div class="tab-pane fade rounded p-2" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
                                                 <div class="accordion" id="accordionExample">
                                                     <div class="steps">
@@ -903,7 +903,8 @@
                                                             <div class="step-title">Finalization</div>
                                                         </div>
                                                     </div>
-
+                                                    <form action="/recipe/storeFull" method="POST" enctype="multipart/form-data">
+                                                        @csrf
                                                     <div class="card border-0">
                                                         <div  id="headingOne">
                                                         </div>
@@ -926,6 +927,15 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                <!--Steps control-->
+                                                                <div class="row mb-2">
+                                                                    <div class="col-md-9">
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <a class="btn btn-primary w-100" type="button" data-bs-toggle="collapse"
+                                                                            data-bs-target="#collapseTwo">Next <i class="fa-solid fa-arrow-right"></i></a>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -941,8 +951,6 @@
                                                                         <a class="text-secondary">In this steps. You must define your recipe overview such as recipe name, type, country, time spend & calorie, main ingredients, short description, visibility, and of course your recipe photo.</a>
                                                                     </div>
                                                                 </div>
-                                                                <form action="/recipe/store" method="POST" enctype="multipart/form-data">
-                                                                    @csrf
                                                                     <div class="row">
                                                                         <div class="col-md-4 mb-2">
                                                                             <select class="form-select" name="recipe_type" required>
@@ -1005,7 +1013,7 @@
                                                                             <label class="form-label">Description</label>
                                                                             <textarea class="form-control" name="recipe_desc" rows="5" required placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing... "></textarea>
                                                                             <label class="form-label mt-2">Image <i class="fa-solid fa-circle-question" type="button"></i></label>
-                                                                            <input class="form-control" type="file" id="formFileEdit2" onchange="previewEdit2()" name="recipe_image" required>
+                                                                            <input class="form-control" type="file" id="formFileEdit2" onchange="previewEdit2()" name="recipe_image" accept="image/png, image/jpg, image/jpeg" required>
                                                                         </div>
                                                                         <div class="col-md-6 p-2">
                                                                             <label class="form-label">Main Ingredients <i class="fa-solid fa-circle-question" type="button"></i></label>
@@ -1022,13 +1030,24 @@
                                                                                         <option value="Private">Private</option>
                                                                                         <option value="Restricted">Restricted</option>
                                                                                     </select>
-                                                                                    <button onclick="clearImageEdit2()" class="btn btn-danger mt-3 w-100"><i class="fa-solid fa-trash"></i> Reset</button>
+                                                                                    <a onclick="clearImageEdit2()" class="btn btn-danger mt-3 w-100"><i class="fa-solid fa-trash"></i> Reset</a>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-
-                                                                </form>
+                                                                <!--Steps control-->
+                                                                <div class="row mb-2">
+                                                                    <div class="col-md-3">
+                                                                        <a class="btn btn-primary w-100" type="button" data-bs-toggle="collapse"
+                                                                            data-bs-target="#collapseOne"><i class="fa-solid fa-arrow-left"></i> Previous</a>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <a class="btn btn-primary w-100" type="button" data-bs-toggle="collapse"
+                                                                            data-bs-target="#collapseThree">Next <i class="fa-solid fa-arrow-right"></i></a>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1041,8 +1060,8 @@
                                                                     <div class="col-md-8">
                                                                         <a class="text-secondary">Next, you can make your ingredient with their value.</a>
                                                                         <a class="text-secondary">Note : You can still modify this in the future. But there's only 3 changes per recipe, so make sure you make the correct one</a><br>
-                                                                        <button class="btn btn-primary" id="addIng">Add Ingredient</button>
-                                                                        <button class="btn btn-danger" id="removeIng">Reset All</button>
+                                                                        <a class="btn btn-primary" id="addIng">Add Ingredient</a>
+                                                                        <a class="btn btn-danger" id="removeIng">Reset All</a>
                                                                     </div>
                                                                     <div class="col-md-3">
                                                                         <img id="frame3" src="http://127.0.0.1:8000/assets/storyset/Ingredient.png" class="img-fluid" style="width:150px;"/>
@@ -1056,18 +1075,18 @@
                                                                                         <div class="row">
                                                                                             <div class="col-md-7">
                                                                                                 <label class="form-label" for="flexCheckDefault">Ingredient Name</label>
-                                                                                                <input class="form-control" name="ingredient" type="text" placeholder="ex: 'Fermented Milk'" required></input>
+                                                                                                <input class="form-control" name="ingredients_name" type="text" placeholder="ex: 'Fermented Milk'" required></input>
                                                                                             </div>
                                                                                             <div class="col-md-5">
                                                                                                 <label class="form-label" for="flexCheckDefault">Value</label>
-                                                                                                <input class="form-control" name="ingredient" type="text" placeholder="ex: '500 ml'" required></input>
+                                                                                                <input class="form-control" name="ingredients_vol" type="text" placeholder="ex: '500 ml'" required></input>
                                                                                             </div>
                                                                                         </div>
                                                                                         <div class="row mt-2">
                                                                                             <div class="col-md-2">
                                                                                                 <div class="form-check">
                                                                                                     <input class="form-check-input" type="checkbox" id="flexCheckDefault">
-                                                                                                    <label class="form-check-label" for="flexCheckDefault">Optional</label>
+                                                                                                    <label class="form-check-label" for="flexCheckDefault" name="ingredients_type">Optional</label>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -1077,9 +1096,9 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
+                                                                        </div><!--End of card.-->
 
-                                                                    </div>
+                                                                    </div><!--End of item holder.-->
                                                                 </div>
                                                                 <div class="row mb-2">
                                                                     <div class="col-md-3">
@@ -1088,8 +1107,8 @@
                                                                     <div class="col-md-8">
                                                                         <a class="text-secondary">Now, you can add your ingredient, tips, and the steps.</a>
                                                                         <a class="text-secondary">Note : You can still modify this in the future. But there's only 5 changes per recipe, so make sure you make the correct one</a><br>
-                                                                        <button class="btn btn-primary" id="addSteps">Add Steps</button>
-                                                                        <button class="btn btn-danger" id="removeSteps">Reset All</button>
+                                                                        <a class="btn btn-primary" id="addSteps">Add Steps</a>
+                                                                        <a class="btn btn-danger" id="removeSteps">Reset All</a>
                                                                     </div>
                                                                     <div class="card-holder m-2" id="stepsHolder">
 
@@ -1098,11 +1117,11 @@
                                                                                 <div class="row">
                                                                                     <div class="col-md-11">
                                                                                         <a style="color:#EB7336;">Steps #1</a>
-                                                                                        <textarea class="form-control" name="steps" rows="3" required placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing... "></textarea>
+                                                                                        <textarea class="form-control" name="steps_body" rows="3" required placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing... "></textarea>
                                                                                         <div class="row mt-2">
                                                                                             <div class="col-md-2">
                                                                                                 <div class="form-check">
-                                                                                                    <input class="form-check-input" type="checkbox" id="flexCheckDefault">
+                                                                                                    <input class="form-check-input" type="checkbox" id="flexCheckDefault" name="steps_type">
                                                                                                     <label class="form-check-label" for="flexCheckDefault">Optional</label>
                                                                                                 </div>
                                                                                             </div>
@@ -1114,7 +1133,7 @@
                                                                                             </div>
                                                                                             <div class="col-md-7">
                                                                                                 <div class="collapse" id="switchAddImgRecipe">
-                                                                                                    <input class="form-control" type="file" id="formFileEditStep" onchange="previewEditStep()" name="recipe_image">
+                                                                                                    <input class="form-control" type="file" id="formFileEditStep" onchange="previewEditStep()" name="steps_image" accept="image/png, image/jpg, image/jpeg">
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -1124,8 +1143,21 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
+                                                                        </div><!--End of card.-->
 
+                                                                    </div><!--End of item holder.-->
+                                                                </div>
+                                                                <!--Steps control-->
+                                                                <div class="row mb-2">
+                                                                    <div class="col-md-3">
+                                                                        <a class="btn btn-primary w-100" type="button" data-bs-toggle="collapse"
+                                                                            data-bs-target="#collapseTwo"><i class="fa-solid fa-arrow-left"></i> Previous</a>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <a class="btn btn-primary w-100" type="button" data-bs-toggle="collapse"
+                                                                            data-bs-target="#collapseFour">Next <i class="fa-solid fa-arrow-right"></i></a>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1138,17 +1170,42 @@
                                                             <div class="card-body">
                                                                 <div class="row mb-2">
                                                                     <div class="col-md-3">
-                                                                    <img id="frame3" src="http://127.0.0.1:8000/assets/storyset/Finalization.png" class="img-fluid" style="width:200px;"/>
+                                                                        <img id="frame3" src="http://127.0.0.1:8000/assets/storyset/Finalization.png" class="img-fluid" style="width:200px;"/>
                                                                     </div>
                                                                     <div class="col-md-8">
                                                                         <a class="text-secondary">Finaly, after all of that. Now you can publish your recipe. And also you can add your video toturial if you want too.</a>
+                                                                        <br>
+                                                                        <label class="form-label mt-2">Video (Optional) <i class="fa-solid fa-circle-question" type="button"></i></label>
+                                                                        <input class="form-control" type="file" id="formFile" onchange="previewVideo()" name="recipe_video" accept="video/mp4, video/mkv">
                                                                     </div>
                                                                 </div>
-
+                                                                <div class="container-fluid shadow p-3 mb-3">
+                                                                    <video controls autoplay class="rounded w-100" alt="video" >
+                                                                        <source src="http://127.0.0.1:8000/assets/video/videoplayback.mp4">
+                                                                    </video>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-md-3">
+                                                                            <a class="btn btn-danger w-100">Reset</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--Steps control-->
+                                                                <div class="row mb-2">
+                                                                    <div class="col-md-3">
+                                                                        <a class="btn btn-primary w-100" data-bs-toggle="collapse"
+                                                                            data-bs-target="#collapseThree"><i class="fa-solid fa-arrow-left"></i> Previous</a>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <button class="btn btn-success w-100" type="submit">Upload <i class="fa-solid fa-arrow-up"></i></button>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                    </form>
+                                                </div><!--End of accordion-->
                                             </div>
 
                                             <!--Collaboration.-->
@@ -1252,7 +1309,7 @@
                     <label class="form-label">Description</label>
                     <textarea class="form-control" name="recipe_desc" rows="5" required placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing... "></textarea>
                     <label class="form-label mt-2">Image <i class="fa-solid fa-circle-question" type="button"></i></label>
-                    <input class="form-control" type="file" id="formFile" onchange="preview()" name="recipe_image" required>
+                    <input class="form-control" type="file" id="formFile" onchange="preview()" name="recipe_image" accept="image/png, image/jpg, image/jpeg" required>
                 </div>
                 <div class="col-md-6 p-2">
                     <label class="form-label">Main Ingredients <i class="fa-solid fa-circle-question" type="button"></i></label>
@@ -1269,7 +1326,7 @@
                                 <option value="Private">Private</option>
                                 <option value="Restricted">Restricted</option>
                             </select>
-                            <button onclick="clearImage()" class="btn btn-danger mt-3 w-100"><i class="fa-solid fa-trash"></i> Reset</button>
+                            <a onclick="clearImage()" class="btn btn-danger mt-3 w-100"><i class="fa-solid fa-trash"></i> Reset</a>
                             <button class="btn btn-success mt-2 w-100" type="submit" value="Save"><i class="fa-solid fa-plus"></i> Post </button>
                         </div>
                     </div>
@@ -1358,7 +1415,7 @@
                                 <label class="form-label">Description</label>
                                 <textarea class="form-control" name="recipe_desc" rows="5" required><?php echo $data->recipe_desc; ?></textarea>
                                 <label class="form-label mt-2">Image <i class="fa-solid fa-circle-question" type="button"></i></label>
-                                <input class="form-control" type="file" id="formFileEdit" onchange="previewEdit()" name="recipe_image">
+                                <input class="form-control" type="file" id="formFileEdit" onchange="previewEdit()" name="recipe_image" accept="image/png, image/jpg, image/jpeg">
                             </div>
                             <div class="col-md-6 p-2">
                                 <label class="form-label">Main Ingredients <i class="fa-solid fa-circle-question" type="button"></i></label>
@@ -1369,7 +1426,7 @@
                                         <img id="frame2" src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" class="img-fluid" style="width:200px; border-radius:100%; border:3px solid #EB7736;"/>
                                     </div>
                                     <div class="col-md-5">
-                                        <button onclick="clearImageEdit()" class="btn btn-danger mt-3 w-100"><i class="fa-solid fa-trash"></i> Reset</button>
+                                        <a onclick="clearImageEdit()" class="btn btn-danger mt-3 w-100"><i class="fa-solid fa-trash"></i> Reset</a>
                                         <button class="btn btn-success mt-2 w-100" type="submit" value="Save"><i class="fa-solid fa-floppy-disk"></i> Save </button>
                                     </div>
                                 </div>
@@ -1601,7 +1658,7 @@
             $("#addSteps").on('click', function () {
                 i++;
                 $('#stepsHolder').append(
-                    '<div class="card shadow border-0 w-100 mb-2"><div class="card-body"><div class="row"><div class="col-md-11"><a style="color:#EB7336;">Steps #' + i + '</a><textarea class="form-control" name="steps" rows="3" required placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing... "></textarea><div class="row mt-2"><div class="col-md-2"><div class="form-check"><input class="form-check-input" type="checkbox" id="flexCheckDefault"><label class="form-check-label" for="flexCheckDefault">Optional</label></div></div><div class="col-md-3"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" data-bs-toggle="collapse" href="#switchAddImgRecipe' + i + '" role="button"><label class="form-check-label" for="flexSwitchCheckChecked">With Image</label></div></div><div class="col-md-7"><div class="collapse" id="switchAddImgRecipe' + i + '"><input class="form-control" type="file" id="formFileEditStep" onchange="previewEditStep()" name="recipe_image"></div></div></div></div><div class="col-md-1"><i class="fa-solid fa-xmark fa-2xl" style="color:#b92c3a;"></i></div></div></div></div>');
+                    '<div class="card shadow border-0 w-100 mb-2"><div class="card-body"><div class="row"><div class="col-md-11"><a style="color:#EB7336;">Steps #' + i + '</a><textarea class="form-control" name="steps" rows="3" required placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing... "></textarea><div class="row mt-2"><div class="col-md-2"><div class="form-check"><input class="form-check-input" type="checkbox" id="flexCheckDefault"><label class="form-check-label" for="flexCheckDefault">Optional</label></div></div><div class="col-md-3"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" data-bs-toggle="collapse" href="#switchAddImgRecipe' + i + '" role="button"><label class="form-check-label" for="flexSwitchCheckChecked">With Image</label></div></div><div class="col-md-7"><div class="collapse" id="switchAddImgRecipe' + i + '"><input class="form-control" type="file" id="formFileEditStep" onchange="previewEditStep()" name="recipe_image" accept="image/png, image/jpg, image/jpeg"></div></div></div></div><div class="col-md-1"><i class="fa-solid fa-xmark fa-2xl" style="color:#b92c3a;"></i></div></div></div></div>');
 
             })
             $("#removeSteps").click(function(){
