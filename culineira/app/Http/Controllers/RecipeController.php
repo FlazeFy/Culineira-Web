@@ -97,24 +97,30 @@ class RecipeController extends Controller
         ]);
 
         //Ingredients data.
-        ingredients::create([
-            'recipe_id' => $recipeData->id,
-            'ingredients_name' => $request-> ingredients_name,
-            'ingredients_vol' => $request-> ingredients_vol,
-            'ingredients_type' => $request-> ingredients_type,
-            'created_at' => date("Y-m-d h:m:i"),
-            'updated_at' => date("Y-m-d h:m:i"),
-        ]);
+        $name_count = count($request-> ingredients_name);
+        for($j=0; $j < $name_count; $j++){
+            ingredients::create([
+                'recipe_id' => $recipeData->id,
+                'ingredients_name' => $request-> ingredients_name[$j],
+                'ingredients_vol' => $request-> ingredients_vol[$j],
+                'ingredients_type' => $request-> ingredients_type[$j],
+                'created_at' => date("Y-m-d h:m:i"),
+                'updated_at' => date("Y-m-d h:m:i"),
+            ]);
+        }
 
-        //Ingredients data.
-        steps::create([
-            'recipe_id' => $recipeData->id,
-            'steps_body' => $request-> steps_body,
-            'steps_type' => $request-> steps_type,
-            'steps_image' => 'null',  //For testing
-            'created_at' => date("Y-m-d h:m:i"),
-            'updated_at' => date("Y-m-d h:m:i"),
-        ]);
+        //Steps data.
+        $body_count = count($request-> steps_body);
+		for($i=0; $i < $body_count; $i++){
+            steps::create([
+                'recipe_id' => $recipeData->id,
+                'steps_body' => $request-> steps_body[$i],
+                'steps_type' => $request-> steps_type[$i],
+                'steps_image' => 'null',  //For testing
+                'created_at' => date("Y-m-d h:m:i"),
+                'updated_at' => date("Y-m-d h:m:i"),
+            ]);
+        }
 
         return redirect('/recipe')->with('flash_message', 'Recipe added!');
     }
@@ -131,25 +137,30 @@ class RecipeController extends Controller
         // $image->storeAs('public/assets/image/recipes', $image->hashName());
 
         //Ingredients data.
-        ingredients::create([
-            'recipe_id' => $request-> recipe_id,
-            'ingredients_name' => $request-> ingredients_name,
-            'ingredients_vol' => $request-> ingredients_vol,
-            'ingredients_type' => $request-> ingredients_type,
-            'created_at' => date("Y-m-d h:m:i"),
-            'updated_at' => date("Y-m-d h:m:i"),
-        ]);
+        $name_count = count($request-> ingredients_name);
+        for($j=0; $j < $name_count; $j++){
+            ingredients::create([
+                'recipe_id' => $request-> recipe_id,
+                'ingredients_name' => $request-> ingredients_name[$j],
+                'ingredients_vol' => $request-> ingredients_vol[$j],
+                'ingredients_type' => $request-> ingredients_type[$j],
+                'created_at' => date("Y-m-d h:m:i"),
+                'updated_at' => date("Y-m-d h:m:i"),
+            ]);
+        }
 
-        //Ingredients data.
-        steps::create([
-            'recipe_id' => $request-> recipe_id,
-            'steps_body' => $request-> steps_body,
-            'steps_type' => $request-> steps_type,
-            'steps_image' => 'null',  //For testing
-            'created_at' => date("Y-m-d h:m:i"),
-            'updated_at' => date("Y-m-d h:m:i"),
-        ]);
-
+        //Steps data.
+        $body_count = count($request-> steps_body);
+		for($i=0; $i < $body_count; $i++){
+            steps::create([
+                'recipe_id' => $request-> recipe_id,
+                'steps_body' => $request-> steps_body[$i],
+                'steps_type' => $request-> steps_type[$i],
+                'steps_image' => 'null',  //For testing
+                'created_at' => date("Y-m-d h:m:i"),
+                'updated_at' => date("Y-m-d h:m:i"),
+            ]);
+        }
         return redirect('/recipe')->with('flash_message', 'Recipe added!');
     }
 
