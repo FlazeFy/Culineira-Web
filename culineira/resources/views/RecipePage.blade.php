@@ -492,6 +492,10 @@
 				background-color: #EB7336 !important;
 				color: #ffffff;
 			}
+
+            #dropIcon{
+                transition: all .3s ease-in;
+            }
 		</style>
 
     </head>
@@ -584,7 +588,7 @@
                 </nav>
 
                 <div class="collapse show" id="globalCollapse" data-bs-parent="#accordionRecipe">
-                    <!--New Recipes.-->
+                    <!--Control Section.-->
                     <div class='container-fluid mb-1 bg-transparent' style='margin-top:-30px;'>
                         <div class='row'>
                             <div class='col-sm-4'>
@@ -625,6 +629,8 @@
                         </div>
                         <a class="text-secondary">Filtered by : </a>
                     </div>
+
+                    <!--New recipes.-->
                     <div class='container-fluid mb-3'>
                         <h3 class="mb-2">New Recipes this week</h3>
                         <div class="row" style='overflow-x: scroll; width:auto; height:130px;'><!--Row must support horizontal scroll without multiple line-->
@@ -649,6 +655,41 @@
                                 @endif
                                 @endforeach
                             @endforeach
+                        </div>
+                    </div>
+
+                    <div class='container-fluid mb-3' style='background: rgba(255, 0, 0, 0.2);'>
+                        <h5 class="mb-1">You have unfinished recipe <i class="fa-solid fa-circle-exclamation" type="button" data-bs-toggle="popover" title="Warning !" data-bs-content="Your unfinished recipe will be automaticly delete after a week since it was created"></i></h5>
+                        <button class="btn btn-link text-decoration-none" id="unfinishedRecipe" data-bs-toggle="collapse" data-bs-target="#collapseUnfinished">
+                            <a class="text-secondary" id="unfinishedButtonText">Show Recipe</a> <i class="fa-solid fa-circle-chevron-down text-secondary" id="dropIcon"></i></button>
+                        <div class="collapse" id="collapseUnfinished">
+                            <div class="row" style='overflow-x: scroll; width:auto; height:130px;'>
+                                @foreach($recipe as $data)
+                                    @php($i=0)
+                                    @php($j=0)
+                                    @php($id=1)
+                                    @if($data->user_id == $id)
+                                        @foreach($ingredients as $ing)
+                                            @if($ing->recipe_id == $data->id)
+                                                @php($i++)
+                                            @endif
+                                        @endforeach
+                                        @foreach($steps as $stp)
+                                            @if($stp->recipe_id == $data->id)
+                                                @php($j++)
+                                            @endif
+                                        @endforeach
+                                        @if(($i == 0)||($j == 0))
+                                        <div class="card border-gray" style='min-width:100px; width:120px; border:none; background:transparent;' type='button' data-bs-toggle="modal" data-bs-target="#dependenciesRecipe<?php echo "_".$data->id; ?>">
+                                            <img src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
+                                                style='border-radius:100%; margin-top:-10px; width:100px; display: block; margin-left: auto; margin-right: auto;'>
+                                            <img src="http://127.0.0.1:8000/assets/image/icon/Continue.png" alt='Add.png' id="addRecipeButton" style='padding:5px;'>
+                                            <a style='font-size:11px; white-space: nowrap;  display: block; margin-left: auto; margin-right: auto;'>{{$data->recipe_name}}</a>
+                                        </div>
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </div>
                         </div>
                     </div>
 
@@ -1677,7 +1718,20 @@
         @endforeach
     @endforeach
 
+    <!--Others CDN.-->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
     <script>
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl)
+        })
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+
         //Darkmode setting.
         function getTheme() {
             return localStorage.getItem('theme') || 'Light';
@@ -1849,13 +1903,11 @@
 		autocomplete(document.getElementById("searchInput"), recipeName);
     </script>
 
-    <!--Others CDN.-->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function () {
             //Steps controls.
-            i = 1; j = 1;
+            i = 1; j = 1; x = 1;
+
             //Add full recipe.
             $("#addSteps").on('click', function () {
                 i++;
@@ -1897,6 +1949,29 @@
             $("#removeIngModal").click(function(){
                 $("#ingHolderModal").empty();
             });
+
+            $('#unfinishedRecipe').on('click', function () {
+                x++;
+                if(x % 2 == 0){
+                    $('#unfinishedButtonText').text("Hide Recipe");
+                    $('#dropIcon').css({
+                        "-ms-transform" : "rotate(180deg)",      //Internet Explorer
+                        "-webkit-transform": "rotate(180deg)",   //Chrome & Safari
+                        "-moz-transform": "rotate(180deg)",      //Firefox
+                        "-o-transform" : "rotate(180deg)",       //Opera
+                        "transform": "rotate(180deg)",            //
+                    });
+                } else {
+                    $('#unfinishedButtonText').text("Show Recipe");
+                    $('#dropIcon').css({
+                        "-ms-transform" : "rotate(0deg)",      //Internet Explorer
+                        "-webkit-transform": "rotate(0deg)",   //Chrome & Safari
+                        "-moz-transform": "rotate(0deg)",      //Firefox
+                        "-o-transform" : "rotate(0deg)",       //Opera
+                        "transform": "rotate(0deg)"            //Others
+                    });
+                }
+            })
         });
     </script>
 	</body>
