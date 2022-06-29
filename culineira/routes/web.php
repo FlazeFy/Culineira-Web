@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LandingController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,6 +20,7 @@ use App\Http\Controllers\UserController;
 // });
 
 //Route::resource('/recipe', RecipeController::class);
+Route::get('/', [LandingController::class, 'index']);
 Route::get('/recipe', [RecipeController::class, 'index']);
 Route::post('/recipe/store', [RecipeController::class, 'store']);
 Route::post('/recipe/storeFull', [RecipeController::class, 'storeFull']);
