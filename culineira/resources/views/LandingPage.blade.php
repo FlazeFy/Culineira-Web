@@ -424,10 +424,10 @@
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul class="nav navbar-nav ml-auto">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="" role="button" >Recipe</a>
+                                        <a class="nav-link" href="" role="button">Recipe</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="" role="button" >My Kitchen</a>
+                                        <a class="nav-link" href="" role="button">My Kitchen</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="" role="button">Community</a>
@@ -442,8 +442,8 @@
                                     <h1 class="text-white mt-5">Welcome, to Culineira</h1>
                                     <p class="text-white mt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
                                     <div class="row mb-xl-5">
-                                        <button class="btn btn-success w-25 m-1 shadow">Sign In</button>
-                                        <button class="btn btn-primary w-25 m-1 shadow" style="background:#78578E;">Let's Join</button>
+                                        <button class="btn btn-success w-25 m-1 shadow" data-bs-toggle="collapse" data-bs-target="#loginForm">Sign In</button>
+                                        <button class="btn btn-primary w-25 m-1 shadow" style="background:#78578E;" data-bs-toggle="collapse" data-bs-target="#createAccForm">Let's Join</button>
                                     </div>
                                     <p class="text-white mt-2">Stay connected with us</p>
                                     <div class="row">
@@ -459,8 +459,32 @@
                                     </div>
                                 </div>
                                 <div class="col-md-5">
-                                    <img src="{{asset('assets/Culineira_LandingImg.png')}}" alt='logo'
-                                    style='display: block; margin-left: auto; margin-right: auto; width:100%;'>
+                                    <div id="accordion">
+                                        <div class="collapse show" id="landingImage" data-bs-parent="#accordion">
+                                            <img src="{{asset('assets/Culineira_LandingImg.png')}}" alt='logo'
+                                                style='display: block; margin-left: auto; margin-right: auto; width:100%;'>
+                                        </div>
+                                        <div class="collapse p-4" id="loginForm" data-bs-parent="#accordion" style="min-width:400px;">
+                                            <form action="/login" method="POST">
+                                            @csrf
+                                            <a class="text-white">Username</a>
+                                            <input class="form-control" type="text" name="username" required></input>
+                                            <a class="text-white">Password</a>
+                                            <input class="form-control" type="password" name="password" required></input>
+                                            <div class="row mt-2">
+                                                <div class="col-md-8">
+                                                    <a class="btn btn-link text-white" style="font-size:13px;">Forget Password</a>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <button class="btn btn-success w-100" type="submit">Submit</button>
+                                                </div>
+                                            </div>
+                                            </form>
+                                        </div>
+                                        <div class="collapse" id="createAccForm" data-bs-parent="#accordion">
+
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

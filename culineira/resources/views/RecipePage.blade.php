@@ -514,7 +514,7 @@
 
                 <!--Profil section.-->
                 @foreach($user as $data)
-                    @if($data->username == 'flazefy')
+                    @if($data->username == session()->get('usernameKey'))
                     <div class='container-fluid p-2 pt-3 rounded-3' title='Click to open profile' type='button'>
                         <img class="img logo rounded-circle mb-3" src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data->username;?>.jpg" alt='<?php echo $data->username.".jpg";?>'
                         style='display: block; margin-left: auto; margin-right: auto;'>
@@ -910,7 +910,7 @@
                                                 <tbody>
                                                 @foreach($user as $data2)
                                                     @foreach($recipe as $data)
-                                                        @if(($data->user_id == $data2->id)&&($data2->username == 'flazefy'))
+                                                        @if(($data->user_id == $data2->id)&&($data2->username == session()->get('usernameKey')))
                                                             <tr>
                                                                 <td><img src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
                                                                     style='border-radius:4px; width:80px;'></td>
@@ -1433,7 +1433,7 @@
     <!--Edit recipe modal-->
     @foreach($user as $data2)
         @foreach($recipe as $data)
-            @if(($data->user_id == $data2->id)&&($data2->username == 'flazefy'))
+            @if(($data->user_id == $data2->id)&&($data2->username == session()->get('usernameKey')))
                 <div class="modal fade" id="editRecipe<?php echo "_".$data->id; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content p-2">
@@ -1536,7 +1536,7 @@
     <!--Dependencies recipe modal-->
     @foreach($user as $data2)
         @foreach($recipe as $data)
-            @if(($data->user_id == $data2->id)&&($data2->username == 'flazefy'))
+            @if(($data->user_id == $data2->id)&&($data2->username == session()->get('usernameKey')))
                 <div class="modal fade" id="dependenciesRecipe<?php echo "_".$data->id; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content p-2">
@@ -1576,10 +1576,10 @@
                                                 $i = 1;
                                                 foreach($steps as $dataStp){
                                                     if($dataStp->recipe_id == $data->id){
-                                                        echo"<p class='text-secondary'>".$i.". ".$dataStp->steps_body."</p>";
+                                                        echo"<p class='text-secondary'><b>".$i.".</b> ".$dataStp->steps_body."</p>";
                                                     }
+                                                    $i++;
                                                 }
-                                                $i++;
                                             ?>
                                         </div>
 
@@ -1697,7 +1697,7 @@
 
     @foreach($user as $data2)
         @foreach($recipe as $data)
-            @if(($data->user_id == $data2->id)&&($data2->username == 'flazefy'))
+            @if(($data->user_id == $data2->id)&&($data2->username == session()->get('usernameKey')))
                 <!--Delete Recipe Modal-->
                 <div class="modal fade" id="deleteRecipe<?php echo "_".$data->id; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -1944,7 +1944,7 @@
             //Add dependencies only.
             @foreach($user as $data2)
                 @foreach($recipe as $data)
-                    @if(($data->user_id == $data2->id)&&($data2->username == 'flazefy'))
+                    @if(($data->user_id == $data2->id)&&($data2->username == session()->get('usernameKey')))
                         $("#addStepsModal<?php echo $data->id;?>").on('click', function () {
                             i++;
                             $('#stepsHolderModal<?php echo $data->id;?>').append(

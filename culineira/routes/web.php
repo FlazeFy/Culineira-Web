@@ -21,7 +21,8 @@ use App\Http\Controllers\LandingController;
 
 //Route::resource('/recipe', RecipeController::class);
 Route::get('/', [LandingController::class, 'index']);
-Route::get('/recipe', [RecipeController::class, 'index']);
+Route::post('/login', [LandingController::class, 'login']);
+Route::get('/recipe', [RecipeController::class, 'index'])->name('recipe');
 Route::post('/recipe/store', [RecipeController::class, 'store']);
 Route::post('/recipe/storeFull', [RecipeController::class, 'storeFull']);
 Route::post('/recipe/storeDependencies', [RecipeController::class, 'storeDependencies']);

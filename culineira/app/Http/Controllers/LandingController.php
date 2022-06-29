@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use App\Models\recipe;
 use App\Models\user;
+use App\Http\Controllers\RecipeController;
 
 class LandingController extends Controller
 {
@@ -13,6 +16,7 @@ class LandingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         $user = user::all();
@@ -29,6 +33,23 @@ class LandingController extends Controller
     public function create()
     {
         //
+    }
+
+    public function login(Request $request)
+    {
+        $check = DB::table('users')
+            ->select()
+            ->where('username', '=', $request-> username)
+            ->where('password', '=', $request-> password)
+            ->get();
+        if(count($check) != 0){
+            // $request->session()->put('idKey', $check->id);
+            $request->session()->put('usernameKey', $request-> username);
+            $request->session()->put('passwordKey', $request-> password);
+            return redirect()->route('recipe');
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**
