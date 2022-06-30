@@ -1004,7 +1004,7 @@
                                                     <form action="/recipe/storeFull" method="POST" enctype="multipart/form-data">
                                                         @csrf
                                                     <div class="card border-0">
-                                                        <div  id="headingOne">
+                                                        <div id="headingOne">
                                                         </div>
 
                                                         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
@@ -1272,7 +1272,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="container-fluid shadow p-3 mb-3">
-                                                                    <video controls autoplay class="rounded w-100" alt="video" >
+                                                                    <video controls class="rounded w-100" alt="video" >
                                                                         <source src="http://127.0.0.1:8000/assets/video/videoplayback.mp4">
                                                                     </video>
                                                                     <div class="row mb-2">
