@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\recipe;
 use App\Models\user;
+use App\Models\feedback;
 use App\Http\Controllers\RecipeController;
 
 class LandingController extends Controller
@@ -62,7 +63,15 @@ class LandingController extends Controller
     {
         //
     }
-
+    public function postFeedback(Request $request)
+    {
+        feedback::create([
+            'feedback_body' => $request-> feedback_body,
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+        return redirect('/')->with('flash_message', 'Feedback was posted!');
+    }
     /**
      * Display the specified resource.
      *
