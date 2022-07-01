@@ -31,9 +31,20 @@ class LandingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        user::create([
+            'username' => $request-> username,
+            'email' => $request-> email,
+            'password' => $request-> password,
+            'description' => $request-> description,
+            'country' => $request-> country,
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+        $request->session()->put('usernameKey', $request-> username);
+        $request->session()->put('passwordKey', $request-> password);
+        return redirect()->route('recipe');
     }
 
     public function login(Request $request)

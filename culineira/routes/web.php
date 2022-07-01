@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\DetailController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,6 +23,7 @@ use App\Http\Controllers\LandingController;
 //Route::resource('/recipe', RecipeController::class);
 Route::get('/', [LandingController::class, 'index']);
 Route::post('/login', [LandingController::class, 'login']);
+Route::post('/create', [LandingController::class, 'create']);
 Route::post('/login/postFeedback', [LandingController::class, 'postFeedback']);
 Route::get('/recipe', [RecipeController::class, 'index'])->name('recipe');
 Route::post('/recipe/store', [RecipeController::class, 'store']);
@@ -30,3 +32,5 @@ Route::post('/recipe/storeDependencies', [RecipeController::class, 'storeDepende
 Route::post('/recipe/update/{id}', [RecipeController::class, 'update']);
 Route::post('/recipe/updateVisibility/{id}', [RecipeController::class, 'updateVisibility']);
 Route::post('/recipe/destroy/{id}', [RecipeController::class, 'destroy']);
+
+Route::get('/detail/{id}', [DetailController::class, 'index']);

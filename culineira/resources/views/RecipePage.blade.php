@@ -727,7 +727,7 @@
                                 @if($data->user_id == $data2->id)
                                 <div class="card border-gray w-25 p-2 border m-3" style='min-width:250px;'>
                                     <img src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
-                                        style='border-radius:4px; margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
+                                        style='margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
                                     <img src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data2->username;?>.jpg" alt='<?php echo $data2->username.".jpg";?>' title='<?php echo $data2->username;?>'
                                         style='border-radius:100%; margin-top:-40px; margin-left:20px; width:40px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
                                     <img src="http://127.0.0.1:8000/assets/image/country/<?php echo $data->recipe_country;?>.png" alt='<?php echo $data->recipe_country.".png";?>' title='<?php echo $data->recipe_country;?>'
@@ -758,7 +758,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button class='btn btn-primary'><i class="fa-solid fa-arrow-right"></i> Cook Now</button>
+                                    <a class='btn btn-primary' href="{{ url('/detail/' . $data->id) }}"><i class="fa-solid fa-arrow-right"></i> Cook Now</a>
                                 </div>
                                 @endif
                                 @endforeach
@@ -779,7 +779,7 @@
                                 @if($data->user_id == $data2->id)
                                 <div class="card border-gray w-25 p-2 border m-3" style='min-width:250px;'>
                                     <img src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
-                                        style='border-radius:4px; margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
+                                        style='margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
                                     <img src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data2->username;?>.jpg" alt='<?php echo $data2->username.".jpg";?>' title='<?php echo $data2->username;?>'
                                         style='border-radius:100%; margin-top:-40px; margin-left:20px; width:40px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
                                     <img src="http://127.0.0.1:8000/assets/image/country/<?php echo $data->recipe_country;?>.png" alt='<?php echo $data->recipe_country.".png";?>' title='<?php echo $data->recipe_country;?>'
@@ -810,7 +810,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button class='btn btn-primary'><i class="fa-solid fa-arrow-right"></i> Cook Now</button>
+                                    <a class='btn btn-primary' href="{{ url('/detail/' . $data->id) }}"><i class="fa-solid fa-arrow-right"></i> Cook Now</a>
                                 </div>
                                 @endif
                                 @endforeach
@@ -831,7 +831,7 @@
                                 @if($data->user_id == $data2->id)
                                 <div class="card border-gray w-25 p-2 border m-3" style='min-width:250px;'>
                                     <img src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
-                                        style='border-radius:4px; margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
+                                        style='margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
                                     <img src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data2->username;?>.jpg" alt='<?php echo $data2->username.".jpg";?>' title='<?php echo $data2->username;?>'
                                         style='border-radius:100%; margin-top:-40px; margin-left:20px; width:40px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
                                     <img src="http://127.0.0.1:8000/assets/image/country/<?php echo $data->recipe_country;?>.png" alt='<?php echo $data->recipe_country.".png";?>' title='<?php echo $data->recipe_country;?>'
@@ -862,7 +862,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button class='btn btn-primary'><i class="fa-solid fa-arrow-right"></i> Cook Now</button>
+                                    <a class='btn btn-primary' href="{{ url('/detail/' . $data->id) }}"><i class="fa-solid fa-arrow-right"></i> Cook Now</a>
                                 </div>
                                 @endif
                                 @endforeach
@@ -913,7 +913,7 @@
                                                         @if(($data->user_id == $data2->id)&&($data2->username == session()->get('usernameKey')))
                                                             <tr>
                                                                 <td><img src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
-                                                                    style='border-radius:4px; width:80px;'></td>
+                                                                    style='width:80px;'></td>
                                                                 <td><h6 style='font-size:12px;'>{{$data->recipe_name}}</h6></td>
                                                                 <td>
                                                                     <h6 style='font-size:12px;'>Level : <span class='text-muted'>{{$data->recipe_level}}</span></h6>

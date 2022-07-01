@@ -665,7 +665,7 @@
                                                         <div class="step-title">Validation</div>
                                                     </div>
                                                 </div>
-                                                <form action="/createAccount" method="POST" autocomplete="off">
+                                                <form action="/create" method="POST" autocomplete="off" enctype="multipart/form-data">
                                                 @csrf
                                                     <div class="card border-0 bg-transparent">
                                                         <div id="headingOne"></div>
