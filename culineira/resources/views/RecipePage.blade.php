@@ -1564,7 +1564,7 @@
                                             <h5>Ingredients</h5>
                                             @foreach($ingredients as $dataIng)
                                                 @if($dataIng->recipe_id == $data->id)
-                                                    <p class="text-secondary"><?php echo $dataIng->ingredients_vol." ~ ".$dataIng->ingredients_name; ?></p>
+                                                    <p class="text-secondary">{{$dataIng->ingredients_vol}} ~ {{$dataIng->ingredients_name}}</p>
                                                 @endif
                                             @endforeach
                                         </div>

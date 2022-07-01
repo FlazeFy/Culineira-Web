@@ -627,23 +627,85 @@
 
                     <!--Recipes Detail.-->
                     @foreach($recipeId as $data)
-                        <div class='container-fluid mb-3'>
-                            <h3 class="mb-2">{{$data->recipe_name}}</h3>
+                        <div class='container-fluid mb-3 p-3'>
+                            <h3 class="mb-2">{{$data->recipe_name}}<span class="container border-0 text-secondary rounded-pill m-2" style="
+                                <?php if($data->recipe_level == "Beginner"){echo"background: rgba(5, 240, 44, 0.2);";}
+                                    else if($data->recipe_level == "Intermediate"){echo"background: rgba(245, 164, 2, 0.2);";}
+                                    else if($data->recipe_level == "Expert"){echo"background: rgba(255, 0, 0, 0.2);";}
+                                ?> font-size:15px;">{{$data->recipe_level}}</span></h3>
                             <div class="row">
-                                <div class="col-md-3 text-center">
+                                <div class="col-md-3 text-center mb-2">
                                     <img src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
-                                        style='width:40%; display: block; margin-left: auto; margin-right: auto;'>
-                                    <h6 style="font-size:14px;">Type : {{$data->recipe_type}}</h6>
-                                    <h6 style="font-size:14px;">Time Spend : {{$data->recipe_time_spend}}</h6>
-                                    <h6 style="font-size:14px;">Calorie : {{$data->recipe_calorie}}</h6><br>
+                                        style='width:70%; display: block; margin-left: auto; margin-right: auto;'><hr>
+                                    <h6 style="font-size:14px;"><span class="text-secondary">Type :</span> {{$data->recipe_type}}</h6>
+                                    <h6 style="font-size:14px;"><span class="text-secondary">Time Spend :</span> {{$data->recipe_time_spend}}</h6>
+                                    <h6 style="font-size:14px;"><span class="text-secondary">Calorie :</span> {{$data->recipe_calorie}}</h6><br>
                                     <h6 style="font-size:14px;">Main Ingredients :</h6>
                                     <h7 style="font-size:13px;">{{$data->recipe_main_ing}}</h7>
+                                    <hr>
+                                    <h6 class="mt-4" style="font-size:14px;">Created On</h6>
+                                    <h7 style="font-size:13px;">{{$data->created_at}}</h7>
+                                    <h6 style="font-size:14px;">Updated On</h6>
+                                    <h7 style="font-size:13px;">{{$data->updated_at}}</h7>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6 mb-2">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <button class="btn btn-primary w-100"><i class="fa-solid fa-list-check"></i> Tiles</button>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button class="btn btn-primary w-100"><i class="fa-solid fa-timeline"></i> Stepper</button>
+                                        </div>
+                                    </div>
+                                    <h5 >How to make</h5>
+                                    <div class="container-fluid">
+                                        @php($i=1)
+                                        @foreach($steps as $stp)
+                                            @if($stp->recipe_id == $data->id)
+                                            <div class="card shadow border-0 w-100 mb-2">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <a style="color:#EB7336;">Steps #{{$i}}</a><br>
+                                                        <a>{{$stp->steps_body}}</a>
+                                                        @if($stp->steps_type == "Optional")
+                                                            <b>{{$stp->steps_type}}</b>
+                                                        @endif
+                                                    </div>
+                                                    <button class="btn btn-link border-0 bg-transparent" style="height:20px; text-decoration:none; color:#EB7336;"><i class="fa-solid fa-comment"></i></button>
+                                                </div>
+                                            </div><!--End of card.-->
+                                            @php($i++)
+                                            @endif
+                                        @endforeach
 
+                                    </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 mb-2">
+                                    <h5 >Ingredients</h5>
+                                    <div class="container-fluid mb-2">
+                                        <b>Required</b><br>
+                                        @php($i=1)
+                                        @foreach($ingredients as $ing)
+                                            @if(($stp->recipe_id == $data->id)&&($ing->ingredients_type == "Required"))
+                                                <a style="font-size:12px;">{{$ing->ingredients_vol}} ~ {{$ing->ingredients_name}}</a><br>
+                                                @php($i++)
+                                            @endif
+                                        @endforeach
 
+                                        <br><b>Optional</b><br>
+                                        @php($i=1)
+                                        @foreach($ingredients as $ing)
+                                            @if(($stp->recipe_id == $data->id)&&($ing->ingredients_type == "Optional"))
+                                                <a style="font-size:12px;">{{$ing->ingredients_vol}} ~ {{$ing->ingredients_name}}</a><br>
+                                                @php($i++)
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                    <hr>
+                                    <h5>Made By</h5>
+                                    <div class="container-fluid mb-2">
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
