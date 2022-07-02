@@ -56,7 +56,7 @@
                 --background7: #EB7336;
             }
             .steps {
-                display: flex;
+                display: block;
                 justify-content: space-between;
                 align-items: center;
                 margin-bottom: 2rem;
@@ -496,6 +496,50 @@
             #dropIcon{
                 transition: all .3s ease-in;
             }
+
+            .chat-online {
+                color: #34ce57
+            }
+
+            .chat-offline {
+                color: #e4606d
+            }
+
+            .chat-messages {
+                display: flex;
+                flex-direction: column;
+                max-height: 800px;
+                overflow-y: scroll
+            }
+
+            .chat-message-left,
+            .chat-message-right {
+                display: flex;
+                flex-shrink: 0
+            }
+
+            .chat-message-left {
+                margin-right: auto
+            }
+
+            .chat-message-right {
+                flex-direction: row-reverse;
+                margin-left: auto;
+            }
+            .py-3 {
+                padding-top: 1rem!important;
+                padding-bottom: 1rem!important;
+            }
+            .px-4 {
+                padding-right: 1.5rem!important;
+                padding-left: 1.5rem!important;
+            }
+            .flex-grow-0 {
+                flex-grow: 0!important;
+            }
+            .border-top {
+                border-top: 1px solid #dee2e6!important;
+            }
 		</style>
 
     </head>
@@ -651,37 +695,134 @@
                                 <div class="col-md-6 mb-2">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <button class="btn btn-primary w-100"><i class="fa-solid fa-list-check"></i> Tiles</button>
+                                            <button class="btn btn-primary w-100" data-bs-toggle="collapse" data-bs-target="#collapseTiles">
+                                                <i class="fa-solid fa-list-check"></i> Tiles</button>
                                         </div>
                                         <div class="col-md-3">
-                                            <button class="btn btn-primary w-100"><i class="fa-solid fa-timeline"></i> Stepper</button>
+                                            <button class="btn btn-primary w-100" data-bs-toggle="collapse" data-bs-target="#collapseStepper">
+                                                <i class="fa-solid fa-timeline"></i> Stepper</button>
                                         </div>
                                     </div>
-                                    <h5 >How to make</h5>
-                                    <div class="container-fluid">
-                                        @php($i=1)
-                                        @foreach($steps as $stp)
-                                            @if($stp->recipe_id == $data->id)
-                                            <div class="card shadow border-0 w-100 mb-2">
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <a style="color:#EB7336;">Steps #{{$i}}</a><br>
-                                                        <a>{{$stp->steps_body}}</a>
-                                                        @if($stp->steps_type == "Optional")
-                                                            <b>{{$stp->steps_type}}</b>
-                                                        @endif
+                                    <h5 class="mt-2">How to make</h5>
+                                    <div class="accordion" id="accordionSteps">
+                                        <div id="collapseTiles" class="collapse show" data-bs-parent="#accordionSteps">
+                                            @php($i=1)
+                                            @foreach($steps as $stp)
+                                                @if($stp->recipe_id == $data->id)
+                                                <div class="card shadow border-0 w-100 mb-2">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <a style="color:#EB7336;">Steps #{{$i}}</a><br>
+                                                            <a>{{$stp->steps_body}}</a>
+                                                            @if($stp->steps_type == "Optional")
+                                                                <b>{{$stp->steps_type}}</b>
+                                                            @endif
+                                                        </div>
+                                                        <button class="btn btn-link border-0 bg-transparent" style="height:20px; text-decoration:none; color:#EB7336;"><i class="fa-solid fa-comment"></i></button>
                                                     </div>
-                                                    <button class="btn btn-link border-0 bg-transparent" style="height:20px; text-decoration:none; color:#EB7336;"><i class="fa-solid fa-comment"></i></button>
+                                                </div><!--End of card.-->
+                                                @php($i++)
+                                                @endif
+                                            @endforeach
+                                        </div>
+
+                                        <div id="collapseStepper" class="collapse" data-bs-parent="#accordionSteps">
+                                            <div class="accordion" id="accordionExample">
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <div class="steps">
+                                                            <!-- <progress id="progress" value=0 max=100></progress> -->
+                                                            @php($i=1)
+                                                            @php($aria="true")
+                                                            @foreach($steps as $stp)
+                                                                @if($stp->recipe_id == $data->id)
+                                                                <div class="step-item">
+                                                                    <button class="step-button text-center mb-1" type="button" data-bs-toggle="collapse"
+                                                                        data-bs-target="#collapseStep<?php echo $i; ?>" aria-expanded="<?php echo $aria; ?>" aria-controls="collapseOne">{{$i}}</button>
+                                                                </div>
+                                                                @php($i++)
+                                                                @php($aria="false")
+                                                                @endif
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        @php($j=1)
+                                                        @php($class=" show")
+                                                        @foreach($steps as $stp)
+                                                            @if($stp->recipe_id == $data->id)
+                                                            <div class="card border-0 shadow rounded">
+                                                                <div id="headingOne"></div>
+                                                                <div id="collapseStep<?php echo $j; ?>" class="collapse<?php echo $class; ?>" aria-labelledby="headingOne"
+                                                                    data-bs-parent="#accordionExample">
+                                                                    <div class="card-body p-4">
+                                                                        <div class="row">
+                                                                            <a style="color:#EB7336;">Steps #{{$j}}</a><br>
+                                                                            <a class="mb-3">{{$stp->steps_body}}</a>
+                                                                            @if($stp->steps_type == "Optional")
+                                                                                <b>{{$stp->steps_type}}</b>
+                                                                            @endif
+                                                                            <hr><a style="color:#EB7336; margin-top:10px;">Comment</a>
+                                                                            <div class="position-relative">
+                                                                                <div class="chat-messages p-2">
+
+                                                                                    <div class="chat-message-right pb-4">
+                                                                                        <div>
+                                                                                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1" alt="Chris Wood" width="35" >
+                                                                                        </div>
+                                                                                        <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
+                                                                                            <div class="font-weight-bold mb-1" style="color:#EB7336;">You<span class="text-secondary" style="font-size:10px;"> Yesterday 19:45</span></div>
+                                                                                            Lorem ipsum dolor sit amet, vis erat denique in, dicunt prodesset te vix.
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="chat-message-left pb-4">
+                                                                                        <div>
+                                                                                            <img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="35" >
+
+                                                                                        </div>
+                                                                                        <div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
+                                                                                            <div class="font-weight-bold mb-1" style="color:#EB7336;">Sharon Lessman<span class="text-secondary" style="font-size:10px;"> Today 12:49</span></div>
+                                                                                            Sit meis deleniti eu, pri vidit meliore docendi ut, an eum erat animal commodo.
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="flex-grow-0 py-3 px-4 border-top">
+                                                                                <div class="input-group">
+                                                                                    <input type="text" class="form-control" placeholder="Type your message">
+                                                                                    <button class="btn btn-primary">Send</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @php($j++)
+                                                            @php($class=" ")
+                                                            @endif
+                                                        @endforeach
+                                                    </div>
                                                 </div>
-                                            </div><!--End of card.-->
-                                            @php($i++)
-                                            @endif
-                                        @endforeach
+                                            </div><!--End of accordion-->
+                                        </div>
 
                                     </div>
                                 </div>
                                 <div class="col-md-3 mb-2">
-                                    <h5 >Ingredients</h5>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <button class="btn btn-primary w-100 border-0" style="background:#DE5667;"><i class="fa-solid fa-thumbs-up"></i></button>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button class="btn btn-primary w-100 border-0" style="background:#B35387;"><i class="fa-solid fa-paperclip"></i></button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button class="btn btn-primary w-100 border-0" style="background:#00B6AB;"><i class="fa-solid fa-share-from-square"></i> Share</button>
+                                        </div>
+                                    </div>
+                                    <h5 class="mt-2">Ingredients</h5>
                                     <div class="container-fluid mb-2">
                                         <b>Required</b><br>
                                         @php($i=1)
@@ -702,9 +843,23 @@
                                         @endforeach
                                     </div>
                                     <hr>
-                                    <h5>Made By</h5>
+                                    <h5>Contributors</h5>
                                     <div class="container-fluid mb-2">
-
+                                        <div class="row" style='height:90px;'>
+                                        @foreach($recipeId as $data)
+                                            @foreach($user as $data2)
+                                            @if($data->user_id == $data2->id)
+                                            <div class="card border-gray m-2" style='min-width:40px; width:40px; border:none; background:transparent; margin-top:5px;' type='button'>
+                                                <a href="">
+                                                <img class="img logo rounded-circle mb-3" src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data2->username;?>.jpg" alt='<?php echo $data2->username.".jpg";?>'
+                                                    style='display: block; margin-left: auto; margin-right: auto; width:40px;'>
+                                                <a style='font-size:11px; white-space: nowrap;  display: block; margin-left: auto; margin-right: auto; margin-top:-10px;'>{{$data2->username}}</a>
+                                                </a>
+                                            </div>
+                                            @endif
+                                            @endforeach
+                                        @endforeach
+                                        </div>
                                     </div>
                                 </div>
                             </div>
