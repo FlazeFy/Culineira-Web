@@ -33,4 +33,5 @@ Route::post('/recipe/update/{id}', [RecipeController::class, 'update']);
 Route::post('/recipe/updateVisibility/{id}', [RecipeController::class, 'updateVisibility']);
 Route::post('/recipe/destroy/{id}', [RecipeController::class, 'destroy']);
 
-Route::get('/detail/{id}', [DetailController::class, 'index']);
+Route::get('/detail/{id}', [DetailController::class, 'index'])->name('detail');
+Route::post('/detail/sendComment/{id}', [DetailController::class, 'sendComment']);

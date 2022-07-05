@@ -710,7 +710,6 @@
                                                                         <img id="frame" src="http://127.0.0.1:8000/assets/NoImage.png" class="img-fluid" style="width:200px; border-radius:100%; background:white;"/>
                                                                     </div>
                                                                     <div class="col-md-5">
-                                                                        <label class="form-label">Visibility <i class="fa-solid fa-circle-question" type="button"></i></label>
                                                                         <a onclick="clearImageCreateAcc()" class="btn btn-danger mt-3 w-100"><i class="fa-solid fa-trash"></i> Reset</a>
                                                                     </div>
                                                                 </div>

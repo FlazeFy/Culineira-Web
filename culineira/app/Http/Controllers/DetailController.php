@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\recipe;
+use App\Models\comment;
 use App\Models\user;
 use App\Models\steps;
 use App\Models\ingredients;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 
 class DetailController extends Controller
 {
@@ -77,9 +79,24 @@ class DetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function sendComment(Request $request, $id)
     {
-        //
+        $users_id = DB::table('users')->where('username', session()->get('usernameKey'))->get();
+        foreach($users_id as $u){
+            $id_user = $u->id;
+        }
+
+        comment::create([
+            'recipe_id' => $id,
+            'steps_id' => $request->steps_id,
+            'users_id' => $id_user,
+            'comment_body' => $request->comment_body,
+            'comment_image' => 'null',  //For testing
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        return redirect()->route('detail', ['id' => $id]);
     }
 
     /**

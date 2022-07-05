@@ -44,6 +44,7 @@
                 --background5: #CED4DA; /*For input border*/
                 --background6: #F0F0F0;
                 --background7: transparent; /*For modal, dropdown, popover border*/
+                --background8: #f1f1f1; /*For bubble chat*/
             }
             body.Dark {
                 --text: whitesmoke;
@@ -54,6 +55,19 @@
                 --background4: #5e5d5d;
                 --background6: #3A3B3C;
                 --background7: #EB7336;
+                --background8: #3A3B3C;
+            }
+
+            .flex-shrink-1.rounded.py-2.px-3.mr-3{
+                background:var(--background8);
+            }
+            #dateMsg{
+                color:var(--text2);
+                font-size:10px;
+            }
+
+            .card.card-body{
+                background:var(--background2);
             }
             .steps {
                 display: block;
@@ -508,7 +522,7 @@
             .chat-messages {
                 display: flex;
                 flex-direction: column;
-                max-height: 800px;
+                max-height: 400px;
                 overflow-y: scroll
             }
 
@@ -682,9 +696,11 @@
                                     <img src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
                                         style='width:70%; display: block; margin-left: auto; margin-right: auto;'><hr>
                                     <h6 style="font-size:14px;"><span class="text-secondary">Type :</span> {{$data->recipe_type}}</h6>
-                                    <h6 style="font-size:14px;"><span class="text-secondary">Time Spend :</span> {{$data->recipe_time_spend}}</h6>
-                                    <h6 style="font-size:14px;"><span class="text-secondary">Calorie :</span> {{$data->recipe_calorie}}</h6><br>
-                                    <h6 style="font-size:14px;">Main Ingredients :</h6>
+                                    <h6 style="font-size:14px;"><span class="text-secondary">Country :</span> {{$data->recipe_country}}</h6>
+                                    <h6 style="font-size:14px;"><span class="text-secondary">Time Spend :</span> {{$data->recipe_time_spend}} min</h6>
+                                    <h6 style="font-size:14px;"><span class="text-secondary">Calorie :</span> {{$data->recipe_calorie}} cal</h6><br>
+
+                                    <h6 style="font-size:14px;">Main Ingredients <i class="fa-solid fa-circle-info"></i></h6>
                                     <h7 style="font-size:13px;">{{$data->recipe_main_ing}}</h7>
                                     <hr>
                                     <h6 class="mt-4" style="font-size:14px;">Created On</h6>
@@ -729,12 +745,12 @@
                                                                         @foreach($comment as $cmt)
                                                                             @foreach($user as $u)
                                                                                 @if(($cmt->steps_id == $stp->id)&&($u->id == $cmt->users_id))
-                                                                                <div class="chat-message-right pb-4">
+                                                                                <div class="chat-message-<?php if($u->username == session()->get('usernameKey')){echo "right";}else{echo "left";}?> pb-4">
                                                                                     <div>
                                                                                         <img src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $u->username;?>.jpg" class="rounded-circle mr-1" alt="<?php echo $u->username; ?>" width="35" >
                                                                                     </div>
-                                                                                    <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
-                                                                                        <div class="font-weight-bold mb-1" style="color:#EB7336;">{{$u->username}}<span class="text-secondary" style="font-size:10px;"> {{$cmt->created_at}}</span></div>
+                                                                                    <div class="flex-shrink-1 rounded py-2 px-3 mr-3" style="<?php if($cmt->users_id == $data->user_id){echo "border:2px #EB7336 solid;";}?>">
+                                                                                        <div class="font-weight-bold mb-1" style="color:#EB7336;">{{$u->username}}<span class="text-secondary" id="dateMsg"> {{$cmt->created_at}}</span></div>
                                                                                         {{$cmt->comment_body}}
                                                                                     </div>
                                                                                 </div>
@@ -745,11 +761,27 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="flex-grow-0 py-3 px-4 border-top">
-                                                                <div class="input-group">
-                                                                    <input type="text" class="form-control" placeholder="Type your message">
-                                                                    <button class="btn btn-primary">Send</button>
+                                                            <div class="flex-grow-0 py-2 border-top">
+                                                                <form action="/detail/sendComment/<?php echo $data->id;?>" method="POST" enctype="multipart/form-data">
+                                                                @csrf
+                                                                <div class="row">
+                                                                    <div class="col-1">
+                                                                        <a class="btn btn-primary" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content-id="popover-content"><i class="fa-solid fa-paperclip"></i></a>
+                                                                        <div id="popover-content" class="d-none">
+                                                                            <a class="text-secondary">Image</a>
+                                                                            <p class="text-secondary mt-2" style="font-size:12px;"><i class="fa-solid fa-circle-info"></i> Max size for image 5 mb, with format jpg or png</p>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-11">
+                                                                        <div class="input-group">
+                                                                            <input name="steps_id" class="form-control" value="<?php echo $stp->id; ?>" required hidden>
+                                                                            <input type="text" class="form-control" placeholder="Type your comment" name="comment_body" required>
+                                                                            <button type="submit" class="btn btn-primary">Send</button>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -800,36 +832,47 @@
                                                                             <div class="card card-body">
                                                                                 <div class="position-relative">
                                                                                     <div class="chat-messages p-2">
-
-                                                                                        <div class="chat-message-right pb-4">
-                                                                                            <div>
-                                                                                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1" alt="Chris Wood" width="35" >
-                                                                                            </div>
-                                                                                            <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
-                                                                                                <div class="font-weight-bold mb-1" style="color:#EB7336;">You<span class="text-secondary" style="font-size:10px;"> Yesterday 19:45</span></div>
-                                                                                                Lorem ipsum dolor sit amet, vis erat denique in, dicunt prodesset te vix.
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                        <div class="chat-message-left pb-4">
-                                                                                            <div>
-                                                                                                <img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="35" >
-
-                                                                                            </div>
-                                                                                            <div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
-                                                                                                <div class="font-weight-bold mb-1" style="color:#EB7336;">Sharon Lessman<span class="text-secondary" style="font-size:10px;"> Today 12:49</span></div>
-                                                                                                Sit meis deleniti eu, pri vidit meliore docendi ut, an eum erat animal commodo.
-                                                                                            </div>
-                                                                                        </div>
-
+                                                                                        @php($c=0)
+                                                                                        @foreach($comment as $cmt)
+                                                                                            @foreach($user as $u)
+                                                                                                @if(($cmt->steps_id == $stp->id)&&($u->id == $cmt->users_id))
+                                                                                                <div class="chat-message-<?php if($u->username == session()->get('usernameKey')){echo "right";}else{echo "left";}?> pb-4">
+                                                                                                    <div>
+                                                                                                        <img src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $u->username;?>.jpg" class="rounded-circle mr-1" alt="<?php echo $u->username; ?>" width="35" >
+                                                                                                    </div>
+                                                                                                    <div class="flex-shrink-1 rounded py-2 px-3 mr-3" style="<?php if($cmt->users_id == $data->user_id){echo "border:2px #EB7336 solid;";}?>">
+                                                                                                        <div class="font-weight-bold mb-1" style="color:#EB7336;">{{$u->username}}<span class="text-secondary" id="dateMsg"> {{$cmt->created_at}}</span></div>
+                                                                                                        {{$cmt->comment_body}}
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                @php($c++)
+                                                                                                @endif
+                                                                                            @endforeach
+                                                                                        @endforeach
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="flex-grow-0 py-3 px-4 border-top">
-                                                                                <div class="input-group">
-                                                                                    <input type="text" class="form-control" placeholder="Type your message">
-                                                                                    <button class="btn btn-primary">Send</button>
+                                                                            <div class="flex-grow-0 py-2 border-top">
+                                                                                <form action="/detail/sendComment/<?php echo $data->id;?>" method="POST" enctype="multipart/form-data">
+                                                                                @csrf
+                                                                                <div class="row">
+                                                                                    <div class="col-1">
+                                                                                        <a class="btn btn-primary" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content-id="popover-content"><i class="fa-solid fa-paperclip"></i></a>
+                                                                                        <div id="popover-content" class="d-none">
+                                                                                            <a class="text-secondary">Image</a>
+                                                                                            <p class="text-secondary mt-2" style="font-size:12px;"><i class="fa-solid fa-circle-info"></i> Max size for image 5 mb, with format jpg or png</p>
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-11">
+                                                                                        <div class="input-group">
+                                                                                            <input name="steps_id" class="form-control" value="<?php echo $stp->id; ?>" required hidden>
+                                                                                            <input type="text" class="form-control" placeholder="Type your comment" name="comment_body" required>
+                                                                                            <button type="submit" class="btn btn-primary">Send</button>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </div>
+                                                                                </form>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -879,7 +922,7 @@
                                         @endforeach
                                     </div>
                                     <hr>
-                                    <h5>Contributors</h5>
+                                    <h5>Contributors <i class="fa-solid fa-circle-info"></i></h5>
                                     <div class="container-fluid mb-2">
                                         <div class="row" style='height:90px;'>
                                         @foreach($recipeId as $data)
@@ -921,13 +964,17 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
     <script>
-        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-        return new bootstrap.Popover(popoverTriggerEl)
-        })
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
+        //Custom popover
+        const list = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        list.map((el) => {
+        let opts = {
+            animation: false,
+        }
+        if (el.hasAttribute('data-bs-content-id')) {
+            opts.content = document.getElementById(el.getAttribute('data-bs-content-id')).innerHTML;
+            opts.html = true;
+        }
+        new bootstrap.Popover(el, opts);
         })
 
         //Darkmode setting.
