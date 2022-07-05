@@ -705,6 +705,7 @@
                                     </div>
                                     <h5 class="mt-2">How to make</h5>
                                     <div class="accordion" id="accordionSteps">
+                                        <div class="accordion" id="accordionMsgTls">
                                         <div id="collapseTiles" class="collapse show" data-bs-parent="#accordionSteps">
                                             @php($i=1)
                                             @foreach($steps as $stp)
@@ -718,12 +719,45 @@
                                                                 <b>{{$stp->steps_type}}</b>
                                                             @endif
                                                         </div>
-                                                        <button class="btn btn-link border-0 bg-transparent" style="height:20px; text-decoration:none; color:#EB7336;"><i class="fa-solid fa-comment"></i></button>
+                                                        <button class="btn btn-link border-0 bg-transparent" style="font-size:16px; text-decoration:none; color:#EB7336;"
+                                                            data-bs-toggle="collapse" data-bs-target="#collapseMsgTls<?php echo $i; ?>"><i class="fa-solid fa-comment"></i> Comment</button>
+                                                        <div class="accordion-collapse collapse" id="collapseMsgTls<?php echo $i; ?>" data-bs-parent="#accordionMsgTls">
+                                                            <div class="card card-body">
+                                                                <div class="position-relative">
+                                                                    <div class="chat-messages p-2">
+                                                                        @php($c=0)
+                                                                        @foreach($comment as $cmt)
+                                                                            @foreach($user as $u)
+                                                                                @if(($cmt->steps_id == $stp->id)&&($u->id == $cmt->users_id))
+                                                                                <div class="chat-message-right pb-4">
+                                                                                    <div>
+                                                                                        <img src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $u->username;?>.jpg" class="rounded-circle mr-1" alt="<?php echo $u->username; ?>" width="35" >
+                                                                                    </div>
+                                                                                    <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
+                                                                                        <div class="font-weight-bold mb-1" style="color:#EB7336;">{{$u->username}}<span class="text-secondary" style="font-size:10px;"> {{$cmt->created_at}}</span></div>
+                                                                                        {{$cmt->comment_body}}
+                                                                                    </div>
+                                                                                </div>
+                                                                                @php($c++)
+                                                                                @endif
+                                                                            @endforeach
+                                                                        @endforeach
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="flex-grow-0 py-3 px-4 border-top">
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control" placeholder="Type your message">
+                                                                    <button class="btn btn-primary">Send</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div><!--End of card.-->
                                                 @php($i++)
                                                 @endif
                                             @endforeach
+                                        </div>
                                         </div>
 
                                         <div id="collapseStepper" class="collapse" data-bs-parent="#accordionSteps">
@@ -762,31 +796,33 @@
                                                                             @if($stp->steps_type == "Optional")
                                                                                 <b>{{$stp->steps_type}}</b>
                                                                             @endif
-                                                                            <hr><a style="color:#EB7336; margin-top:10px;">Comment</a>
-                                                                            <div class="position-relative">
-                                                                                <div class="chat-messages p-2">
+                                                                            <a style="color:#EB7336; margin-top:10px;">Comment</a>
+                                                                            <div class="card card-body">
+                                                                                <div class="position-relative">
+                                                                                    <div class="chat-messages p-2">
 
-                                                                                    <div class="chat-message-right pb-4">
-                                                                                        <div>
-                                                                                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1" alt="Chris Wood" width="35" >
+                                                                                        <div class="chat-message-right pb-4">
+                                                                                            <div>
+                                                                                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1" alt="Chris Wood" width="35" >
+                                                                                            </div>
+                                                                                            <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
+                                                                                                <div class="font-weight-bold mb-1" style="color:#EB7336;">You<span class="text-secondary" style="font-size:10px;"> Yesterday 19:45</span></div>
+                                                                                                Lorem ipsum dolor sit amet, vis erat denique in, dicunt prodesset te vix.
+                                                                                            </div>
                                                                                         </div>
-                                                                                        <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
-                                                                                            <div class="font-weight-bold mb-1" style="color:#EB7336;">You<span class="text-secondary" style="font-size:10px;"> Yesterday 19:45</span></div>
-                                                                                            Lorem ipsum dolor sit amet, vis erat denique in, dicunt prodesset te vix.
+
+                                                                                        <div class="chat-message-left pb-4">
+                                                                                            <div>
+                                                                                                <img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="35" >
+
+                                                                                            </div>
+                                                                                            <div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
+                                                                                                <div class="font-weight-bold mb-1" style="color:#EB7336;">Sharon Lessman<span class="text-secondary" style="font-size:10px;"> Today 12:49</span></div>
+                                                                                                Sit meis deleniti eu, pri vidit meliore docendi ut, an eum erat animal commodo.
+                                                                                            </div>
                                                                                         </div>
+
                                                                                     </div>
-
-                                                                                    <div class="chat-message-left pb-4">
-                                                                                        <div>
-                                                                                            <img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="35" >
-
-                                                                                        </div>
-                                                                                        <div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
-                                                                                            <div class="font-weight-bold mb-1" style="color:#EB7336;">Sharon Lessman<span class="text-secondary" style="font-size:10px;"> Today 12:49</span></div>
-                                                                                            Sit meis deleniti eu, pri vidit meliore docendi ut, an eum erat animal commodo.
-                                                                                        </div>
-                                                                                    </div>
-
                                                                                 </div>
                                                                             </div>
                                                                             <div class="flex-grow-0 py-3 px-4 border-top">

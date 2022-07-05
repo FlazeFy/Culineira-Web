@@ -21,9 +21,10 @@ class DetailController extends Controller
         $user = user::all();
         $recipe = recipe::all();
         $recipeId = DB::table('recipes')->where('id', $id)->get();
-        $steps = steps::all();
+        $comment = DB::table('comment')->where('recipe_id', $id)->orderBy('created_at', 'ASC')->get();
+        $steps = DB::table('steps')->orderBy('id', 'ASC')->get();
         $ingredients = ingredients::all();
-        return view ('DetailPage')->with('recipeId', $recipeId)->with('recipe', $recipe)->with('user', $user)->with('steps', $steps)->with('ingredients', $ingredients);
+        return view ('DetailPage')->with('recipeId', $recipeId)->with('recipe', $recipe)->with('comment', $comment)->with('user', $user)->with('steps', $steps)->with('ingredients', $ingredients);
     }
 
     /**
