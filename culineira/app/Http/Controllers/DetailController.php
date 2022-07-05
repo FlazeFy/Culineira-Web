@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 class DetailController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a filterRecipe of the resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -26,7 +26,35 @@ class DetailController extends Controller
         $comment = DB::table('comment')->where('recipe_id', $id)->orderBy('created_at', 'ASC')->get();
         $steps = DB::table('steps')->orderBy('id', 'ASC')->get();
         $ingredients = ingredients::all();
-        return view ('DetailPage')->with('recipeId', $recipeId)->with('recipe', $recipe)->with('comment', $comment)->with('user', $user)->with('steps', $steps)->with('ingredients', $ingredients);
+
+        //You may also like.
+        foreach($recipeId as $ri){
+            $country = $ri->recipe_country;
+            $level = $ri->recipe_level;
+            $name = $ri->recipe_name;
+            $ing = $ri->recipe_main_ing;
+        }
+        $mayLikeRecipe = DB::table('recipes')->where('recipe_country', $country)->where('recipe_level', $level)->get();
+
+        //Similar recipe.
+        //Split recipe_name into separate word.
+        $name_explode = explode(" ", $name);
+        $ing_explode = explode(", ", $ing);
+
+        //Count word in recipe_name.
+        $countWordName = str_word_count($name);
+        $countWordIng = str_word_count($ing);
+
+        $filterRecipe = DB::table('recipes');
+        for($i=0; $i < $countWordName; $i++){
+            $filterRecipe->orWhere('recipe_name', 'LIKE','%'.$name_explode[$i].'%');
+        }
+        for($j=0; $j < $countWordIng; $j++){
+            $filterRecipe->orWhere('recipe_main_ing', 'LIKE','%'.$ing_explode[$j].'%');
+        }
+        $results = $filterRecipe->get();
+
+        return view ('DetailPage')->with('recipeId', $recipeId)->with('recipe', $recipe)->with('comment', $comment)->with('user', $user)->with('steps', $steps)->with('ingredients', $ingredients)->with('mayLikeRecipe', $mayLikeRecipe)->with('similar', $results);
     }
 
     /**
