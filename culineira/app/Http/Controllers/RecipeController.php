@@ -42,17 +42,17 @@ class RecipeController extends Controller
      */
     public function store(Request $request)
     {
-        // //validate image
-        // $this->validate($request, [
-        //     'recipe_image'     => 'required|image|mimes:jpeg,png,jpg|max:5000',
-        // ]);
+        //validate image
+        $this->validate($request, [
+            'recipe_image'     => 'required|image|mimes:jpeg,png,jpg|max:5000',
+        ]);
 
-        // //upload image
-        // $image = $request->file('recipe_image');
-        // $image->storeAs('public/assets/image/recipes', $image->hashName());
+        //upload image
+        $image = $request->file('recipe_image');
+        $image->storeAs('public/assets/image/recipes', $image->hashName());
 
         //Recipe data.
-        recipe::create([
+        $id_recipe = recipe::create([
             'user_id' => 1, //For testing
             'recipe_name' => $request-> recipe_name,
             'recipe_calorie' => $request-> recipe_calorie,
@@ -63,22 +63,24 @@ class RecipeController extends Controller
             'recipe_main_ing' => $request->recipe_main_ing,
             'recipe_level' => $request->recipe_level,
             'recipe_visibility' => $request->recipe_visibility,
+            'recipe_url' => $image->hashName(),
             'created_at' => date("Y-m-d h:m:i"),
             'updated_at' => date("Y-m-d h:m:i"),
         ]);
+
         return redirect('/recipe')->with('flash_message', 'Recipe added!');
     }
 
     public function storeFull(Request $request)
     {
-        // //validate image
-        // $this->validate($request, [
-        //     'recipe_image'     => 'required|image|mimes:jpeg,png,jpg|max:5000',
-        // ]);
+        //validate image
+        $this->validate($request, [
+            'recipe_image'     => 'required|image|mimes:jpeg,png,jpg|max:5000',
+        ]);
 
-        // //upload image
-        // $image = $request->file('recipe_image');
-        // $image->storeAs('public/assets/image/recipes', $image->hashName());
+        //upload image
+        $image = $request->file('recipe_image');
+        $image->storeAs('public/assets/image/recipes', $image->hashName());
 
         //Recipe data.
         $recipeData = recipe::create([
@@ -92,6 +94,7 @@ class RecipeController extends Controller
             'recipe_main_ing' => $request->recipe_main_ing,
             'recipe_level' => $request->recipe_level,
             'recipe_visibility' => $request->recipe_visibility,
+            'recipe_url' => $image->hashName(),
             'created_at' => date("Y-m-d h:m:i"),
             'updated_at' => date("Y-m-d h:m:i"),
         ]);

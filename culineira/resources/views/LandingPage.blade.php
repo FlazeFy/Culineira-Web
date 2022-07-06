@@ -472,8 +472,6 @@
                 z-index: 1;
             }
             .deneb_cta .cta_wrapper:after {
-                content: "";
-                background: url(../images/shape/cta_shape.png) no-repeat;
                 background-position: bottom;
                 width: 100%;
                 height: 100%;
@@ -491,42 +489,9 @@
                     font-size: 24px;
                 }
             }
-            .deneb_cta .cta_wrapper .cta_content h3:after {
-                content: "";
-                display: block;
-                background: url(../images/shape/line_2.png) no-repeat;
-                max-width: 110px;
-                height: 2px;
-                margin-top: 13px;
-                margin-bottom: 24px;
-            }
+
             .deneb_cta .cta_wrapper .cta_content p {
                 color: #fff;
-            }
-            .deneb_cta .cta_wrapper .button_box {
-                float: right;
-            }
-            @media only screen and (min-width: 768px) and (max-width: 991px) {
-                .deneb_cta .cta_wrapper .button_box {
-                    float: none;
-                    text-align: left;
-                    margin-top: 30px;
-                }
-            }
-            @media (max-width: 767px) {
-                .deneb_cta .cta_wrapper .button_box {
-                    float: none;
-                    text-align: center;
-                    margin-top: 30px;
-                }
-            }
-            .deneb_cta .cta_wrapper .button_box .deneb_btn {
-                background: #fff;
-                color: #011a3e;
-            }
-            .deneb_cta .cta_wrapper .button_box .deneb_btn:hover,
-            .deneb_cta .cta_wrapper .button_box .deneb_btn:focus {
-                box-shadow: 2.5px 4.33px 15px 0px rgba(0, 0, 0, 0.15);
             }
 
             /*Autocomplete search*/
@@ -873,7 +838,7 @@
                 </section>
 
                 <section>
-                    <div class="container" style="margin-top:12%;">
+                    <div class="container bg-transparent py-4" style="margin-top:15%;">
                         <h2 class="text-dark text-center mt-5">FREQUENTLY ASKED QUESTIONS</h2></header>
                         <div class="row">
                             <div class="col-lg-6">
@@ -963,24 +928,24 @@
                 </section>
 
                 <section>
-                    <div class="container" style="margin-top:12%;">
+                    <div class="container bg-transparent py-4" style="margin-top:15%;">
                         <h2 class="text-dark text-center mt-5">THEIR EXPERIENCE</h2></header>
                         <div class="row">
                             @php($i = 1)
                             @foreach($review as $rev)
                                 @if($i != 2)
                                 <div class="card border-0 bg-transparent mx-5 p-3 w-25">
-                                    <img class="rounded-circle img-fluid rounded shadow w-75 mx-auto d-block" src="{{asset('assets/image/users/user_flazefy.jpg')}}" alt='user_flazefy.jpg'>
-                                    <h4 class="text-center fw-bold">@ {{$rev->users.username}}</h4>
-                                    <a class="text-center">"{{$rev->review_body}}"</a>
-                                    <a class="text-center fst-italic fw-bold mt-2">joined since Dec 2021</a>
+                                    <img class="rounded-circle img-fluid rounded shadow w-75 mx-auto d-block" src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $rev->username;?>.jpg" alt='user_<?php echo $rev->username; ?>.jpg'>
+                                    <h4 class="text-center fw-bold">@ {{$rev->username}}</h4>
+                                    <a class="text-center">"{{$rev->body}}"</a>
+                                    <a class="text-center fst-italic fw-bold mt-2">joined since <?php echo date('F, Y', strtotime($rev->joined)); ?></a>
                                 </div>
                                 @else
                                 <div class="card border-0 bg-transparent mt-5 mx-5 p-3 w-25">
-                                    <img class="rounded-circle img-fluid rounded shadow w-75 mx-auto d-block" src="{{asset('assets/image/users/user_flazefy.jpg')}}" alt='user_flazefy.jpg'>
-                                    <h4 class="text-center fw-bold">@ {{$rev->users.username}}</h4>
-                                    <a class="text-center">"{{$rev->review_body}}"</a>
-                                    <a class="text-center fst-italic fw-bold mt-2">joined since Jan 2022</a>
+                                    <img class="rounded-circle img-fluid rounded shadow w-75 mx-auto d-block" src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $rev->username;?>.jpg" alt='user_<?php echo $rev->username; ?>.jpg'>
+                                    <h4 class="text-center fw-bold">@ {{$rev->username}}</h4>
+                                    <a class="text-center">"{{$rev->body}}"</a>
+                                    <a class="text-center fst-italic fw-bold mt-2">joined since <?php echo date('F, Y', strtotime($rev->joined)); ?></a>
                                 </div>
                                 @endif
                                 @php($i++)
@@ -1018,7 +983,7 @@
                         <div class="col-lg-4 col-md-6 col-12">
                             <div class="widget widegt_about">
                                 <div class="widget_title">
-                                    <img src="assets/images/logo_1.png" class="img-fluid" alt="">
+                                    <h2>Culineira</h2>
                                 </div>
                                 <p class="text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                             </div>

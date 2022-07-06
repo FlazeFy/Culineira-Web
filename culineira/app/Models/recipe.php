@@ -11,6 +11,6 @@ class recipe extends Model
 
     protected $table = 'recipes';
     protected $primaryKey = 'id';
-    protected $fillable = ['user_id', 'recipe_name', 'recipe_calorie', 'recipe_desc', 'recipe_country', 'recipe_type', 'recipe_time_spend', 'recipe_main_ing', 'recipe_level', 'recipe_visibility', 'created_at', 'updated_at'];
+    protected $fillable = ['user_id', 'recipe_name', 'recipe_calorie', 'recipe_desc', 'recipe_country', 'recipe_type', 'recipe_time_spend', 'recipe_main_ing', 'recipe_level', 'recipe_visibility', 'recipe_url', 'created_at', 'updated_at'];
 
 }
