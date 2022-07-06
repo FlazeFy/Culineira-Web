@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Models\recipe;
 use App\Models\user;
 use App\Models\feedback;
+use App\Models\review;
 use App\Http\Controllers\RecipeController;
 
 class LandingController extends Controller
@@ -22,8 +23,9 @@ class LandingController extends Controller
     {
         $user = user::all();
         $recipe = recipe::all();
+        $review = DB::table('review')->join('users', 'users.id', '=', 'review.users_id');
 
-        return view ('LandingPage')->with('recipe', $recipe)->with('user', $user);
+        return view ('LandingPage')->with('recipe', $recipe)->with('user', $user)->with('review', $review);
     }
 
     /**
@@ -33,18 +35,26 @@ class LandingController extends Controller
      */
     public function create(Request $request)
     {
-        user::create([
-            'username' => $request-> username,
-            'email' => $request-> email,
-            'password' => $request-> password,
-            'description' => $request-> description,
-            'country' => $request-> country,
-            'created_at' => date("Y-m-d h:m:i"),
-            'updated_at' => date("Y-m-d h:m:i"),
-        ]);
-        $request->session()->put('usernameKey', $request-> username);
-        $request->session()->put('passwordKey', $request-> password);
-        return redirect()->route('recipe');
+        $check = DB::table('users')
+            ->select()
+            ->where('username', $request-> username)
+            ->get();
+        if(count($check) == 0){
+            user::create([
+                'username' => $request-> username,
+                'email' => $request-> email,
+                'password' => $request-> password,
+                'description' => $request-> description,
+                'country' => $request-> country,
+                'created_at' => date("Y-m-d h:m:i"),
+                'updated_at' => date("Y-m-d h:m:i"),
+            ]);
+            $request->session()->put('usernameKey', $request-> username);
+            $request->session()->put('passwordKey', $request-> password);
+            return redirect()->route('recipe');
+        } else {
+            return redirect()->route('/')->with('failed_message', 'Username already been taken');
+        }
     }
 
     public function login(Request $request)
@@ -60,7 +70,7 @@ class LandingController extends Controller
             $request->session()->put('passwordKey', $request-> password);
             return redirect()->route('recipe');
         } else {
-            return redirect()->back();
+            return redirect()->back()->with('failed_message', 'Wrong username or password');
         }
     }
 
@@ -81,7 +91,7 @@ class LandingController extends Controller
             'created_at' => date("Y-m-d h:m:i"),
             'updated_at' => date("Y-m-d h:m:i"),
         ]);
-        return redirect('/')->with('flash_message', 'Feedback was posted!');
+        return redirect('/')->with('success_message', 'Feedback was posted!');
     }
     /**
      * Display the specified resource.

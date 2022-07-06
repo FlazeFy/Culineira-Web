@@ -768,105 +768,227 @@
                         </div>
                     </div>
                 </div>
-                <div class='container-fluid bg-transparent py-4' style="padding:15%;">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="card border-0 shadow" style="width: 18rem; margin-top:50%;">
-                                <div class="card-body">
-                                    <h5 class="card-title">What is Culineira</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
+
+                <section>
+                    <div class='container-fluid bg-transparent py-4' style="padding:15%;">
+                    <h2 class="text-dark text-center mt-5">OUR FEATURES</h2></header>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="card border-0 shadow" style="width: 18rem; margin-top:50%;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">What is Culineira</h5>
+                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="row">
-                                <div class="card border-0 shadow mt-5 mx-2" style="width:220px;">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <i class="fa-solid fa-book fa-2x"></i>
-                                            </div>
-                                            <div class="col-md-10">
-                                                <h5 class="card-title">Recipes</h5>
-                                            </div>
-                                        </div>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-                                    </div>
-                                </div>
-                                <div class="card border-0 shadow mt-5 mx-2" style="width:220px;">
-                                    <div class="card-body">
-                                    <div class="row">
-                                            <div class="col-md-2">
-                                                <i class="fa-solid fa-kitchen-set fa-2x"></i>
-                                            </div>
-                                            <div class="col-md-10">
-                                                <h5 class="card-title">My Kitchen</h5>
-                                            </div>
-                                        </div>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-                                    </div>
-                                </div>
-                                <div class="card border-0 shadow mt-5 mx-2" style="width:220px;">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <i class="fa-solid fa-people-group fa-2x"></i>
-                                            </div>
-                                            <div class="col-md-10">
-                                                <h5 class="card-title mx-1">Community</h5>
-                                            </div>
-                                        </div>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-                                    </div>
-                                </div>
-                                <div class="card border-0 shadow mt-3 mx-2" style="width:220px;">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <i class="fa-solid fa-link fa-2x"></i>
-                                            </div>
-                                            <div class="col-md-10">
-                                                <h5 class="card-title mx-1">Dependencies</h5>
-                                            </div>
-                                        </div>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-                                    </div>
-                                </div>
-                                <div class="card border-0 shadow mt-3 mx-2" style="width:220px;">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <i class="fa-solid fa-person-chalkboard fa-2x"></i>
-                                            </div>
-                                            <div class="col-md-10">
-                                                <h5 class="card-title mx-1">Classroom</h5>
-                                            </div>
-                                        </div>
-                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-                                    </div>
-                                </div>
-                                <div class="card border-0 shadow mt-3 mx-2" style="width:220px; background:#EB7336;">
-                                    <div class="card-body">
-                                        <form action="/login/postFeedback" method="POST">
-                                            @csrf
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="card border-0 shadow mt-5 mx-2" style="width:220px;">
+                                        <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-2">
-                                                    <i class="fa-solid fa-comment-dots fa-2x text-white"></i>
+                                                    <i class="fa-solid fa-book fa-2x"></i>
                                                 </div>
                                                 <div class="col-md-10">
-                                                    <h5 class="text-white">Feedback</h5>
+                                                    <h5 class="card-title">Recipes</h5>
                                                 </div>
                                             </div>
-                                            <textarea class="form-control" rows="5" aria-label="With textarea" name="feedback_body" placeholder="type your feedback here..."></textarea>
-                                            <button class="btn btn-success mt-2" type="submit">Send</button>
-                                        </form>
+                                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+                                        </div>
+                                    </div>
+                                    <div class="card border-0 shadow mt-5 mx-2" style="width:220px;">
+                                        <div class="card-body">
+                                        <div class="row">
+                                                <div class="col-md-2">
+                                                    <i class="fa-solid fa-kitchen-set fa-2x"></i>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <h5 class="card-title">My Kitchen</h5>
+                                                </div>
+                                            </div>
+                                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+                                        </div>
+                                    </div>
+                                    <div class="card border-0 shadow mt-5 mx-2" style="width:220px;">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <i class="fa-solid fa-people-group fa-2x"></i>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <h5 class="card-title mx-1">Community</h5>
+                                                </div>
+                                            </div>
+                                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+                                        </div>
+                                    </div>
+                                    <div class="card border-0 shadow mt-3 mx-2" style="width:220px;">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <i class="fa-solid fa-link fa-2x"></i>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <h5 class="card-title mx-1">Dependencies</h5>
+                                                </div>
+                                            </div>
+                                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+                                        </div>
+                                    </div>
+                                    <div class="card border-0 shadow mt-3 mx-2" style="width:220px;">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <i class="fa-solid fa-person-chalkboard fa-2x"></i>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <h5 class="card-title mx-1">Classroom</h5>
+                                                </div>
+                                            </div>
+                                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+                                        </div>
+                                    </div>
+                                    <div class="card border-0 shadow mt-3 mx-2" style="width:220px; background:#EB7336;">
+                                        <div class="card-body">
+                                            <form action="/login/postFeedback" method="POST">
+                                                @csrf
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <i class="fa-solid fa-comment-dots fa-2x text-white"></i>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <h5 class="text-white">Feedback</h5>
+                                                    </div>
+                                                </div>
+                                                <textarea class="form-control" rows="5" aria-label="With textarea" name="feedback_body" placeholder="type your feedback here..."></textarea>
+                                                <button class="btn btn-success mt-2" type="submit">Send</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </section>
+
+                <section>
+                    <div class="container" style="margin-top:12%;">
+                        <h2 class="text-dark text-center mt-5">FREQUENTLY ASKED QUESTIONS</h2></header>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div id="accordionFAQ">
+                                    <div class="card bg-transparent border-0">
+                                        <div class="card-header" id="headingOne" style='border:none;'>
+                                            <a data-bs-toggle="collapse" href="#collapseA1" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                <h6 class="text-title"><i class="fa-solid fa-angle-down float-right"></i> Why use Culineira?</h6>
+                                            </a>
+                                        </div>
+                                        <div id="collapseA1" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionFAQ">
+                                            <div class="card-body text-title">
+                                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card bg-transparent border-0">
+                                        <div class="card-header" id="headingTwo" style='border:none;'>
+                                            <a data-bs-toggle="collapse" href="#collapseA2" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                <h6 class="text-title"><i class="fa-solid fa-angle-down float-right"></i> Are Culineira ensure security of user data?</h6>
+                                            </a>
+                                        </div>
+                                        <div id="collapseA2" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionFAQ">
+                                            <div class="card-body text-title">
+                                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card bg-transparent border-0">
+                                        <div class="card-header" id="headingThree" style='border:none;'>
+                                            <a data-bs-toggle="collapse" href="#collapseA3" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                <h6 class="text-title"><i class="fa-solid fa-angle-down float-right"></i> Are all recipe in Culineira trusted?</h6>
+                                            </a>
+                                        </div>
+                                        <div id="collapseA3" class="collapse" aria-labelledby="headingThree" data-bs-parent="#accordionFAQ">
+                                            <div class="card-body text-title">
+                                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div id="accordion2">
+                                    <div class="card bg-transparent border-0">
+                                        <div class="card-header" id="headingOne" style='border:none;'>
+                                            <a data-bs-toggle="collapse" href="#collapseB1" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                <h6 class="text-title"><i class="fa-solid fa-angle-down float-right"></i> The difference between Culineira and others similiar Apps?</h6>
+                                            </a>
+                                        </div>
+                                        <div id="collapseB1" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordion2">
+                                            <div class="card-body text-title">
+                                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card bg-transparent border-0">
+                                        <div class="card-header" id="headingTwo" style='border:none;'>
+                                            <a data-bs-toggle="collapse" href="#collapseB2" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                <h6 class="text-title"><i class="fa-solid fa-angle-down float-right"></i> Can Culineira be used for free?</h6>
+                                            </a>
+                                        </div>
+                                        <div id="collapseB2" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion2">
+                                            <div class="card-body text-title">
+                                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card bg-transparent border-0">
+                                        <div class="card-header" id="headingThree" style='border:none;'>
+                                            <a data-bs-toggle="collapse" href="#collapseB3" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                <h6 class="text-title"><i class="fa-solid fa-angle-down float-right"></i> When we use Culineira?</h6>
+                                            </a>
+                                        </div>
+                                        <div id="collapseB3" class="collapse" aria-labelledby="headingThree" data-bs-parent="#accordion2">
+                                            <div class="card-body text-title">
+                                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="container" style="margin-top:12%;">
+                        <h2 class="text-dark text-center mt-5">THEIR EXPERIENCE</h2></header>
+                        <div class="row">
+                            @php($i = 1)
+                            @foreach($review as $rev)
+                                @if($i != 2)
+                                <div class="card border-0 bg-transparent mx-5 p-3 w-25">
+                                    <img class="rounded-circle img-fluid rounded shadow w-75 mx-auto d-block" src="{{asset('assets/image/users/user_flazefy.jpg')}}" alt='user_flazefy.jpg'>
+                                    <h4 class="text-center fw-bold">@ {{$rev->users.username}}</h4>
+                                    <a class="text-center">"{{$rev->review_body}}"</a>
+                                    <a class="text-center fst-italic fw-bold mt-2">joined since Dec 2021</a>
+                                </div>
+                                @else
+                                <div class="card border-0 bg-transparent mt-5 mx-5 p-3 w-25">
+                                    <img class="rounded-circle img-fluid rounded shadow w-75 mx-auto d-block" src="{{asset('assets/image/users/user_flazefy.jpg')}}" alt='user_flazefy.jpg'>
+                                    <h4 class="text-center fw-bold">@ {{$rev->users.username}}</h4>
+                                    <a class="text-center">"{{$rev->review_body}}"</a>
+                                    <a class="text-center fst-italic fw-bold mt-2">joined since Jan 2022</a>
+                                </div>
+                                @endif
+                                @php($i++)
+                            @endforeach
+                        </div>
+                    </div>
+                </section>
+
             </div>
         </div>
 
@@ -952,6 +1074,41 @@
                 <p class="text-center text-white">Copyright &copy; 2020 All rights reserved.</p>
             </div>
         </footer>
+
+        <!--Modal validation-->
+        @if(Session::has('failed_message'))
+            <div class="modal fade" id="error_login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Error</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <img src="{{asset('assets/image/icon/Failed.png')}}" alt='failed.png' style='width:30%;'><br>
+                        <h7 class="m-2">{{ Session::get('failed_message') }}</h7>
+                    </div>
+                </div>
+            </div>
+            </div>
+        @endif
+
+        @if(Session::has('success_message'))
+            <div class="modal fade" id="error_login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Success</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <img src="{{asset('assets/image/icon/Success.png')}}" alt='failed.png' style='width:30%;'><br>
+                        <h7 class="m-2">{{ Session::get('success_message') }}</h7>
+                    </div>
+                </div>
+            </div>
+            </div>
+        @endif
 
         <!--Others CDN.-->
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
@@ -1094,6 +1251,13 @@
             }
             var country = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua & Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia & Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands","Central Arfrican Republic","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cuba","Curacao","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Myanmar","Namibia","Nauro","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","North Korea","Norway","Oman","Pakistan","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre & Miquelon","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","St Kitts & Nevis","St Lucia","St Vincent","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad & Tobago","Tunisia","Turkey","Turkmenistan","Turks & Caicos","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States of America","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"];
             autocomplete(document.getElementById("searchInput"), country);
+        </script>
+
+        <script>
+            //Modal setting.
+            $(window).on('load', function() {
+                $('#error_login').modal('show');
+            });
         </script>
 
 	</body>
