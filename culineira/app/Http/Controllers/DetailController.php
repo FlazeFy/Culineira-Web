@@ -7,6 +7,7 @@ use App\Models\recipe;
 use App\Models\comment;
 use App\Models\user;
 use App\Models\steps;
+use App\Models\likes;
 use App\Models\ingredients;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -54,7 +55,26 @@ class DetailController extends Controller
         }
         $results = $filterRecipe->get();
 
-        return view ('DetailPage')->with('recipeId', $recipeId)->with('recipe', $recipe)->with('comment', $comment)->with('user', $user)->with('steps', $steps)->with('ingredients', $ingredients)->with('mayLikeRecipe', $mayLikeRecipe)->with('similar', $results);
+        //Get user id
+        $users_id = DB::table('users')->where('username', session()->get('usernameKey'))->get();
+        foreach($users_id as $u){
+            $id_user = $u->id;
+        }
+        //Retrive likes by recipe id and user id
+        $likesUser = DB::table('likes')->where('recipe_id', $id)->where('users_id', $id_user)->get();
+        $likesId = DB::table('likes')->where('recipe_id', $id)->get();
+
+        return view ('DetailPage')
+            ->with('recipeId', $recipeId)
+            ->with('recipe', $recipe)
+            ->with('comment', $comment)
+            ->with('user', $user)
+            ->with('steps', $steps)
+            ->with('ingredients', $ingredients)
+            ->with('mayLikeRecipe', $mayLikeRecipe)
+            ->with('similar', $results)
+            ->with('likesUser', $likesUser)
+            ->with('likesId', $likesId);
     }
 
     /**
@@ -76,6 +96,35 @@ class DetailController extends Controller
     public function store(Request $request)
     {
         //
+    }
+
+    public function likes($id)
+    {
+        $users_id = DB::table('users')->where('username', session()->get('usernameKey'))->get();
+        foreach($users_id as $u){
+            $id_user = $u->id;
+        }
+
+        //Check if recipe is liked or not
+        $check = DB::table('likes')->where('recipe_id', $id)->where('users_id', $id_user)->get();
+        if($check->count() == 0){
+            //Likes.
+            likes::create([
+                'recipe_id' => $id,
+                'users_id' => $id_user,
+                'created_at' => date("Y-m-d h:m:i"),
+                'updated_at' => date("Y-m-d h:m:i"),
+            ]);
+            return redirect()->route('detail', ['id' => $id])->with('flash_message', 'Recipe liked!');;
+        } else {
+            //Disliked.
+            foreach($check as $c){
+                $id_likes = $c->id;
+            }
+            likes::destroy($id_likes);
+            return redirect()->route('detail', ['id' => $id])->with('flash_message', 'Recipe disliked!');;
+        }
+
     }
 
     /**

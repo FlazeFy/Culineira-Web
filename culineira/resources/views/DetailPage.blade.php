@@ -686,11 +686,23 @@
                     <!--Recipes Detail.-->
                     @foreach($recipeId as $data)
                         <div class='container-fluid mb-3 p-3'>
-                            <h3 class="mb-2">{{$data->recipe_name}}<span class="container border-0 text-secondary rounded-pill m-2" style="
-                                <?php if($data->recipe_level == "Beginner"){echo"background: rgba(5, 240, 44, 0.2);";}
-                                    else if($data->recipe_level == "Intermediate"){echo"background: rgba(245, 164, 2, 0.2);";}
-                                    else if($data->recipe_level == "Expert"){echo"background: rgba(255, 0, 0, 0.2);";}
-                                ?> font-size:15px;">{{$data->recipe_level}}</span></h3>
+                            <h3 class="mb-2">{{$data->recipe_name}}
+                                <span class="container border-0 text-secondary rounded-pill m-2" style="
+                                    <?php if($data->recipe_level == "Beginner"){echo"background: rgba(5, 240, 44, 0.2);";}
+                                        else if($data->recipe_level == "Intermediate"){echo"background: rgba(245, 164, 2, 0.2);";}
+                                        else if($data->recipe_level == "Expert"){echo"background: rgba(255, 0, 0, 0.2);";}
+                                    ?> font-size:15px;">{{$data->recipe_level}}
+                                </span>
+                                <span class="container border-0 text-secondary rounded-pill ml-1" style="font-size:15px;">
+                                    <a style="color: #d9534f;"><i class="fa-solid fa-heart"></i>
+                                        @php($total=0)
+                                        @foreach($likesId as $like)
+                                            @php($total++)
+                                        @endforeach
+                                        {{$total}}
+                                    </a>
+                                </span>
+                            </h3>
                             <div class="row">
                                 <div class="col-md-3 text-center mb-2">
                                     <img src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
@@ -892,13 +904,24 @@
                                 <div class="col-md-3 mb-2">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <button class="btn btn-primary w-100 border-0" style="background:#DE5667;"><i class="fa-solid fa-thumbs-up"></i></button>
+                                            <form action="/detail/likes/<?php echo $data->id;?>" method="POST" >
+                                                @csrf
+                                                @php($l=0)
+                                                @foreach($likesUser as $like)
+                                                    @php($l++)
+                                                @endforeach
+                                                @if($l > 0)
+                                                    <button class="btn btn-primary w-100 bg-transparent border-2" title="Dislike this recipe" type="submit"><i class="fa-solid fa-heart" style="color:#DE5667;"></i></button>
+                                                @else
+                                                    <button class="btn btn-primary w-100 bg-transparent border-2" title="Like this recipe" type="submit"><i class="fa-regular fa-heart" style="color:#DE5667;"></i></button>
+                                                @endif
+                                            </form>
                                         </div>
                                         <div class="col-md-3">
-                                            <button class="btn btn-primary w-100 border-0" style="background:#B35387;"><i class="fa-solid fa-paperclip"></i></button>
+                                            <button class="btn btn-primary w-100 border-2" style="background:#B35387; border-color:#B35387;" title="Add to my list"><i class="fa-solid fa-paperclip"></i></button>
                                         </div>
                                         <div class="col-md-6">
-                                            <button class="btn btn-primary w-100 border-0" style="background:#00B6AB;"><i class="fa-solid fa-share-from-square"></i> Share</button>
+                                            <button class="btn btn-primary w-100 border-2" style="background:#00B6AB; border-color:#00B6AB;"><i class="fa-solid fa-share-from-square"></i> Share</button>
                                         </div>
                                     </div>
                                     <h5 class="mt-2">Ingredients</h5>
@@ -925,8 +948,7 @@
                                     <h5>Contributors <i class="fa-solid fa-circle-info"></i></h5>
                                     <div class="container-fluid mb-2">
                                         <div class="row" style='height:90px;'>
-                                        @foreach($recipeId as $data)
-                                            @foreach($user as $data2)
+                                        @foreach($user as $data2)
                                             @if($data->user_id == $data2->id)
                                             <div class="card border-gray m-2" style='min-width:40px; width:40px; border:none; background:transparent; margin-top:5px;' type='button'>
                                                 <a href="">
@@ -936,7 +958,6 @@
                                                 </a>
                                             </div>
                                             @endif
-                                            @endforeach
                                         @endforeach
                                         </div>
                                     </div>
