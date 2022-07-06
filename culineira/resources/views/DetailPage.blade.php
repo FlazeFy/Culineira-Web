@@ -705,7 +705,7 @@
                             </h3>
                             <div class="row">
                                 <div class="col-md-3 text-center mb-2">
-                                    <img src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
+                                    <img src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
                                         style='width:70%; display: block; margin-left: auto; margin-right: auto;'><hr>
                                     <h6 style="font-size:14px;"><span class="text-secondary">Type :</span> {{$data->recipe_type}}</h6>
                                     <h6 style="font-size:14px;"><span class="text-secondary">Country :</span> {{$data->recipe_country}}</h6>
@@ -977,7 +977,7 @@
                             @foreach($user as $data2)
                             @if($data->user_id == $data2->id)
                             <div class="card border-gray w-25 p-2 border m-3" style='min-width:250px;'>
-                                <img src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
+                                <img src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
                                     style='margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
                                 <img src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data2->username;?>.jpg" alt='<?php echo $data2->username.".jpg";?>' title='<?php echo $data2->username;?>'
                                     style='border-radius:100%; margin-top:-40px; margin-left:20px; width:40px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
@@ -1031,7 +1031,7 @@
                         @foreach($user as $data2)
                         @if($data->user_id == $data2->id)
                         <div class="card border-gray w-25 p-2 border m-3" style='min-width:250px;'>
-                            <img src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
+                            <img src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
                                 style='margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
                             <img src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data2->username;?>.jpg" alt='<?php echo $data2->username.".jpg";?>' title='<?php echo $data2->username;?>'
                                 style='border-radius:100%; margin-top:-40px; margin-left:20px; width:40px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
@@ -1080,7 +1080,7 @@
                         @foreach($user as $data2)
                         @if($data->user_id == $data2->id)
                         <div class="card border-gray w-25 p-2 border m-3" style='min-width:250px;'>
-                            <img src="http://127.0.0.1:8000/assets/image/recipes/<?php echo str_ireplace(' ', '%20', $data->recipe_name)."_".$data->user_id;?>.png" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
+                            <img src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
                                 style='margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
                             <img src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data2->username;?>.jpg" alt='<?php echo $data2->username.".jpg";?>' title='<?php echo $data2->username;?>'
                                 style='border-radius:100%; margin-top:-40px; margin-left:20px; width:40px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>

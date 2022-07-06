@@ -49,7 +49,7 @@ class RecipeController extends Controller
 
         //upload image
         $image = $request->file('recipe_image');
-        $image->storeAs('public/assets/image/recipes', $image->hashName());
+        $image->storeAs('public', $image->hashName());
 
         //Recipe data.
         $id_recipe = recipe::create([
@@ -68,7 +68,7 @@ class RecipeController extends Controller
             'updated_at' => date("Y-m-d h:m:i"),
         ]);
 
-        return redirect('/recipe')->with('flash_message', 'Recipe added!');
+        return redirect('/recipe')->with('success_message', 'Recipe added!');
     }
 
     public function storeFull(Request $request)
@@ -80,7 +80,7 @@ class RecipeController extends Controller
 
         //upload image
         $image = $request->file('recipe_image');
-        $image->storeAs('public/assets/image/recipes', $image->hashName());
+        $image->storeAs('public', $image->hashName());
 
         //Recipe data.
         $recipeData = recipe::create([
@@ -125,7 +125,7 @@ class RecipeController extends Controller
             ]);
         }
 
-        return redirect('/recipe')->with('flash_message', 'Recipe added!');
+        return redirect('/recipe')->with('success_message', 'Recipe added!');
     }
 
     public function storeDependencies(Request $request)
@@ -164,7 +164,7 @@ class RecipeController extends Controller
                 'updated_at' => date("Y-m-d h:m:i"),
             ]);
         }
-        return redirect('/recipe')->with('flash_message', 'Recipe added!');
+        return redirect('/recipe')->with('success_message', 'Dependencies added!');
     }
 
     /**
@@ -209,7 +209,7 @@ class RecipeController extends Controller
             'updated_at' => date("Y-m-d h:m:i"),
         ]);
 
-        return redirect('/recipe')->with('flash_message', 'Recipe updated!');
+        return redirect('/recipe')->with('success_message', 'Recipe updated!');
     }
     public function updateVisibility(Request $request, $id)
     {
@@ -218,7 +218,7 @@ class RecipeController extends Controller
             'updated_at' => date("Y-m-d h:m:i"),
         ]);
 
-        return redirect('/recipe')->with('flash_message', 'Recipe updated!');
+        return redirect('/recipe')->with('success_message', 'Recipe visibility changed to', $request->visibility);
     }
 
     /**
@@ -232,9 +232,9 @@ class RecipeController extends Controller
     {
         if($request->validation == $request->recipe_name){
             recipe::destroy($id);
-            return redirect('/recipe')->with('flash_message', 'Recipe deleted!');
+            return redirect('/recipe')->with('success_message', 'Recipe deleted!');
         } else {
-            return redirect('/recipe')->with('flash_message', 'Delete failed, please input same recipe name!');
+            return redirect('/recipe')->with('failed_message', 'Delete failed, please input same recipe name!');
 
         }
     }

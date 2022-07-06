@@ -42,15 +42,11 @@ class DetailController extends Controller
         $name_explode = explode(" ", $name);
         $ing_explode = explode(", ", $ing);
 
-        //Count word in recipe_name.
-        $countWordName = str_word_count($name);
-        $countWordIng = str_word_count($ing);
-
         $filterRecipe = DB::table('recipes');
-        for($i=0; $i < $countWordName; $i++){
+        for($i=0; $i < count($name_explode); $i++){
             $filterRecipe->orWhere('recipe_name', 'LIKE','%'.$name_explode[$i].'%');
         }
-        for($j=0; $j < $countWordIng; $j++){
+        for($j=0; $j < count($ing_explode); $j++){
             $filterRecipe->orWhere('recipe_main_ing', 'LIKE','%'.$ing_explode[$j].'%');
         }
         $results = $filterRecipe->get();

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('recipe_main_ing', 30);
             $table->string('recipe_level', 20);
             $table->string('recipe_visibility', 20);
+            $table->string('recipe_url', 100);
             $table->timestamps();
         });
     }

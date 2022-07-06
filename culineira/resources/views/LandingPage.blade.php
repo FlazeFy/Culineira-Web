@@ -32,6 +32,8 @@
                 --background5: #CED4DA; /*For input border*/
                 --background6: #F0F0F0;
                 --background7: transparent; /*For modal, dropdown, popover border*/
+                --toast1: white;
+                --toast2: white;
             }
             body.Dark {
                 --text: whitesmoke;
@@ -42,6 +44,16 @@
                 --background4: #5e5d5d;
                 --background6: #3A3B3C;
                 --background7: #EB7336;
+                --toast1: #E39168;
+                --toast2: #EB7336;
+            }
+            .toast-body.rounded-bottom{
+                background:var(--toast2);
+                color:var(--text);
+            }
+            .toast-header{
+                background:var(--toast1);
+                color:var(--text);
             }
             .steps {
                 display: flex;
@@ -1059,17 +1071,16 @@
         @endif
 
         @if(Session::has('success_message'))
-            <div class="modal fade" id="error_login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Success</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body text-center">
-                        <img src="{{asset('assets/image/icon/Success.png')}}" alt='failed.png' style='width:30%;'><br>
-                        <h7 class="m-2">{{ Session::get('success_message') }}</h7>
-                    </div>
+            <div class="position-fixed bottom-0 end-0 p-4" style="z-index: 11">
+            <div id="recipe_toast" class="toast hide shadow rounded-top" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <img class="mx-2" src="{{asset('assets/image/icon/Success.png')}}" alt='success.png' style='width:22px;'>
+                    <h6 class="me-auto mt-1 ">Success</h6>
+                    <small>Just now</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body rounded-bottom">
+                    {{ Session::get('success_message') }}
                 </div>
             </div>
             </div>
@@ -1222,6 +1233,7 @@
             //Modal setting.
             $(window).on('load', function() {
                 $('#error_login').modal('show');
+                $('#recipe_toast').toast('show');
             });
         </script>
 

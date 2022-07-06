@@ -26,6 +26,7 @@ class LandingController extends Controller
         $review = DB::table('review')
             ->join('users', 'users.id', '=', 'review.users_id')
             ->select('users.username as username','review.review_body as body','users.created_at as joined')
+            ->limit(3)
             ->get();
 
         return view ('LandingPage')->with('recipe', $recipe)->with('user', $user)->with('review', $review);
