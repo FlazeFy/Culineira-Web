@@ -948,7 +948,7 @@
             </div><!--End of accordion-->
 
             <div class='container-fluid mb-3 p-3'>
-                <h3 class="mb-2">Similar Recipe</h3>
+                <h3 class="mb-2">Similar Recipe <i class="fa-solid fa-circle-exclamation fa-2xs" type="button" data-bs-toggle="popover" title="Information" data-bs-content="Show others recipe with same main ingredients"></i></h3>
                 <div class="row">
                 @foreach($similar as $data)
                     @foreach($recipeId as $rcp)
@@ -999,7 +999,7 @@
             </div>
 
             <div class='container-fluid mb-3 p-3'>
-                <h3 class="mb-2">Wanna Make Complete Dish</h3>
+                <h3 class="mb-2">Wanna Make Complete Dish <i class="fa-solid fa-circle-exclamation fa-2xs" type="button" data-bs-toggle="popover" title="Information" data-bs-content="Show different type of recipe to make full dished"></i></h3>
                 <div class="row">
                 @foreach($recipeId as $d)
                     @php($type = $d->recipe_type)
@@ -1052,7 +1052,7 @@
             </div>
 
             <div class='container-fluid mb-3 p-3'>
-                <h3 class="mb-2">You May Also Like</h3>
+                <h3 class="mb-2">You May Also Like <i class="fa-solid fa-circle-exclamation fa-2xs" type="button" data-bs-toggle="popover" title="Information" data-bs-content="Show others recipe with same country or level"></i></h3>
                 <div class="row">
                 @foreach($mayLikeRecipe as $data)
                     @if($data->recipe_visibility != 'Private')

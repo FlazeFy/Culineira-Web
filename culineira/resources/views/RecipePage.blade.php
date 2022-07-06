@@ -661,24 +661,28 @@
                     </div>
                     @php($unfinished=0)
                     @foreach($recipe as $data)
-                        @php($a=0)
-                        @php($b=0)
-                        @php($id=1)
-                        @if($data->user_id == $id)
-                            @foreach($ingredients as $ing)
-                                @if($ing->recipe_id == $data->id)
-                                    @php($a++)
+                        @foreach($user as $data2)
+                            @if(($data->user_id == $data2->id)&&($data2->username == session()->get('usernameKey')))
+                                @php($a=0)
+                                @php($b=0)
+                                @php($id=1)
+                                @if($data->user_id == $id)
+                                    @foreach($ingredients as $ing)
+                                        @if($ing->recipe_id == $data->id)
+                                            @php($a++)
+                                        @endif
+                                    @endforeach
+                                    @foreach($steps as $stp)
+                                        @if($stp->recipe_id == $data->id)
+                                            @php($b++)
+                                        @endif
+                                    @endforeach
+                                    @if(($a == 0)||($b == 0))
+                                        @php($unfinished++)
+                                    @endif
                                 @endif
-                            @endforeach
-                            @foreach($steps as $stp)
-                                @if($stp->recipe_id == $data->id)
-                                    @php($b++)
-                                @endif
-                            @endforeach
-                            @if(($a == 0)||($b == 0))
-                                @php($unfinished++)
                             @endif
-                        @endif
+                        @endforeach
                     @endforeach
                     @if($unfinished > 0)
                         <div class='container-fluid mb-3' style='background: rgba(255, 0, 0, 0.2);'>

@@ -51,8 +51,8 @@ class LandingController extends Controller
     {
         $check = DB::table('users')
             ->select()
-            ->where('username', '=', $request-> username)
-            ->where('password', '=', $request-> password)
+            ->where('username', $request-> username)
+            ->where('password', $request-> password)
             ->get();
         if(count($check) != 0){
             // $request->session()->put('idKey', $check->id);
