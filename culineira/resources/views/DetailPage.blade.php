@@ -543,6 +543,15 @@
             .border-top {
                 border-top: 1px solid #dee2e6!important;
             }
+
+            .btn-circle.btn-xl {
+                width: 35px;
+                height: 35px;
+                padding: 5px;
+                border-radius: 35px;
+                font-size: 16px;
+                line-height: 1.33;
+            }
 		</style>
 
     </head>
@@ -779,14 +788,12 @@
                                                                     <div class="col-1">
                                                                         <div hidden>
                                                                             <div data-name="popover-content-custom-<?php echo $stp->id;?>">
-                                                                                <div class="input-group">
-                                                                                    <img id="frame" src="http://127.0.0.1:8000/assets/NoImage.png" class="img-fluid d-block mx-auto" style="width:150px; border-radius:100%; border:3px solid #EB7736;"/>
-                                                                                    <a onclick="clearImageComment()" class="btn btn-danger my-2 w-100"><i class="fa-solid fa-trash"></i> Reset</a>
-                                                                                    <input class="form-control" type="file" id="formFileComment" onchange="previewComment()" name="comment_image" accept="image/png, image/jpg, image/jpeg">
-                                                                                </div>
+                                                                                <button type="button" class="btn btn-primary btn-circle btn-xl" title="Image" data-bs-toggle="collapse" href="#collapseAddImage"><i class="fa-solid fa-image"></i></button>
+                                                                                <button type="button" class="btn btn-primary btn-circle btn-xl" title="Video" data-bs-toggle="collapse" href="#collapseAddVideo"><i class="fa-solid fa-video"></i></button>
+                                                                                <button type="button" class="btn btn-primary btn-circle btn-xl" title="Tips" data-bs-toggle="collapse" href="#collapseAddTips"><i class="fa-solid fa-lightbulb"></i></button>
                                                                             </div>
                                                                         </div>
-                                                                        <a id="btn_popover_<?php echo $stp->id;?>" tabindex="0" class="btn btn-primary" role="button" data-bs-toggle="popover-custom" title="Upload Image" ><i class="fa-solid fa-paperclip"></i></a>
+                                                                        <a id="btn_popover_<?php echo $stp->id;?>" class="btn btn-primary" data-bs-toggle="popover-custom" data-html="true" title="Attached" ><i class="fa-solid fa-paperclip"></i></a>
                                                                     </div>
                                                                     <div class="col-11">
                                                                         <div class="input-group">
@@ -796,6 +803,40 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                <div id="accordionAtchTls">
+                                                                    <div class="collapse" id="collapseAddImage" data-bs-parent="#accordionAtchTls">
+                                                                        <div class="container-fluid py-1">
+                                                                            <h7><i class="fa-solid fa-circle-info"></i> Maximum size image is 5 mb</h7>
+                                                                            <div class="input-group">
+                                                                                <img id="frame" src="http://127.0.0.1:8000/assets/NoImage.png" class="img-fluid d-block mx-auto" style="width:150px; border-radius:100%; border:3px solid #EB7736;"/>
+                                                                                <div class="row mt-2">
+                                                                                    <div class="col-md-3">
+                                                                                        <a onclick="clearImageComment()" class="btn btn-danger w-100"><i class="fa-solid fa-trash"></i> Reset</a>
+                                                                                    </div>
+                                                                                    <div class="col-md-9">
+                                                                                        <input class="form-control w-100" type="file" id="formFileComment" onchange="previewComment()" name="comment_image" accept="image/png, image/jpg, image/jpeg">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="collapse" id="collapseAddVideo" data-bs-parent="#accordionAtchTls">
+                                                                        <div class="container-fluid py-1">
+                                                                            <h7><i class="fa-solid fa-circle-info"></i> Maximum size video is 5 mb</h7>
+                                                                            <div class="input-group">
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="collapse" id="collapseAddTips" data-bs-parent="#accordionAtchTls">
+                                                                        <div class="container-fluid py-1">
+                                                                            <h7><i class="fa-solid fa-circle-info"></i> ...</h7>
+                                                                            <div class="input-group">
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div><!--End of accordion attached-->
                                                                 </form>
                                                             </div>
                                                         </div>
@@ -873,12 +914,14 @@
                                                                                 @csrf
                                                                                 <div class="row">
                                                                                     <div class="col-1">
-                                                                                        <a class="btn btn-primary" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content-id="popover-content"><i class="fa-solid fa-paperclip"></i></a>
-                                                                                        <div id="popover-content" class="d-none">
-                                                                                            <a class="text-secondary">Image</a>
-                                                                                            <p class="text-secondary mt-2" style="font-size:12px;"><i class="fa-solid fa-circle-info"></i> Max size for image 5 mb, with format jpg or png</p>
-
+                                                                                        <div hidden>
+                                                                                            <div data-name="popover-content-custom-<?php echo $stp->id;?>_Stepper">
+                                                                                                <button type="button" class="btn btn-primary btn-circle btn-xl" title="Image" data-bs-toggle="collapse" href="#collapseAddImage"><i class="fa-solid fa-image"></i></button>
+                                                                                                <button type="button" class="btn btn-primary btn-circle btn-xl" title="Video" data-bs-toggle="collapse" href="#collapseAddVideo"><i class="fa-solid fa-video"></i></button>
+                                                                                                <button type="button" class="btn btn-primary btn-circle btn-xl" title="Tips" data-bs-toggle="collapse" href="#collapseAddTips"><i class="fa-solid fa-lightbulb"></i></button>
+                                                                                            </div>
                                                                                         </div>
+                                                                                        <a id="btn_popover_<?php echo $stp->id;?>_Stepper" class="btn btn-primary" data-bs-toggle="popover-custom" data-html="true" title="Attached" ><i class="fa-solid fa-paperclip"></i></a>
                                                                                     </div>
                                                                                     <div class="col-11">
                                                                                         <div class="input-group">
@@ -888,6 +931,40 @@
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
+                                                                                <div id="accordionAtchStp">
+                                                                                    <div class="collapse" id="collapseAddImage" data-bs-parent="#accordionAtchStp">
+                                                                                        <div class="container-fluid py-1">
+                                                                                            <h7><i class="fa-solid fa-circle-info"></i> Maximum size image is 5 mb</h7>
+                                                                                            <div class="input-group">
+                                                                                                <img id="frame" src="http://127.0.0.1:8000/assets/NoImage.png" class="img-fluid d-block mx-auto" style="width:150px; border-radius:100%; border:3px solid #EB7736;"/>
+                                                                                                <div class="row mt-2">
+                                                                                                    <div class="col-md-3">
+                                                                                                        <a onclick="clearImageComment()" class="btn btn-danger w-100"><i class="fa-solid fa-trash"></i> Reset</a>
+                                                                                                    </div>
+                                                                                                    <div class="col-md-9">
+                                                                                                        <input class="form-control w-100" type="file" id="formFileComment" onchange="previewComment()" name="comment_image" accept="image/png, image/jpg, image/jpeg">
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="collapse" id="collapseAddVideo" data-bs-parent="#accordionAtchStp">
+                                                                                        <div class="container-fluid py-1">
+                                                                                            <h7><i class="fa-solid fa-circle-info"></i> Maximum size video is 5 mb</h7>
+                                                                                            <div class="input-group">
+
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="collapse" id="collapseAddTips" data-bs-parent="#accordionAtchStp">
+                                                                                        <div class="container-fluid py-1">
+                                                                                            <h7><i class="fa-solid fa-circle-info"></i> ...</h7>
+                                                                                            <div class="input-group">
+
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div><!--End of accordion attached-->
                                                                                 </form>
                                                                             </div>
                                                                         </div>
@@ -1135,6 +1212,7 @@
     <script>
         //Custom popover
         $(document).ready(function() {
+            //For tiles.
             <?php
                 foreach($recipeId as $data){
                     foreach($steps as $stp){
@@ -1142,9 +1220,27 @@
                             echo"
                             var options = {
                                 html: true,
+                                sanitize: false,
                                 content: $('[data-name="; echo'"popover-content-custom-'.$stp->id.'"'; echo"]')
                             }
                             var exampleEl = document.getElementById('btn_popover_".$stp->id."')
+                            var popover = new bootstrap.Popover(exampleEl, options)";
+                        }
+                    }
+                }
+            ?>
+            //For stepper.
+            <?php
+                foreach($recipeId as $data){
+                    foreach($steps as $stp){
+                        if($stp->recipe_id == $data->id){
+                            echo"
+                            var options = {
+                                html: true,
+                                sanitize: false,
+                                content: $('[data-name="; echo'"popover-content-custom-'.$stp->id.'_Stepper"'; echo"]')
+                            }
+                            var exampleEl = document.getElementById('btn_popover_".$stp->id."_Stepper')
                             var popover = new bootstrap.Popover(exampleEl, options)";
                         }
                     }

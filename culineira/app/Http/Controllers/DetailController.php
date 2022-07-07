@@ -159,12 +159,26 @@ class DetailController extends Controller
             $id_user = $u->id;
         }
 
+        if($request->hasFile('comment_image')){
+            //Validate image.
+            $this->validate($request, [
+                'comment_image'     => 'required|image|mimes:jpeg,png,jpg|max:5000',
+            ]);
+
+            //Store image.
+            $image = $request->file('comment_image');
+            $image->storeAs('public', $image->hashName());
+            $imageURL = $image->hashName();
+        } else {
+            $imageURL = "null";
+        }
+
         comment::create([
             'recipe_id' => $id,
             'steps_id' => $request->steps_id,
             'users_id' => $id_user,
             'comment_body' => $request->comment_body,
-            'comment_image' => 'null',  //For testing
+            'comment_image' => $imageURL,
             'created_at' => date("Y-m-d h:m:i"),
             'updated_at' => date("Y-m-d h:m:i"),
         ]);
