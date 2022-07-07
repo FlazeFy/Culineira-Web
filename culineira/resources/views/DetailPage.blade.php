@@ -12,19 +12,8 @@
     <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
     <script src="https://kit.fontawesome.com/12801238e9.js" crossorigin="anonymous"></script>
-    <script href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css"></script>
     <!-- Jquery -->
     <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <!-- Jquery DataTables -->
-    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <!-- Bootstrap dataTables Javascript -->
-    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
-
-    <script type="text/javascript" charset="utf-8">
-        $(document).ready(function () {
-            $('#example').DataTable();
-        });
-    </script>
 
         <!--Source file.-->
 
@@ -723,6 +712,10 @@
                                 <div class="col-md-6 mb-2">
                                     <div class="row">
                                         <div class="col-md-3">
+                                            <button class="btn btn-primary w-100" style="background:#00B6AB; border-color:#00B6AB;" data-bs-toggle="collapse" data-bs-target="#collapseDesc">
+                                                Description</button>
+                                        </div>
+                                        <div class="col-md-3">
                                             <button class="btn btn-primary w-100" data-bs-toggle="collapse" data-bs-target="#collapseTiles">
                                                 <i class="fa-solid fa-list-check"></i> Tiles</button>
                                         </div>
@@ -731,10 +724,16 @@
                                                 <i class="fa-solid fa-timeline"></i> Stepper</button>
                                         </div>
                                     </div>
-                                    <h5 class="mt-2">How to make</h5>
+
                                     <div class="accordion" id="accordionSteps">
+                                        <div id="collapseDesc" class="collapse" data-bs-parent="#accordionSteps">
+                                            <h5 class="mt-2">Description</h5>
+                                            <p><?php echo nl2br($data->recipe_desc);?></p>
+                                        </div>
+
                                         <div class="accordion" id="accordionMsgTls">
                                         <div id="collapseTiles" class="collapse show" data-bs-parent="#accordionSteps">
+                                            <h5 class="mt-2">How to make</h5>
                                             @php($i=1)
                                             @foreach($steps as $stp)
                                                 @if($stp->recipe_id == $data->id)
@@ -778,12 +777,16 @@
                                                                 @csrf
                                                                 <div class="row">
                                                                     <div class="col-1">
-                                                                        <a class="btn btn-primary" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content-id="popover-content"><i class="fa-solid fa-paperclip"></i></a>
-                                                                        <div id="popover-content" class="d-none">
-                                                                            <a class="text-secondary">Image</a>
-                                                                            <p class="text-secondary mt-2" style="font-size:12px;"><i class="fa-solid fa-circle-info"></i> Max size for image 5 mb, with format jpg or png</p>
-
+                                                                        <div hidden>
+                                                                            <div data-name="popover-content-custom-<?php echo $stp->id;?>">
+                                                                                <div class="input-group">
+                                                                                    <img id="frame" src="http://127.0.0.1:8000/assets/NoImage.png" class="img-fluid d-block mx-auto" style="width:150px; border-radius:100%; border:3px solid #EB7736;"/>
+                                                                                    <a onclick="clearImageComment()" class="btn btn-danger my-2 w-100"><i class="fa-solid fa-trash"></i> Reset</a>
+                                                                                    <input class="form-control" type="file" id="formFileComment" onchange="previewComment()" name="comment_image" accept="image/png, image/jpg, image/jpeg">
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
+                                                                        <a id="btn_popover_<?php echo $stp->id;?>" tabindex="0" class="btn btn-primary" role="button" data-bs-toggle="popover-custom" title="Upload Image" ><i class="fa-solid fa-paperclip"></i></a>
                                                                     </div>
                                                                     <div class="col-11">
                                                                         <div class="input-group">
@@ -805,6 +808,7 @@
                                         </div>
 
                                         <div id="collapseStepper" class="collapse" data-bs-parent="#accordionSteps">
+                                            <h5 class="mt-2">How to make</h5>
                                             <div class="accordion" id="accordionExample">
                                                 <div class="row">
                                                     <div class="col-md-2">
@@ -1130,16 +1134,27 @@
 
     <script>
         //Custom popover
-        const list = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-        list.map((el) => {
-        let opts = {
-            animation: false,
-        }
-        if (el.hasAttribute('data-bs-content-id')) {
-            opts.content = document.getElementById(el.getAttribute('data-bs-content-id')).innerHTML;
-            opts.html = true;
-        }
-        new bootstrap.Popover(el, opts);
+        $(document).ready(function() {
+            <?php
+                foreach($recipeId as $data){
+                    foreach($steps as $stp){
+                        if($stp->recipe_id == $data->id){
+                            echo"
+                            var options = {
+                                html: true,
+                                content: $('[data-name="; echo'"popover-content-custom-'.$stp->id.'"'; echo"]')
+                            }
+                            var exampleEl = document.getElementById('btn_popover_".$stp->id."')
+                            var popover = new bootstrap.Popover(exampleEl, options)";
+                        }
+                    }
+                }
+            ?>
+        })
+
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl)
         })
 
         //Darkmode setting.
