@@ -115,11 +115,25 @@ class RecipeController extends Controller
         //Steps data.
         $body_count = count($request-> steps_body);
 		for($i=0; $i < $body_count; $i++){
+            if($request->hasFile('steps_image.'.$i)){
+                //validate image
+                $this->validate($request, [
+                    'steps_image.'.$i     => 'required|image|mimes:jpeg,png,jpg|max:5000',
+                ]);
+
+                //upload image
+                $image = $request->file('steps_image.'.$i);
+                $image->storeAs('public', $image->hashName());
+                $imageURL = $image->hashName();
+            } else {
+                $imageURL = "null";
+            }
+
             steps::create([
                 'recipe_id' => $recipeData->id,
                 'steps_body' => $request-> steps_body[$i],
                 'steps_type' => $request-> steps_type[$i],
-                'steps_image' => 'null',  //For testing
+                'steps_image' => $imageURL,
                 'created_at' => date("Y-m-d h:m:i"),
                 'updated_at' => date("Y-m-d h:m:i"),
             ]);
@@ -130,15 +144,6 @@ class RecipeController extends Controller
 
     public function storeDependencies(Request $request)
     {
-        // //validate image
-        // $this->validate($request, [
-        //     'recipe_image'     => 'required|image|mimes:jpeg,png,jpg|max:5000',
-        // ]);
-
-        // //upload image
-        // $image = $request->file('recipe_image');
-        // $image->storeAs('public/assets/image/recipes', $image->hashName());
-
         //Ingredients data.
         $name_count = count($request-> ingredients_name);
         for($j=0; $j < $name_count; $j++){
@@ -155,11 +160,25 @@ class RecipeController extends Controller
         //Steps data.
         $body_count = count($request-> steps_body);
 		for($i=0; $i < $body_count; $i++){
+            if($request->hasFile('steps_image.'.$i)){
+                //validate image
+                $this->validate($request, [
+                    'steps_image.'.$i     => 'required|image|mimes:jpeg,png,jpg|max:5000',
+                ]);
+
+                //upload image
+                $image = $request->file('steps_image.'.$i);
+                $image->storeAs('public/steps', $image->hashName());
+                $imageURL = $image->hashName();
+            } else {
+                $imageURL = "null";
+            }
+
             steps::create([
                 'recipe_id' => $request-> recipe_id,
                 'steps_body' => $request-> steps_body[$i],
                 'steps_type' => $request-> steps_type[$i],
-                'steps_image' => 'null',  //For testing
+                'steps_image' => $imageURL,
                 'created_at' => date("Y-m-d h:m:i"),
                 'updated_at' => date("Y-m-d h:m:i"),
             ]);

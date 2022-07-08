@@ -749,10 +749,23 @@
                                                 <div class="card shadow border-0 w-100 mb-2">
                                                     <div class="card-body">
                                                         <div class="row">
-                                                            <a style="color:#EB7336;">Steps #{{$i}}</a><br>
-                                                            <a>{{$stp->steps_body}}</a>
+                                                            <a style="color:#EB7336;">Steps #{{$i}}
                                                             @if($stp->steps_type == "Optional")
-                                                                <b>{{$stp->steps_type}}</b>
+                                                                <b class="text-secondary">~ {{$stp->steps_type}}</b>
+                                                            @endif
+                                                            </a><br>
+                                                            @if($stp->steps_image != "null")
+                                                                <div class="row">
+                                                                    <div class="col-md-5">
+                                                                        <img src="http://127.0.0.1:8000/storage/{{ $stp->steps_image }}" alt='{{ $stp->steps_image }}'
+                                                                            style='width:50%; display: block; margin-left: auto; margin-right: auto;'>
+                                                                    </div>
+                                                                    <div class="col-md-7">
+                                                                        <a>{{$stp->steps_body}}</a>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <a>{{$stp->steps_body}}</a>
                                                             @endif
                                                         </div>
                                                         <button class="btn btn-link border-0 bg-transparent" style="font-size:16px; text-decoration:none; color:#EB7336;"
@@ -771,7 +784,13 @@
                                                                                     </div>
                                                                                     <div class="flex-shrink-1 rounded py-2 px-3 mr-3" style="<?php if($cmt->users_id == $data->user_id){echo "border:2px #EB7336 solid;";}?>">
                                                                                         <div class="font-weight-bold mb-1" style="color:#EB7336;">{{$u->username}}<span class="text-secondary" id="dateMsg"> {{$cmt->created_at}}</span></div>
-                                                                                        {{$cmt->comment_body}}
+                                                                                        @if($cmt->comment_image != "null")
+                                                                                            <img src="http://127.0.0.1:8000/storage/{{ $cmt->comment_image }}" alt='{{ $cmt->comment_image }}'
+                                                                                                style='width:30%; display: block; margin-left: auto; margin-right: auto;'>
+                                                                                            <a>{{$cmt->comment_body}}</a>
+                                                                                        @else
+                                                                                            <a>{{$cmt->comment_body}}</a>
+                                                                                        @endif
                                                                                     </div>
                                                                                 </div>
                                                                                 @php($c++)
@@ -880,10 +899,23 @@
                                                                     data-bs-parent="#accordionExample">
                                                                     <div class="card-body p-4">
                                                                         <div class="row">
-                                                                            <a style="color:#EB7336;">Steps #{{$j}}</a><br>
-                                                                            <a class="mb-3">{{$stp->steps_body}}</a>
+                                                                            <a style="color:#EB7336;">Steps #{{$i}}
                                                                             @if($stp->steps_type == "Optional")
-                                                                                <b>{{$stp->steps_type}}</b>
+                                                                                <b class="text-secondary">~ {{$stp->steps_type}}</b>
+                                                                            @endif
+                                                                            </a><br>
+                                                                            @if($stp->steps_image != "null")
+                                                                                <div class="row">
+                                                                                    <div class="col-md-5">
+                                                                                        <img src="http://127.0.0.1:8000/storage/{{ $stp->steps_image }}" alt='{{ $stp->steps_image }}'
+                                                                                            style='width:50%; display: block; margin-left: auto; margin-right: auto;'>
+                                                                                    </div>
+                                                                                    <div class="col-md-7">
+                                                                                        <a>{{$stp->steps_body}}</a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            @else
+                                                                                <a>{{$stp->steps_body}}</a>
                                                                             @endif
                                                                             <a style="color:#EB7336; margin-top:10px;">Comment</a>
                                                                             <div class="card card-body">
@@ -899,7 +931,13 @@
                                                                                                     </div>
                                                                                                     <div class="flex-shrink-1 rounded py-2 px-3 mr-3" style="<?php if($cmt->users_id == $data->user_id){echo "border:2px #EB7336 solid;";}?>">
                                                                                                         <div class="font-weight-bold mb-1" style="color:#EB7336;">{{$u->username}}<span class="text-secondary" id="dateMsg"> {{$cmt->created_at}}</span></div>
-                                                                                                        {{$cmt->comment_body}}
+                                                                                                        @if($cmt->comment_image != "null")
+                                                                                                            <img src="http://127.0.0.1:8000/storage/{{ $cmt->comment_image }}" alt='{{ $cmt->comment_image }}'
+                                                                                                                style='width:50%; display: block; margin-left: auto; margin-right: auto;'>
+                                                                                                            <a>{{$cmt->comment_body}}</a>
+                                                                                                        @else
+                                                                                                            <a>{{$cmt->comment_body}}</a>
+                                                                                                        @endif
                                                                                                     </div>
                                                                                                 </div>
                                                                                                 @php($c++)
@@ -916,9 +954,9 @@
                                                                                     <div class="col-1">
                                                                                         <div hidden>
                                                                                             <div data-name="popover-content-custom-<?php echo $stp->id;?>_Stepper">
-                                                                                                <button type="button" class="btn btn-primary btn-circle btn-xl" title="Image" data-bs-toggle="collapse" href="#collapseAddImage"><i class="fa-solid fa-image"></i></button>
-                                                                                                <button type="button" class="btn btn-primary btn-circle btn-xl" title="Video" data-bs-toggle="collapse" href="#collapseAddVideo"><i class="fa-solid fa-video"></i></button>
-                                                                                                <button type="button" class="btn btn-primary btn-circle btn-xl" title="Tips" data-bs-toggle="collapse" href="#collapseAddTips"><i class="fa-solid fa-lightbulb"></i></button>
+                                                                                                <button type="button" class="btn btn-primary btn-circle btn-xl" title="Image" data-bs-toggle="collapse" href="#collapseAddImage_Stepper"><i class="fa-solid fa-image"></i></button>
+                                                                                                <button type="button" class="btn btn-primary btn-circle btn-xl" title="Video" data-bs-toggle="collapse" href="#collapseAddVideo_Stepper"><i class="fa-solid fa-video"></i></button>
+                                                                                                <button type="button" class="btn btn-primary btn-circle btn-xl" title="Tips" data-bs-toggle="collapse" href="#collapseAddTips_Stepper"><i class="fa-solid fa-lightbulb"></i></button>
                                                                                             </div>
                                                                                         </div>
                                                                                         <a id="btn_popover_<?php echo $stp->id;?>_Stepper" class="btn btn-primary" data-bs-toggle="popover-custom" data-html="true" title="Attached" ><i class="fa-solid fa-paperclip"></i></a>
@@ -932,7 +970,7 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div id="accordionAtchStp">
-                                                                                    <div class="collapse" id="collapseAddImage" data-bs-parent="#accordionAtchStp">
+                                                                                    <div class="collapse" id="collapseAddImage_Stepper" data-bs-parent="#accordionAtchStp">
                                                                                         <div class="container-fluid py-1">
                                                                                             <h7><i class="fa-solid fa-circle-info"></i> Maximum size image is 5 mb</h7>
                                                                                             <div class="input-group">
@@ -948,7 +986,7 @@
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="collapse" id="collapseAddVideo" data-bs-parent="#accordionAtchStp">
+                                                                                    <div class="collapse" id="collapseAddVideo_Stepper" data-bs-parent="#accordionAtchStp">
                                                                                         <div class="container-fluid py-1">
                                                                                             <h7><i class="fa-solid fa-circle-info"></i> Maximum size video is 5 mb</h7>
                                                                                             <div class="input-group">
@@ -956,7 +994,7 @@
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="collapse" id="collapseAddTips" data-bs-parent="#accordionAtchStp">
+                                                                                    <div class="collapse" id="collapseAddTips_Stepper" data-bs-parent="#accordionAtchStp">
                                                                                         <div class="container-fluid py-1">
                                                                                             <h7><i class="fa-solid fa-circle-info"></i> ...</h7>
                                                                                             <div class="input-group">
@@ -1010,7 +1048,7 @@
                                         <b>Required</b><br>
                                         @php($i=1)
                                         @foreach($ingredients as $ing)
-                                            @if(($stp->recipe_id == $data->id)&&($ing->ingredients_type == "Required"))
+                                            @if(($ing->recipe_id == $data->id)&&($ing->ingredients_type == "Required"))
                                                 <a style="font-size:12px;">{{$ing->ingredients_vol}} ~ {{$ing->ingredients_name}}</a><br>
                                                 @php($i++)
                                             @endif
@@ -1019,7 +1057,7 @@
                                         <br><b>Optional</b><br>
                                         @php($i=1)
                                         @foreach($ingredients as $ing)
-                                            @if(($stp->recipe_id == $data->id)&&($ing->ingredients_type == "Optional"))
+                                            @if(($ing->recipe_id == $data->id)&&($ing->ingredients_type == "Optional"))
                                                 <a style="font-size:12px;">{{$ing->ingredients_vol}} ~ {{$ing->ingredients_name}}</a><br>
                                                 @php($i++)
                                             @endif
