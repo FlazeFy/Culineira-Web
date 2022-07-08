@@ -737,6 +737,11 @@
                                     <div class="accordion" id="accordionSteps">
                                         <div id="collapseDesc" class="collapse" data-bs-parent="#accordionSteps">
                                             <h5 class="mt-2">Description</h5>
+                                            @if($data->recipe_video != "null")
+                                                <video controls class="rounded w-100" alt="video" >
+                                                    <source src="http://127.0.0.1:8000/storage/{{ $data->recipe_video }}">
+                                                </video>
+                                            @endif
                                             <p><?php echo nl2br($data->recipe_desc);?></p>
                                         </div>
 

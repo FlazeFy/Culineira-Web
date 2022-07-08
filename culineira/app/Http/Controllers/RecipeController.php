@@ -7,6 +7,8 @@ use App\Models\recipe;
 use App\Models\user;
 use App\Models\steps;
 use App\Models\ingredients;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class RecipeController extends Controller
 {
@@ -64,6 +66,7 @@ class RecipeController extends Controller
             'recipe_level' => $request->recipe_level,
             'recipe_visibility' => $request->recipe_visibility,
             'recipe_url' => $image->hashName(),
+            'recipe_video' => "null",
             'created_at' => date("Y-m-d h:m:i"),
             'updated_at' => date("Y-m-d h:m:i"),
         ]);
@@ -82,6 +85,20 @@ class RecipeController extends Controller
         $image = $request->file('recipe_image');
         $image->storeAs('public', $image->hashName());
 
+        if($request->hasFile('recipe_video')){
+            //validate image
+            $this->validate($request, [
+                'recipe_video'     => 'mimes:mp4|max:50000',
+            ]);
+
+            //upload image
+            $video = $request->file('recipe_video');
+            $video->storeAs('public', $video->hashName());
+            $videoURL = $video->hashName();
+        } else {
+            $videoURL = "null";
+        }
+
         //Recipe data.
         $recipeData = recipe::create([
             'user_id' => 1, //For testing
@@ -95,6 +112,7 @@ class RecipeController extends Controller
             'recipe_level' => $request->recipe_level,
             'recipe_visibility' => $request->recipe_visibility,
             'recipe_url' => $image->hashName(),
+            'recipe_video' => $videoURL,
             'created_at' => date("Y-m-d h:m:i"),
             'updated_at' => date("Y-m-d h:m:i"),
         ]);
@@ -168,7 +186,7 @@ class RecipeController extends Controller
 
                 //upload image
                 $image = $request->file('steps_image.'.$i);
-                $image->storeAs('public/steps', $image->hashName());
+                $image->storeAs('public', $image->hashName());
                 $imageURL = $image->hashName();
             } else {
                 $imageURL = "null";
@@ -217,16 +235,51 @@ class RecipeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        recipe::where('id', $id)->update([
-            'recipe_calorie' => $request-> recipe_calorie,
-            'recipe_desc' => $request-> recipe_desc,
-            'recipe_country' => $request-> recipe_country,
-            'recipe_type' => $request-> recipe_type,
-            'recipe_time_spend' => $request-> recipe_time_spend,
-            'recipe_main_ing' => $request->recipe_main_ing,
-            'recipe_level' => $request->recipe_level,
-            'updated_at' => date("Y-m-d h:m:i"),
-        ]);
+        $recipeId = DB::table('recipes')->where('id', $id)->get();
+        if($request->hasFile('recipe_url')){
+            //Get old image url.
+            foreach($recipeId as $r){
+                $old_image = $r->recipe_url;
+            }
+
+            //Validate image.
+            $this->validate($request, [
+                'recipe_url'     => 'required|image|mimes:jpeg,png,jpg|max:5000',
+            ]);
+
+            //Upload image.
+            $new_image = $request->file('recipe_url');
+            $new_image->storeAs('public', $new_image->hashName());
+            $imageURL = $new_image->hashName();
+
+            //Delete old image if new image is uploaded.
+            if($request->file('recipe_url')->isValid()){
+                Storage::delete('public/'.$old_image);
+            }
+
+            recipe::where('id', $id)->update([
+                'recipe_calorie' => $request-> recipe_calorie,
+                'recipe_desc' => $request-> recipe_desc,
+                'recipe_country' => $request-> recipe_country,
+                'recipe_type' => $request-> recipe_type,
+                'recipe_time_spend' => $request-> recipe_time_spend,
+                'recipe_main_ing' => $request->recipe_main_ing,
+                'recipe_level' => $request->recipe_level,
+                'recipe_url' => $imageURL,
+                'updated_at' => date("Y-m-d h:m:i"),
+            ]);
+        } else {
+            recipe::where('id', $id)->update([
+                'recipe_calorie' => $request-> recipe_calorie,
+                'recipe_desc' => $request-> recipe_desc,
+                'recipe_country' => $request-> recipe_country,
+                'recipe_type' => $request-> recipe_type,
+                'recipe_time_spend' => $request-> recipe_time_spend,
+                'recipe_main_ing' => $request->recipe_main_ing,
+                'recipe_level' => $request->recipe_level,
+                'updated_at' => date("Y-m-d h:m:i"),
+            ]);
+        }
 
         return redirect('/recipe')->with('success_message', 'Recipe updated!');
     }

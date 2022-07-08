@@ -1129,7 +1129,7 @@
                                                                             <label class="form-label">Description</label>
                                                                             <textarea class="form-control" name="recipe_desc" rows="5" required placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing... "></textarea>
                                                                             <label class="form-label mt-2">Image <i class="fa-solid fa-circle-question" type="button"></i></label>
-                                                                            <input class="form-control" type="file" id="formFileEdit2" onchange="previewEdit2()" name="recipe_image" accept="image/png, image/jpg, image/jpeg" required>
+                                                                            <input class="form-control" type="file" id="formFileFull" onchange="previewFull()" name="recipe_image" accept="image/png, image/jpg, image/jpeg" required>
                                                                         </div>
                                                                         <div class="col-md-6 p-2">
                                                                             <label class="form-label">Main Ingredients <i class="fa-solid fa-circle-question" type="button"></i></label>
@@ -1137,7 +1137,7 @@
                                                                             <label class="form-label">Preview</label>
                                                                             <div class="row">
                                                                                 <div class="col-md-7">
-                                                                                    <img id="frame3" src="http://127.0.0.1:8000/assets/NoImage.png" class="img-fluid" style="width:200px; border-radius:100%; border:3px solid #EB7736;"/>
+                                                                                    <img id="frameFull" src="http://127.0.0.1:8000/assets/NoImage.png" class="img-fluid" style="width:200px; border-radius:100%; border:3px solid #EB7736;"/>
                                                                                 </div>
                                                                                 <div class="col-md-5">
                                                                                     <label class="form-label">Visibility <i class="fa-solid fa-circle-question" type="button"></i></label>
@@ -1146,7 +1146,7 @@
                                                                                         <option value="Private">Private</option>
                                                                                         <option value="Restricted">Restricted</option>
                                                                                     </select>
-                                                                                    <a onclick="clearImageEdit2()" class="btn btn-danger mt-3 w-100"><i class="fa-solid fa-trash"></i> Reset</a>
+                                                                                    <a onclick="clearImageFull()" class="btn btn-danger mt-3 w-100"><i class="fa-solid fa-trash"></i> Reset</a>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -1280,22 +1280,24 @@
                                                             <div class="card-body">
                                                                 <div class="row mb-2">
                                                                     <div class="col-md-3">
-                                                                        <img id="frame3" src="http://127.0.0.1:8000/assets/storyset/Finalization.png" class="img-fluid" style="width:200px;"/>
+                                                                        <img src="http://127.0.0.1:8000/assets/storyset/Finalization.png" class="img-fluid" style="width:200px;"/>
                                                                     </div>
                                                                     <div class="col-md-8">
                                                                         <a class="text-secondary">Finaly, after all of that. Now you can publish your recipe. And also you can add your video toturial if you want too.</a>
                                                                         <br>
                                                                         <label class="form-label mt-2">Video (Optional) <i class="fa-solid fa-circle-question" type="button"></i></label>
-                                                                        <input class="form-control" type="file" id="formFile" onchange="previewVideo()" name="recipe_video" accept="video/mp4, video/mkv">
+                                                                        <input class="form-control" type="file" id="formFileVideo" name="recipe_video" accept="video/mp4">
                                                                     </div>
                                                                 </div>
                                                                 <div class="container-fluid shadow p-3 mb-3">
-                                                                    <video controls class="rounded w-100" alt="video" >
-                                                                        <source src="http://127.0.0.1:8000/assets/video/videoplayback.mp4">
-                                                                    </video>
-                                                                    <div class="row mb-2">
+                                                                    <div class="container rounded" style="border:3px solid #EB7736;">
+                                                                        <video controls class="rounded w-100" alt="video" >
+                                                                            <source id="frameVideo" src="2">
+                                                                        </video>
+                                                                    </div>
+                                                                    <div class="row my-2">
                                                                         <div class="col-md-3">
-                                                                            <a class="btn btn-danger w-100">Reset</a>
+                                                                            <a class="btn btn-danger w-100" onclick="clearVideo()">Reset</a>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1525,7 +1527,7 @@
                                 <label class="form-label">Description</label>
                                 <textarea class="form-control" name="recipe_desc" rows="5" required><?php echo $data->recipe_desc; ?></textarea>
                                 <label class="form-label mt-2">Image <i class="fa-solid fa-circle-question" type="button"></i></label>
-                                <input class="form-control" type="file" id="formFileEdit" onchange="previewEdit()" name="recipe_image" accept="image/png, image/jpg, image/jpeg">
+                                <input class="form-control" type="file" id="formFileEdit<?php echo $data->id; ?>" onchange="previewEdit<?php echo $data->id; ?>()" name="recipe_url" accept="image/png, image/jpg, image/jpeg">
                             </div>
                             <div class="col-md-6 p-2">
                                 <label class="form-label">Main Ingredients <i class="fa-solid fa-circle-question" type="button"></i></label>
@@ -1533,10 +1535,10 @@
                                 <label class="form-label">Preview</label>
                                 <div class="row">
                                     <div class="col-md-7">
-                                        <img id="frame2" src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" class="img-fluid" style="width:200px; border-radius:100%; border:3px solid #EB7736;"/>
+                                        <img id="frameEdit<?php echo $data->id; ?>" src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" class="img-fluid" style="width:200px; border-radius:100%; border:3px solid #EB7736;"/>
                                     </div>
                                     <div class="col-md-5">
-                                        <a onclick="clearImageEdit()" class="btn btn-danger mt-3 w-100"><i class="fa-solid fa-trash"></i> Reset</a>
+                                        <a onclick="clearImageEdit<?php echo $data->id; ?>()" class="btn btn-danger mt-3 w-100"><i class="fa-solid fa-trash"></i> Reset</a>
                                         <button class="btn btn-success mt-2 w-100" type="submit" value="Save"><i class="fa-solid fa-floppy-disk"></i> Save </button>
                                     </div>
                                 </div>
@@ -1855,26 +1857,50 @@
         });
 
         //Image upload preview.
+        //For create instant recipe.
         function preview() {
             frame.src = URL.createObjectURL(event.target.files[0]);
-        }
-        function previewEdit() {
-            frame2.src = URL.createObjectURL(event.target.files[0]);
-        }
-        function previewEdit2() {
-            frame3.src = URL.createObjectURL(event.target.files[0]);
         }
         function clearImage() {
             document.getElementById('formFile').value = null;
             frame.src = "http://127.0.0.1:8000/assets/NoImage.png";
         }
-        function clearImageEdit() {
-            document.getElementById('formFileEdit').value = null;
-            frame2.src = "http://127.0.0.1:8000/assets/NoImage.png";
+
+        //For edit recipe.
+        <?php
+        foreach($user as $data2){
+            foreach($recipe as $data){
+                if(($data->user_id == $data2->id)&&($data2->username == session()->get('usernameKey'))){
+                    echo"
+                    function previewEdit".$data->id."() {
+                        frameEdit".$data->id.".src = URL.createObjectURL(event.target.files[0]);
+                    }
+                    function clearImageEdit".$data->id."() {
+                        document.getElementById('formFileEdit".$data->id."').value = null;
+                        frameEdit".$data->id.".src = 'http://127.0.0.1:8000/assets/NoImage.png';
+                    }";
+                }
+            }
         }
-        function clearImageEdit2() {
-            document.getElementById('formFileEdit2').value = null;
-            frame3.src = "http://127.0.0.1:8000/assets/NoImage.png";
+        ?>
+
+        //For create full recipe.
+        function previewFull() {
+            frameFull.src = URL.createObjectURL(event.target.files[0]);
+        }
+        function clearImageFull() {
+            document.getElementById('formFileFull').value = null;
+            frameFull.src = "http://127.0.0.1:8000/assets/NoImage.png";
+        }
+
+        $(document).on("change", "#formFileVideo", function(evt) {
+            var $source = $('#frameVideo');
+            $source[0].src = URL.createObjectURL(this.files[0]);
+            $source.parent()[0].load();
+        });
+        function clearVideo() {
+            document.getElementById('formFileVideo').value = null;
+            frameVideo.src = "http://127.0.0.1:8000/assets/NoVideo.png";
         }
 
         //Sidebar setting.
