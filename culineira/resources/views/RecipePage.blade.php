@@ -609,7 +609,7 @@
                                 <form autocomplete="off" action="" method="POST">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text"><button class="btn btn-primary p-1" style="height:30px; width:30px;"><i class="fa-solid fa-magnifying-glass fa-xs"></i></button></span>
-                                    <input type="text" class="form-control" id="searchInput" name="search" placeholder="recipe, @creator, or #community" aria-label="Username" aria-describedby="basic-addon1">
+                                    <input type="text" class="form-control" id="searchInput" name="search" placeholder="recipe name, or main ingredients" aria-label="Username" aria-describedby="basic-addon1">
                                 </div>
                                 </form>
                             </div>

@@ -12,8 +12,23 @@
     <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
     <script src="https://kit.fontawesome.com/12801238e9.js" crossorigin="anonymous"></script>
+    <script href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css"></script>
+
     <!-- Jquery -->
     <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <!-- Jquery DataTables -->
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <!-- Bootstrap dataTables Javascript -->
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+            $('#recipeTable').DataTable();
+        });
+        $(document).ready(function () {
+            $('#classTable').DataTable();
+        });
+    </script>
 
         <!--Source file.-->
 
@@ -46,7 +61,9 @@
                 --background7: #EB7336;
                 --background8: #3A3B3C;
             }
-
+            .text-primary{
+                color:var(--text2) !important;
+            }
             .flex-shrink-1.rounded.py-2.px-3.mr-3{
                 background:var(--background8);
             }
@@ -526,6 +543,16 @@
             .image-upload>input {
                 display: none;
             }
+            a.text-secondary.fw-normal{
+                font-size:12px;
+                width:auto;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                line-clamp: 1;
+                -webkit-box-orient: vertical;
+            }
 		</style>
 
     </head>
@@ -762,19 +789,55 @@
 
                             <div class="row gutters-sm">
                                 <div class="col-sm-6 mb-3">
-                                    <div class="container-fluid h-100 rounded border-gray border">
-                                        <div class="card-body">
-                                            <h6 class="d-flex align-items-center mb-3">Recipes</h6>
-
-                                        </div>
+                                    <div class="container-fluid h-100 rounded border-gray border p-2">
+                                        <h6 class="d-flex align-items-center mb-3">Recipes</h6>
+                                        <table class="table table-paginate" id="recipeTable" cellspacing="0" width="100%">
+                                            <thead>
+                                                <tr>
+                                                <th scope="col">Image</th>
+                                                <th scope="col">Name & Main Ingredients</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!--Public Recipe List-->
+                                                @foreach($recipeId as $r)
+                                                    <tr class='clickable-row'>
+                                                        <td style='width:60px;'> <img class="rounded img-fluid d-block mx-auto" src="http://127.0.0.1:8000/storage/{{ $r->recipe_url }}" alt='{{ $r->recipe_url }}'></td>
+                                                        <td>
+                                                            <a class="text-primary fw-normal">{{$r->recipe_name}}</a><br>
+                                                            <a class="text-secondary fw-normal">{{$r->recipe_main_ing}}</a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div><!--End of recipe section.-->
                                 <div class="col-sm-6 mb-3">
-                                    <div class="container-fluid h-100 rounded border-gray border">
-                                        <div class="card-body">
-                                            <h6 class="d-flex align-items-center mb-3">Community</h6>
-
-                                        </div>
+                                    <div class="container-fluid h-100 rounded border-gray border p-2">
+                                        <h6 class="d-flex align-items-center mb-3">Classroom</h6>
+                                        <table class="table table-paginate" id="classTable" cellspacing="0" width="100%">
+                                            <thead>
+                                                <tr>
+                                                <th scope="col">Image</th>
+                                                <th scope="col">Class Name & Type</th>
+                                                <th scope="col">Recipes</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!--Classroom List-->
+                                                @foreach($classId as $c)
+                                                    <tr class='clickable-row'>
+                                                        <td style='width:60px;'> <img class="rounded img-fluid d-block mx-auto" src="http://127.0.0.1:8000/storage/{{ $c->classroom_image }}" alt='{{ $c->classroom_image }}'></td>
+                                                        <td>
+                                                            <a class="text-primary fw-normal">{{$c->classroom_name}}</a><br>
+                                                            <a class="text-secondary fw-normal">{{$c->classroom_type}}</a>
+                                                        </td>
+                                                        <td><a class="text-primary fw-normal">10 Recipes</a></td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div><!--End of community section.-->
                             </div>

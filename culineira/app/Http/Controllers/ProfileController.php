@@ -10,6 +10,7 @@ use App\Models\steps;
 use App\Models\likes;
 use App\Models\ingredients;
 use App\Models\socmed;
+use App\Models\classroom;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
@@ -25,20 +26,36 @@ class ProfileController extends Controller
     {
         $user = user::all();
         $recipe = recipe::all();
+
+        //Show public recipe in profile.
+        $recipeId = DB::table('recipes')
+            ->join('users', 'users.id', '=', 'recipes.user_id')
+            ->where('username', session()->get('usernameKey'))
+            ->where('recipe_visibility', 'Public')
+            ->orderBy('recipes.updated_at', 'ASC')->get();
+
+        //Show classroom in profile.
+        $classId = DB::table('classroom')
+            ->join('users', 'users.id', '=', 'classroom.users_id')
+            ->where('username', session()->get('usernameKey'))
+            ->orderBy('classroom.updated_at', 'ASC')->get();
+
+        //Show social media in profile.
         $socmedId = DB::table('socmed')
             ->join('users', 'users.id', '=', 'socmed.users_id')
             ->where('username', session()->get('usernameKey'))->get();
-        $userId = DB::table('users')->where('username', session()->get('usernameKey'))->get();
-        $steps = DB::table('steps')->orderBy('id', 'ASC')->get();
-        $ingredients = ingredients::all();
+
+        //Show user login data in profile.
+        $userId = DB::table('users')
+            ->where('username', session()->get('usernameKey'))->get();
 
         return view ('ProfilePage')
             ->with('userId', $userId)
+            ->with('recipeId', $recipeId)
+            ->with('classId', $classId)
             ->with('recipe', $recipe)
             ->with('user', $user)
-            ->with('steps', $steps)
-            ->with('socmedId', $socmedId)
-            ->with('ingredients', $ingredients);
+            ->with('socmedId', $socmedId);
     }
 
     /**
