@@ -529,7 +529,7 @@
                     @if($data->username == session()->get('usernameKey'))
                     <div class='container-fluid p-2 pt-3 rounded-3' title='Click to open profile' type='button'>
                         <a href="{{ url('/profile') }}">
-                        <img class="img logo rounded-circle mb-3" src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data->username;?>.jpg" alt='<?php echo $data->username.".jpg";?>'
+                        <img class="img logo rounded-circle mb-3" src="http://127.0.0.1:8000/storage/{{ $data->image_url }}" alt='{{ $data->image_url }}'
                         style='display: block; margin-left: auto; margin-right: auto;'>
                         <h5 class="text-center" style='color:color:#2F4858;'>@<span>{{$data->username}}</span></h5>
                         <div class='row' style='justify-content:center;'>
@@ -662,7 +662,7 @@
                                     <a href="{{ url('/detail/' . $data->id) }}">
                                     <img src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
                                         style='border-radius:100%; margin-top:-10px; width:100px; display: block; margin-left: auto; margin-right: auto;'>
-                                    <img src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data2->username;?>.jpg" alt='<?php echo $data2->username.".jpg";?>' title='<?php echo $data2->username;?>'
+                                    <img src="http://127.0.0.1:8000/storage/{{ $data2->image_url }}" alt='{{ $data2->image_url }}'
                                         style='border-radius:100%; margin-top:-80px; width:40px; border:3px solid #eb7336; box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 15px;'>
                                     <a style='font-size:11px; white-space: nowrap;  display: block; margin-left: auto; margin-right: auto; margin-top:-30px;'>{{$data->recipe_name}}</a>
                                     </a>
@@ -748,7 +748,7 @@
                                 <div class="card border-gray w-25 p-2 border m-3" style='min-width:250px;'>
                                     <img src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
                                         style='margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
-                                    <img src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data2->username;?>.jpg" alt='<?php echo $data2->username.".jpg";?>' title='<?php echo $data2->username;?>'
+                                    <img src="http://127.0.0.1:8000/storage/{{ $data2->image_url }}" alt='{{ $data2->image_url }}'
                                         style='border-radius:100%; margin-top:-40px; margin-left:20px; width:40px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
                                     <img src="http://127.0.0.1:8000/assets/image/country/<?php echo $data->recipe_country;?>.png" alt='<?php echo $data->recipe_country.".png";?>' title='<?php echo $data->recipe_country;?>'
                                         style='border-radius:100%; width:40px; margin-top:30px; margin-left:200px; position:absolute; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
@@ -800,7 +800,7 @@
                                 <div class="card border-gray w-25 p-2 border m-3" style='min-width:250px;'>
                                     <img src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
                                         style='margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
-                                    <img src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data2->username;?>.jpg" alt='<?php echo $data2->username.".jpg";?>' title='<?php echo $data2->username;?>'
+                                    <img src="http://127.0.0.1:8000/storage/{{ $data2->image_url }}" alt='{{ $data2->image_url }}'
                                         style='border-radius:100%; margin-top:-40px; margin-left:20px; width:40px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
                                     <img src="http://127.0.0.1:8000/assets/image/country/<?php echo $data->recipe_country;?>.png" alt='<?php echo $data->recipe_country.".png";?>' title='<?php echo $data->recipe_country;?>'
                                         style='border-radius:100%; width:40px; margin-top:30px; margin-left:200px; position:absolute; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
@@ -852,7 +852,7 @@
                                 <div class="card border-gray w-25 p-2 border m-3" style='min-width:250px;'>
                                     <img src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
                                         style='margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
-                                    <img src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data2->username;?>.jpg" alt='<?php echo $data2->username.".jpg";?>' title='<?php echo $data2->username;?>'
+                                    <img src="http://127.0.0.1:8000/storage/{{ $data2->image_url }}" alt='{{ $data2->image_url }}'
                                         style='border-radius:100%; margin-top:-40px; margin-left:20px; width:40px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
                                     <img src="http://127.0.0.1:8000/assets/image/country/<?php echo $data->recipe_country;?>.png" alt='<?php echo $data->recipe_country.".png";?>' title='<?php echo $data->recipe_country;?>'
                                         style='border-radius:100%; width:40px; margin-top:30px; margin-left:200px; position:absolute; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>

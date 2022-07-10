@@ -500,35 +500,6 @@
                 transition: all .3s ease-in;
             }
 
-            .chat-online {
-                color: #34ce57
-            }
-
-            .chat-offline {
-                color: #e4606d
-            }
-
-            .chat-messages {
-                display: flex;
-                flex-direction: column;
-                max-height: 400px;
-                overflow-y: scroll
-            }
-
-            .chat-message-left,
-            .chat-message-right {
-                display: flex;
-                flex-shrink: 0
-            }
-
-            .chat-message-left {
-                margin-right: auto
-            }
-
-            .chat-message-right {
-                flex-direction: row-reverse;
-                margin-left: auto;
-            }
             .py-3 {
                 padding-top: 1rem!important;
                 padding-bottom: 1rem!important;
@@ -551,6 +522,9 @@
                 border-radius: 35px;
                 font-size: 16px;
                 line-height: 1.33;
+            }
+            .image-upload>input {
+                display: none;
             }
 		</style>
 
@@ -639,6 +613,9 @@
                                     <a class="nav-link" href="" role="button" data-bs-toggle="collapse" data-bs-target="#activityCollapse" aria-expanded="false" aria-controls="CollapseExample2">Activity</a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link" href="" role="button" data-bs-toggle="collapse" data-bs-target="#historyCollapse" aria-expanded="false" aria-controls="CollapseExample2">History</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="" role="button" data-bs-toggle="collapse" data-bs-target="#settingCollapse" aria-expanded="false" aria-controls="CollapseExample2">Setting</a>
                                 </li>
                             </ul>
@@ -652,11 +629,22 @@
                         @foreach($userId as $u)
                         <div class="row gutters-sm">
                             <div class="col-md-4 mb-3">
-                                <div class="card">
+                                <div class="container-fluid rounded border-gray border" >
                                     <div class="card-body">
                                         <div class="d-flex flex-column align-items-center text-center">
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
-                                            <div class="mt-3">
+                                            <form action="/profile/updateImage/<?php echo $u->id; ?>" method="POST" id="formImage" enctype="multipart/form-data">
+                                            @csrf
+                                            <img id="frame" class="img logo rounded-circle shadow" src="http://127.0.0.1:8000/storage/{{ $u->image_url }}" alt='{{ $u->image_url }}'
+                                                style='display: block; margin-left: auto; margin-right: auto; width:200px;'>
+                                                <div class="image-upload" id="formFileEditAcc" onchange="previewEditAcc()">
+                                                    <label for="file-input">
+                                                        <img class="rounded-circle shadow d-block position-relative p-1" style="width:50px; height:50px; top:-50px; left:50px; background:#198754;" title="Change Image"
+                                                            src="http://127.0.0.1:8000/assets/image/icon/ChangeImage.png"/>
+                                                    </label>
+                                                    <input id="file-input" type="file" name="image_url"/>
+                                                </div>
+                                            </form>
+                                            <div class="mb-1">
                                                 <h4>{{$u->username}}</h4>
                                                 <p class="text-secondary mb-1"><i class="fa-solid fa-location-dot"></i> {{$u->country}}</p>
                                                 <p class="text-muted font-size-sm">{{$u->description}}</p>
@@ -678,104 +666,103 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card mt-3">
+                                <div class="container-fluid mt-3 rounded border-gray border">
                                     <ul class="list-group list-group-flush">
                                     @foreach($socmedId as $s)
                                     <form action="/profile/updateSocmed/<?php echo $s->id; ?>" method="POST">
                                         @csrf
-
-                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap border-0">
                                             <h6 class="mb-2"><i class="fa-brands fa-facebook fa-lg"></i> Facebook</h6>
                                             <input class="form-control" name="socmed_facebook" value="{{$s->socmed_facebook}}" placeholder="{{$s->socmed_facebook}}">
                                         </li>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap border-0">
                                             <h6 class="mb-2"><i class="fa-brands fa-youtube fa-lg"></i> Youtube</h6>
                                             <input class="form-control" name="socmed_youtube" value="{{$s->socmed_youtube}}" placeholder="{{$s->socmed_youtube}}">
                                         </li>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap border-0">
                                             <h6 class="mb-2"><i class="fa-brands fa-tiktok fa-lg"></i> TikTok</h6>
                                             <input class="form-control" name="socmed_tiktok" value="{{$s->socmed_tiktok}}" placeholder="{{$s->socmed_tiktok}}">
                                         </li>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap border-0">
                                             <h6 class="mb-2"><i class="fa-brands fa-instagram fa-lg"></i> Instagram</h6>
                                             <input class="form-control" name="socmed_instagram" value="{{$s->socmed_instagram}}" placeholder="{{$s->socmed_instagram}}">
                                         </li>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap border-0">
                                             <h6 class="mb-2"><i class="fa-brands fa-linkedin fa-lg"></i> LinkedIn</h6>
                                             <input class="form-control" name="socmed_linkedin" value="{{$s->socmed_linkedin}}" placeholder="{{$s->socmed_linkedin}}">
                                         </li>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap border-0">
                                             <button type="submit" class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i> Update</button>
                                         </li>
                                     </form>
                                     @endforeach
                                     </ul>
                                 </div>
-                                <div class="card mt-3 p-3">
+                                <div class="container-fluid mt-3 p-3 rounded border-gray border">
                                     <h6 class="d-flex align-items-center mb-3">Achievement</h6>
 
                                 </div>
                             </div>
                             <div class="col-md-8">
-                                <div class="card mb-3">
+                                <div class="container-fluid mb-3 rounded border-gray border">
                                     <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">Fullname</h6>
+                                    <form action="/profile/updateProfile/<?php echo $u->id; ?>" method="POST" autocomplete="off">
+                                        @csrf
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <h6 class="mb-0">Username</h6>
+                                            </div>
+                                            <div class="col-sm-9 text-secondary"><input class="form-control" name="username" value="{{$u->username}}" placeholder="{{$u->username}}" disabled></div>
                                         </div>
-                                        <div class="col-sm-9 text-secondary">-</div>
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">Username</h6>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <h6 class="mb-0">Email</h6>
+                                            </div>
+                                            <div class="col-sm-9 text-secondary"><input class="form-control" name="email" value="{{$u->email}}" placeholder="{{$u->email}}" disabled></div>
                                         </div>
-                                        <div class="col-sm-9 text-secondary">{{$u->username}}</div>
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">Email</h6>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <h6 class="mb-0">Password</h6>
+                                            </div>
+                                            <div class="col-sm-9 text-secondary"><input class="form-control" name="password" value="{{$u->password}}" placeholder="{{$u->password}}"></div>
                                         </div>
-                                        <div class="col-sm-9 text-secondary">{{$u->email}}</div>
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">Password</h6>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <h6 class="mb-0">Country</h6>
+                                            </div>
+                                            <div class="col-sm-9 text-secondary">
+                                                <div class="autocomplete w-100">
+                                                    <input class="form-control" id="searchInput" name="country" value="{{$u->country}}" placeholder="{{$u->country}}">
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-9 text-secondary">{{$u->password}}</div>
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                        <h6 class="mb-0">Mobile</h6>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                            <h6 class="mb-0">Description</h6>
+                                            </div>
+                                            <div class="col-sm-9 text-secondary"><textarea class="form-control" rows="4" name="description" placeholder="{{$u->description}}">{{$u->description}}</textarea></div>
                                         </div>
-                                        <div class="col-sm-9 text-secondary">-</div>
-                                    </div>
-                                    <hr>
+                                        <hr>
                                     <div class="row">
-                                        <div class="col-sm-3">
-                                        <h6 class="mb-0">Description</h6>
+                                        <div class="col-sm-7">
+                                            <button class="btn btn-success" type="submit"><i class="fa-solid fa-pen-to-square"></i> Update</button>
                                         </div>
-                                        <div class="col-sm-9 text-secondary">{{$u->description}}</div>
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm-8">
-                                            <a class="btn btn-success" type="submit"><i class="fa-solid fa-pen-to-square"></i> Update</a>
-                                        </div>
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-5">
                                             <a class="text-secondary fst-italic fw-bold" style="font-size:12px;">Joined Since:  <span class="fw-normal">{{$u->updated_at}}</span></a><br>
                                             <a class="text-secondary fst-italic fw-bold" style="font-size:12px;">Last Updated:  <span class="fw-normal">{{$u->created_at}}</span></a>
                                         </div>
                                     </div>
+                                    </form>
                                 </div>
                             </div>
 
                             <div class="row gutters-sm">
                                 <div class="col-sm-6 mb-3">
-                                    <div class="card h-100">
+                                    <div class="container-fluid h-100 rounded border-gray border">
                                         <div class="card-body">
                                             <h6 class="d-flex align-items-center mb-3">Recipes</h6>
 
@@ -783,7 +770,7 @@
                                     </div>
                                 </div><!--End of recipe section.-->
                                 <div class="col-sm-6 mb-3">
-                                    <div class="card h-100">
+                                    <div class="container-fluid h-100 rounded border-gray border">
                                         <div class="card-body">
                                             <h6 class="d-flex align-items-center mb-3">Community</h6>
 
@@ -827,6 +814,14 @@
         var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
         return new bootstrap.Popover(popoverTriggerEl)
         })
+
+        //Image upload preview.
+        function previewEditAcc() {
+            frame.src = URL.createObjectURL(event.target.files[0]);
+        }
+        document.getElementById("formFileEditAcc").onchange = function() {
+            document.getElementById("formImage").submit();
+        };
 
         //Darkmode setting.
         function getTheme() {
@@ -891,76 +886,73 @@
 
         //Search input.
         function autocomplete(inp, arr) {
-			var currentFocus;
+            var currentFocus;
 
-			inp.addEventListener("input", function(e) {
-				var a, b, i, val = this.value;
-				closeAllLists();
-				if (!val) { return false;}
-				currentFocus = -1;
-				a = document.createElement("DIV");
-				a.setAttribute("id", this.id + "autocomplete-list");
-				a.setAttribute("class", "autocomplete-items");
-				this.parentNode.appendChild(a);
-				for (i = 0; i < arr.length; i++) {
-					if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-						b = document.createElement("DIV");
-						b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-						b.innerHTML += arr[i].substr(val.length);
-						b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-						b.addEventListener("click", function(e) {
-							inp.value = this.getElementsByTagName("input")[0].value;
-							closeAllLists();
-						});
-						a.appendChild(b);
-					}
-				}
-			});
-			inp.addEventListener("keydown", function(e) {
-				var x = document.getElementById(this.id + "autocomplete-list");
-				if (x) x = x.getElementsByTagName("div");
-				if (e.keyCode == 40) {
-					currentFocus++;
-					addActive(x);
-				} else if (e.keyCode == 38) {
-					currentFocus--;
-					addActive(x);
-				} else if (e.keyCode == 13) {
-					e.preventDefault();
-					if (currentFocus > -1) {
-						if (x) x[currentFocus].click();
-					}
-				}
-			});
-			function addActive(x) {
-				if (!x) return false;
-				removeActive(x);
-				if (currentFocus >= x.length) currentFocus = 0;
-				if (currentFocus < 0) currentFocus = (x.length - 1);
-				x[currentFocus].classList.add("autocomplete-active");
-			}
-			function removeActive(x) {
-				for (var i = 0; i < x.length; i++) {
-				x[i].classList.remove("autocomplete-active");
-				}
-			}
-			function closeAllLists(elmnt) {
-				var x = document.getElementsByClassName("autocomplete-items");
-				for (var i = 0; i < x.length; i++) {
-				if (elmnt != x[i] && elmnt != inp) {
-					x[i].parentNode.removeChild(x[i]);
-				}
-				}
-			}
-			document.addEventListener("click", function (e) {
-				closeAllLists(e.target);
-			});
-		}
-		var recipeName = [
-            @foreach($recipe as $data)<?php echo "'"; echo $data['recipe_name']; echo "',"; ?>@endforeach
-            @foreach($user as $data)<?php echo "'@"; echo $data['username']; echo "',"; ?>@endforeach
-        ];
-		autocomplete(document.getElementById("searchInput"), recipeName);
+            inp.addEventListener("input", function(e) {
+                var a, b, i, val = this.value;
+                closeAllLists();
+                if (!val) { return false;}
+                currentFocus = -1;
+                a = document.createElement("DIV");
+                a.setAttribute("id", this.id + "autocomplete-list");
+                a.setAttribute("class", "autocomplete-items");
+                this.parentNode.appendChild(a);
+                for (i = 0; i < arr.length; i++) {
+                    if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                        b = document.createElement("DIV");
+                        b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                        b.innerHTML += arr[i].substr(val.length);
+                        b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                        b.addEventListener("click", function(e) {
+                            inp.value = this.getElementsByTagName("input")[0].value;
+                            closeAllLists();
+                        });
+                        a.appendChild(b);
+                    }
+                }
+            });
+            inp.addEventListener("keydown", function(e) {
+                var x = document.getElementById(this.id + "autocomplete-list");
+                if (x) x = x.getElementsByTagName("div");
+                if (e.keyCode == 40) {
+                    currentFocus++;
+                    addActive(x);
+                } else if (e.keyCode == 38) {
+                    currentFocus--;
+                    addActive(x);
+                } else if (e.keyCode == 13) {
+                    e.preventDefault();
+                    if (currentFocus > -1) {
+                        if (x) x[currentFocus].click();
+                    }
+                }
+            });
+            function addActive(x) {
+                if (!x) return false;
+                removeActive(x);
+                if (currentFocus >= x.length) currentFocus = 0;
+                if (currentFocus < 0) currentFocus = (x.length - 1);
+                x[currentFocus].classList.add("autocomplete-active");
+            }
+            function removeActive(x) {
+                for (var i = 0; i < x.length; i++) {
+                x[i].classList.remove("autocomplete-active");
+                }
+            }
+            function closeAllLists(elmnt) {
+                var x = document.getElementsByClassName("autocomplete-items");
+                for (var i = 0; i < x.length; i++) {
+                if (elmnt != x[i] && elmnt != inp) {
+                    x[i].parentNode.removeChild(x[i]);
+                }
+                }
+            }
+            document.addEventListener("click", function (e) {
+                closeAllLists(e.target);
+            });
+        }
+        var country = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua & Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia & Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands","Central Arfrican Republic","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cuba","Curacao","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Myanmar","Namibia","Nauro","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","North Korea","Norway","Oman","Pakistan","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre & Miquelon","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","St Kitts & Nevis","St Lucia","St Vincent","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad & Tobago","Tunisia","Turkey","Turkmenistan","Turks & Caicos","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States of America","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"];
+        autocomplete(document.getElementById("searchInput"), country);
     </script>
 
 	</body>

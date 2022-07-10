@@ -44,3 +44,5 @@ Route::post('/detail/likes/{id}', [DetailController::class, 'likes']);
 //Profile page.
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 Route::post('/profile/updateSocmed/{id}', [ProfileController::class, 'updateSocmed']);
+Route::post('/profile/updateProfile/{id}', [ProfileController::class, 'updateProfile']);
+Route::post('/profile/updateImage/{id}', [ProfileController::class, 'updateImage']);

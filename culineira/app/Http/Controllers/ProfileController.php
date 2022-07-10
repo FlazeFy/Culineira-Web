@@ -11,6 +11,7 @@ use App\Models\likes;
 use App\Models\ingredients;
 use App\Models\socmed;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
 
 class ProfileController extends Controller
@@ -102,6 +103,49 @@ class ProfileController extends Controller
         ]);
 
         return redirect('/profile')->with('success_message', 'Social Media Updated');
+    }
+
+    public function updateProfile(Request $request, $id)
+    {
+        user::where('id', $id)->update([
+            'password' => $request-> password,
+            'description' => $request-> description,
+            'country' => $request-> country,
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        return redirect('/profile')->with('success_message', 'Account Updated');
+    }
+
+    public function updateImage(Request $request, $id)
+    {
+        $users_id = DB::table('users')->where('username', session()->get('usernameKey'))->get();
+        //Get old image url.
+        foreach($users_id as $u){
+            $old_image = $u->image_url;
+        }
+
+        //Validate image.
+        $this->validate($request, [
+            'image_url'     => 'required|image|mimes:jpeg,png,jpg|max:5000',
+        ]);
+
+        //Upload image.
+        $new_image = $request->file('image_url');
+        $new_image->storeAs('public', $new_image->hashName());
+        $imageURL = $new_image->hashName();
+
+        //Delete old image if new image is uploaded.
+        if($request->file('image_url')->isValid()){
+            Storage::delete('public/'.$old_image);
+        }
+
+        user::where('id', $id)->update([
+            'image_url' => $imageURL,
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        return redirect('/profile')->with('success_message', 'Profile Image Updated');
     }
 
     /**

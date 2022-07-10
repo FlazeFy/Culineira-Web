@@ -572,7 +572,8 @@
                 @foreach($user as $data)
                     @if($data->username == session()->get('usernameKey'))
                     <div class='container-fluid p-2 pt-3 rounded-3' title='Click to open profile' type='button'>
-                        <img class="img logo rounded-circle mb-3" src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data->username;?>.jpg" alt='<?php echo $data->username.".jpg";?>'
+                        <a href="{{ url('/profile') }}">
+                        <img class="img logo rounded-circle mb-3" src="http://127.0.0.1:8000/storage/{{ $data->image_url }}" alt='{{ $data->image_url }}'
                         style='display: block; margin-left: auto; margin-right: auto;'>
                         <h5 class="text-center" style='color:color:#2F4858;'>@<span>{{$data->username}}</span></h5>
                         <div class='row' style='justify-content:center;'>
@@ -589,6 +590,7 @@
                                 <a style='font-size:12px;'>Recipes</a>
                             </div>
                         </div>
+                        </a>
                     </div>
                     @endif
                 @endforeach
@@ -631,7 +633,7 @@
                             <ul class="nav navbar-nav ml-auto">
                                 @foreach($recipeId as $data)
                                     <li class="nav-item">
-                                        <a class="nav-link" href="" role="button" aria-expanded="false" aria-controls="CollapseExample2" >Book Now > {{$data->recipe_name}}</a>
+                                        <a class="nav-link" href="/recipe" role="button" aria-expanded="false" aria-controls="CollapseExample2" >Cook Now > {{$data->recipe_name}}</a>
                                     </li>
                                 @endforeach
                             </ul>
@@ -785,12 +787,12 @@
                                                                                 @if(($cmt->steps_id == $stp->id)&&($u->id == $cmt->users_id))
                                                                                 <div class="chat-message-<?php if($u->username == session()->get('usernameKey')){echo "right";}else{echo "left";}?> pb-4">
                                                                                     <div>
-                                                                                        <img src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $u->username;?>.jpg" class="rounded-circle mr-1" alt="<?php echo $u->username; ?>" width="35" >
+                                                                                        <img src="http://127.0.0.1:8000/storage/{{ $u->image_url }}" alt='{{ $u->image_url }}' class="rounded-circle mr-1" width="35" >
                                                                                     </div>
                                                                                     <div class="flex-shrink-1 rounded py-2 px-3 mr-3" style="<?php if($cmt->users_id == $data->user_id){echo "border:2px #EB7336 solid;";}?>">
                                                                                         <div class="font-weight-bold mb-1" style="color:#EB7336;">{{$u->username}}<span class="text-secondary" id="dateMsg"> {{$cmt->created_at}}</span></div>
                                                                                         @if($cmt->comment_image != "null")
-                                                                                            <img src="http://127.0.0.1:8000/storage/{{ $cmt->comment_image }}" alt='{{ $cmt->comment_image }}'
+                                                                                            <img src="http://127.0.0.1:8000/storage/{{ $cmt->comment_image }}" alt='{{ $cmt->comment_image }}'  class="rounded-circle mr-1"
                                                                                                 style='width:30%; display: block; margin-left: auto; margin-right: auto;'>
                                                                                             <a>{{$cmt->comment_body}}</a>
                                                                                         @else
@@ -932,7 +934,7 @@
                                                                                                 @if(($cmt->steps_id == $stp->id)&&($u->id == $cmt->users_id))
                                                                                                 <div class="chat-message-<?php if($u->username == session()->get('usernameKey')){echo "right";}else{echo "left";}?> pb-4">
                                                                                                     <div>
-                                                                                                        <img src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $u->username;?>.jpg" class="rounded-circle mr-1" alt="<?php echo $u->username; ?>" width="35" >
+                                                                                                        <img src="http://127.0.0.1:8000/storage/{{ $u->image_url }}" alt='{{ $u->image_url }}' class="rounded-circle mr-1" width="35" >
                                                                                                     </div>
                                                                                                     <div class="flex-shrink-1 rounded py-2 px-3 mr-3" style="<?php if($cmt->users_id == $data->user_id){echo "border:2px #EB7336 solid;";}?>">
                                                                                                         <div class="font-weight-bold mb-1" style="color:#EB7336;">{{$u->username}}<span class="text-secondary" id="dateMsg"> {{$cmt->created_at}}</span></div>
@@ -1076,7 +1078,7 @@
                                             @if($data->user_id == $data2->id)
                                             <div class="card border-gray m-2" style='min-width:40px; width:40px; border:none; background:transparent; margin-top:5px;' type='button'>
                                                 <a href="">
-                                                <img class="img logo rounded-circle mb-3" src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data2->username;?>.jpg" alt='<?php echo $data2->username.".jpg";?>'
+                                                <img class="img logo rounded-circle mb-3" src="http://127.0.0.1:8000/storage/{{ $data2->image_url }}" alt='{{ $data2->image_url }}'  class="rounded-circle mr-1"
                                                     style='display: block; margin-left: auto; margin-right: auto; width:40px;'>
                                                 <a style='font-size:11px; white-space: nowrap;  display: block; margin-left: auto; margin-right: auto; margin-top:-10px;'>{{$data2->username}}</a>
                                                 </a>
@@ -1103,7 +1105,7 @@
                             <div class="card border-gray w-25 p-2 border m-3" style='min-width:250px;'>
                                 <img src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
                                     style='margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
-                                <img src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data2->username;?>.jpg" alt='<?php echo $data2->username.".jpg";?>' title='<?php echo $data2->username;?>'
+                                <img src="http://127.0.0.1:8000/storage/{{ $data2->image_url }}" alt='{{ $data2->image_url }}'
                                     style='border-radius:100%; margin-top:-40px; margin-left:20px; width:40px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
                                 <img src="http://127.0.0.1:8000/assets/image/country/<?php echo $data->recipe_country;?>.png" alt='<?php echo $data->recipe_country.".png";?>' title='<?php echo $data->recipe_country;?>'
                                     style='border-radius:100%; width:40px; margin-top:30px; margin-left:200px; position:absolute; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
@@ -1157,7 +1159,7 @@
                         <div class="card border-gray w-25 p-2 border m-3" style='min-width:250px;'>
                             <img src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
                                 style='margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
-                            <img src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data2->username;?>.jpg" alt='<?php echo $data2->username.".jpg";?>' title='<?php echo $data2->username;?>'
+                            <img src="http://127.0.0.1:8000/storage/{{ $data2->image_url }}" alt='{{ $data2->image_url }}'
                                 style='border-radius:100%; margin-top:-40px; margin-left:20px; width:40px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
                             <img src="http://127.0.0.1:8000/assets/image/country/<?php echo $data->recipe_country;?>.png" alt='<?php echo $data->recipe_country.".png";?>' title='<?php echo $data->recipe_country;?>'
                                 style='border-radius:100%; width:40px; margin-top:30px; margin-left:200px; position:absolute; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
@@ -1206,7 +1208,7 @@
                         <div class="card border-gray w-25 p-2 border m-3" style='min-width:250px;'>
                             <img src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
                                 style='margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
-                            <img src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data2->username;?>.jpg" alt='<?php echo $data2->username.".jpg";?>' title='<?php echo $data2->username;?>'
+                            <img src="http://127.0.0.1:8000/storage/{{ $data2->image_url }}" alt='{{ $data2->image_url }}'
                                 style='border-radius:100%; margin-top:-40px; margin-left:20px; width:40px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
                             <img src="http://127.0.0.1:8000/assets/image/country/<?php echo $data->recipe_country;?>.png" alt='<?php echo $data->recipe_country.".png";?>' title='<?php echo $data->recipe_country;?>'
                                 style='border-radius:100%; width:40px; margin-top:30px; margin-left:200px; position:absolute; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>

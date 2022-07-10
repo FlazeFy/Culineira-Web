@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('email', 40);
             $table->string('password', 20);
             $table->string('description', 200);
-            $table->string('country', 20);
+            $table->string('country', 50);
+            $table->string('image_url', 100);
 
             // $table->rememberToken();
             $table->timestamps();
