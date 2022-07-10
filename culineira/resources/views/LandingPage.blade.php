@@ -583,8 +583,8 @@
                                     <h1 class="text-white mt-5">Welcome, to Culineira</h1>
                                     <p class="text-white mt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
                                     <div class="row mb-xl-5">
-                                        <button class="btn btn-success w-25 m-1 shadow" data-bs-toggle="collapse" data-bs-target="#loginForm">Sign In</button>
-                                        <button class="btn btn-primary w-25 m-1 shadow" style="background:#78578E;" data-bs-toggle="collapse" data-bs-target="#createAccForm">Let's Join</button>
+                                        <button class="btn btn-success w-25 m-1 rounded-pill shadow" data-bs-toggle="collapse" data-bs-target="#loginForm">Sign In</button>
+                                        <button class="btn btn-primary w-25 m-1 rounded-pill shadow" style="background:#78578E;" data-bs-toggle="collapse" data-bs-target="#createAccForm">Let's Join</button>
                                     </div>
                                     <p class="text-white mt-2">Stay connected with us</p>
                                     <div class="row">
@@ -981,7 +981,7 @@
                         <div class="col-md-8">
                             <h3>Have any great recipe?<br><a style="font-size:14px;"> But you dont know where to share it?</a></h3>
                             <p>Curabitur libero eros, efficitur sit amet sodales tincidunt, aliquet et leo sed ut nibh feugiat, auctor enim quis.</p>
-                            <a href="#" class="btn btn-success">Join Us</a>
+                            <a href="#" class="btn btn-success rounded-pill">Join Us</a>
                         </div>
                     </div>
                 </div>
@@ -1048,7 +1048,7 @@
                         </div>
                     </div>
                 </div>
-                <p class="text-center text-white">Copyright &copy; 2020 All rights reserved.</p>
+                <p class="text-center text-white">Copyright &copy; 2022 All rights reserved.</p>
             </div>
         </footer>
 

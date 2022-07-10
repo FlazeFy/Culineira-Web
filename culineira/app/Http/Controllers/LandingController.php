@@ -9,6 +9,7 @@ use App\Models\recipe;
 use App\Models\user;
 use App\Models\feedback;
 use App\Models\review;
+use App\Models\socmed;
 use App\Http\Controllers\RecipeController;
 
 class LandingController extends Controller
@@ -44,12 +45,22 @@ class LandingController extends Controller
             ->where('username', $request-> username)
             ->get();
         if(count($check) == 0){
-            user::create([
+            $user_id = user::create([
                 'username' => $request-> username,
                 'email' => $request-> email,
                 'password' => $request-> password,
                 'description' => $request-> description,
                 'country' => $request-> country,
+                'created_at' => date("Y-m-d h:m:i"),
+                'updated_at' => date("Y-m-d h:m:i"),
+            ]);
+            socmed::create([
+                'users_id' => $user_id->$id,
+                'socmed_facebook' => "null",
+                'socmed_youtube' => "null",
+                'socmed_tiktok' => "null",
+                'socmed_instagram' => "null",
+                'socmed_linkedin' => "null",
                 'created_at' => date("Y-m-d h:m:i"),
                 'updated_at' => date("Y-m-d h:m:i"),
             ]);

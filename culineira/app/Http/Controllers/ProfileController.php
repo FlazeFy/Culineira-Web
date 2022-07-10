@@ -9,6 +9,7 @@ use App\Models\user;
 use App\Models\steps;
 use App\Models\likes;
 use App\Models\ingredients;
+use App\Models\socmed;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -23,16 +24,20 @@ class ProfileController extends Controller
     {
         $user = user::all();
         $recipe = recipe::all();
+        $socmedId = DB::table('socmed')
+            ->join('users', 'users.id', '=', 'socmed.users_id')
+            ->where('username', session()->get('usernameKey'))->get();
         $userId = DB::table('users')->where('username', session()->get('usernameKey'))->get();
         $steps = DB::table('steps')->orderBy('id', 'ASC')->get();
         $ingredients = ingredients::all();
 
         return view ('ProfilePage')
-        ->with('userId', $userId)
-        ->with('recipe', $recipe)
-        ->with('user', $user)
-        ->with('steps', $steps)
-        ->with('ingredients', $ingredients);
+            ->with('userId', $userId)
+            ->with('recipe', $recipe)
+            ->with('user', $user)
+            ->with('steps', $steps)
+            ->with('socmedId', $socmedId)
+            ->with('ingredients', $ingredients);
     }
 
     /**
@@ -85,9 +90,18 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateSocmed(Request $request, $id)
     {
-        //
+        socmed::where('id', $id)->update([
+            'socmed_facebook' => $request-> socmed_facebook,
+            'socmed_youtube' => $request-> socmed_youtube,
+            'socmed_tiktok' => $request-> socmed_tiktok,
+            'socmed_instagram' => $request-> socmed_instagram,
+            'socmed_linkedin' => $request-> socmed_linkedin,
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        return redirect('/profile')->with('success_message', 'Social Media Updated');
     }
 
     /**

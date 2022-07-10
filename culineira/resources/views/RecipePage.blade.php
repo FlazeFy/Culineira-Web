@@ -528,6 +528,7 @@
                 @foreach($user as $data)
                     @if($data->username == session()->get('usernameKey'))
                     <div class='container-fluid p-2 pt-3 rounded-3' title='Click to open profile' type='button'>
+                        <a href="{{ url('/profile') }}">
                         <img class="img logo rounded-circle mb-3" src="http://127.0.0.1:8000/assets/image/users/user_<?php echo $data->username;?>.jpg" alt='<?php echo $data->username.".jpg";?>'
                         style='display: block; margin-left: auto; margin-right: auto;'>
                         <h5 class="text-center" style='color:color:#2F4858;'>@<span>{{$data->username}}</span></h5>
@@ -545,6 +546,7 @@
                                 <a style='font-size:12px;'>Recipes</a>
                             </div>
                         </div>
+                        </a>
                     </div>
                     @endif
                 @endforeach

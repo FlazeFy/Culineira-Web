@@ -595,8 +595,8 @@
 
                 <!--Main Navbar.-->
                 <ul class="list-unstyled components mb-3">
-                    <li class="active">
-                        <a href="#"><i class="fa-solid fa-book"></i> Recipes</a>
+                    <li>
+                        <a href="{{ url('/recipe') }}"><i class="fa-solid fa-book"></i> Recipes</a>
                     </li>
                     <li>
                     <a href="#"><i class="fa-solid fa-kitchen-set"></i> My Kitchen</a>
@@ -680,26 +680,35 @@
                                 </div>
                                 <div class="card mt-3">
                                     <ul class="list-group list-group-flush">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0"><i class="fa-brands fa-facebook fa-lg"></i> Facebook</h6>
-                                        <span class="text-secondary">https://bootdey.com</span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0"><i class="fa-brands fa-youtube fa-lg"></i> Youtube</h6>
-                                        <span class="text-secondary">bootdey</span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0"><i class="fa-brands fa-tiktok fa-lg"></i> TikTok</h6>
-                                        <span class="text-secondary">@bootdey</span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0"><i class="fa-brands fa-instagram fa-lg"></i> Instagram</h6>
-                                        <span class="text-secondary">bootdey</span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0"><i class="fa-brands fa-linkedin fa-lg"></i> LinkedIn</h6>
-                                        <span class="text-secondary">bootdey</span>
-                                    </li>
+                                    @foreach($socmedId as $s)
+                                    <form action="/profile/updateSocmed/<?php echo $s->id; ?>" method="POST">
+                                        @csrf
+
+                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                            <h6 class="mb-2"><i class="fa-brands fa-facebook fa-lg"></i> Facebook</h6>
+                                            <input class="form-control" name="socmed_facebook" value="{{$s->socmed_facebook}}" placeholder="{{$s->socmed_facebook}}">
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                            <h6 class="mb-2"><i class="fa-brands fa-youtube fa-lg"></i> Youtube</h6>
+                                            <input class="form-control" name="socmed_youtube" value="{{$s->socmed_youtube}}" placeholder="{{$s->socmed_youtube}}">
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                            <h6 class="mb-2"><i class="fa-brands fa-tiktok fa-lg"></i> TikTok</h6>
+                                            <input class="form-control" name="socmed_tiktok" value="{{$s->socmed_tiktok}}" placeholder="{{$s->socmed_tiktok}}">
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                            <h6 class="mb-2"><i class="fa-brands fa-instagram fa-lg"></i> Instagram</h6>
+                                            <input class="form-control" name="socmed_instagram" value="{{$s->socmed_instagram}}" placeholder="{{$s->socmed_instagram}}">
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                            <h6 class="mb-2"><i class="fa-brands fa-linkedin fa-lg"></i> LinkedIn</h6>
+                                            <input class="form-control" name="socmed_linkedin" value="{{$s->socmed_linkedin}}" placeholder="{{$s->socmed_linkedin}}">
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                            <button type="submit" class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i> Update</button>
+                                        </li>
+                                    </form>
+                                    @endforeach
                                     </ul>
                                 </div>
                                 <div class="card mt-3 p-3">
@@ -753,11 +762,12 @@
                                     </div>
                                     <hr>
                                     <div class="row">
-                                        <div class="col-sm-7">
-                                            <a class="btn btn-primary" type="submit"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
+                                        <div class="col-sm-8">
+                                            <a class="btn btn-success" type="submit"><i class="fa-solid fa-pen-to-square"></i> Update</a>
                                         </div>
-                                        <div class="col-sm-5">
-                                            <a>Last Updated:  {{$u->updated_at}}</a>
+                                        <div class="col-sm-4">
+                                            <a class="text-secondary fst-italic fw-bold" style="font-size:12px;">Joined Since:  <span class="fw-normal">{{$u->updated_at}}</span></a><br>
+                                            <a class="text-secondary fst-italic fw-bold" style="font-size:12px;">Last Updated:  <span class="fw-normal">{{$u->created_at}}</span></a>
                                         </div>
                                     </div>
                                 </div>
@@ -791,6 +801,22 @@
             </div>
         </div>
     </div>
+
+    @if(Session::has('success_message'))
+        <div class="position-fixed bottom-0 end-0 p-4" style="z-index: 11">
+        <div id="profile_toast" class="toast hide shadow rounded-top" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <img class="mx-2" src="{{asset('assets/image/icon/Success.png')}}" alt='success.png' style='width:22px;'>
+                <h6 class="me-auto mt-1 ">Success</h6>
+                <small>Just now</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body rounded-bottom">
+                {{ Session::get('success_message') }}
+            </div>
+        </div>
+        </div>
+    @endif
 
     <!--Others CDN.-->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
@@ -855,6 +881,12 @@
         $('#sidebar').toggleClass('active');
         });
         })(jQuery);
+
+        //Modal setting.
+        $(window).on('load', function() {
+            $('#profile_modal').modal('show');
+            $('#profile_toast').toast('show');
+        });
 
 
         //Search input.
