@@ -650,14 +650,14 @@
                                                             data-bs-parent="#accordionExample">
                                                             <div class="card-body">
                                                                 <a class="text-white">Username</a>
-                                                                <input class="form-control" type="text" name="username" required></input>
+                                                                <input class="form-control" type="text" name="username"></input>
                                                                 <a class="text-white">Email</a>
-                                                                <input class="form-control" type="email" name="email" required></input>
+                                                                <input class="form-control" type="email" name="email"></input>
                                                                 <a class="text-white">Password</a>
-                                                                <input class="form-control" type="password" name="password" required></input>
+                                                                <input class="form-control" type="password" name="password"></input>
                                                                 <a class="text-white">Country</a>
                                                                 <div class="autocomplete w-100">
-                                                                    <input class="form-control" type="text" id="searchInput" name="country" required></input>
+                                                                    <input class="form-control" type="text" id="searchInput" name="country"></input>
                                                                 </div>
                                                                 <a class="text-white">Description</a>
                                                                 <textarea class="form-control" rows="4" aria-label="With textarea" name="description" placeholder="tell others about yourselft..."></textarea>
@@ -679,14 +679,38 @@
                                                         <div id="collapseTwo" class="collapse" aria-labelledby="headingOne"
                                                             data-bs-parent="#accordionExample">
                                                             <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-md-9">
+                                                                        <select class="form-select mb-2" aria-label="Default select example" id="recipe_type">
+                                                                            <option value="Oriental">Oriental</option>
+                                                                            <option value="Middle Eastern">Middle Eastern</option>
+                                                                            <option value="Continental">Continental</option>
+                                                                            <option value="Indian">Indian</option>
+                                                                            <option value="Chinese">Chinese</option>
+                                                                            <option value="Korean & Japanese">Korean & Japanese</option>
+                                                                            <option value="Main Course">Main Course</option>
+                                                                            <option value="Appetizer">Appetizer</option>
+                                                                            <option value="Desserts">Desserts</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <a class="btn btn-success" id="add_preferred_recipe"><i class="fa-solid fa-plus"></i> Add</a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="container-fluid bg-transparent rounded mb-4" style="border:2px solid white;">
+                                                                    <a class="text-white">Preferred Recipe</a>
+                                                                    <div class="row" id="data_preferred_recipe">
+
+                                                                    </div>
+                                                                </div>
                                                                 <a class="text-white">Image</a>
-                                                                <input class="form-control" type="file" id="formFileCreateAcc" onchange="previewCreateAcc()" name="user_image" accept="image/png, image/jpg, image/jpeg" required>
+                                                                <input class="form-control" type="file" id="formFileCreateAcc" onchange="previewCreateAcc()" name="image_url" accept="image/png, image/jpg, image/jpeg">
                                                                 <label class="form-label">Preview</label>
                                                                 <div class="row">
-                                                                    <div class="col-md-7">
-                                                                        <img id="frame" src="http://127.0.0.1:8000/assets/NoImage.png" class="img-fluid" style="width:200px; border-radius:100%; background:white;"/>
+                                                                    <div class="col-md-6">
+                                                                        <img id="frame" src="http://127.0.0.1:8000/assets/NoImage.png" class="img-fluid" style="width:150px; border-radius:100%; background:white;"/>
                                                                     </div>
-                                                                    <div class="col-md-5">
+                                                                    <div class="col-md-6">
                                                                         <a onclick="clearImageCreateAcc()" class="btn btn-danger mt-3 w-100"><i class="fa-solid fa-trash"></i> Reset</a>
                                                                     </div>
                                                                 </div>
@@ -1234,6 +1258,19 @@
             $(window).on('load', function() {
                 $('#error_login').modal('show');
                 $('#recipe_toast').toast('show');
+            });
+
+            $(document).ready(function () {
+                //Add preferred recipe.
+                i = 1;
+                $("#add_preferred_recipe").on('click', function () {
+                    if(i <= 3){
+                        var rcp = $("#recipe_type").val();
+                        $('#data_preferred_recipe').append(
+                            '<div class="card border-0 rounded m-1 p-2 text-white text-center" style="background: rgba(25, 135, 84, 0.4); width:30%;"><input name="recipe_type_preferred[]" class="form-control" hidden value="'+ rcp +'">'+ rcp +'</div>');
+                        i++;
+                    }
+                })
             });
         </script>
 
