@@ -553,6 +553,28 @@
                 line-clamp: 1;
                 -webkit-box-orient: vertical;
             }
+            #communityBox{
+                width:30%;
+                background-position: center;
+                background-repeat:no-repeat;
+                position: relative;
+                background-size: cover;
+                background-color: black;
+            }
+            #communityTitle{
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                line-clamp: 2;
+                -webkit-box-orient: vertical;
+            }
+            #community-holder{
+                display: flex;
+                flex-direction: row;
+                max-height: 400px;
+                overflow-y: scroll;
+            }
 		</style>
 
     </head>
@@ -698,27 +720,27 @@
                                     @foreach($socmedId as $s)
                                     <form action="/profile/updateSocmed/<?php echo $s->id; ?>" method="POST">
                                         @csrf
-                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap border-0">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap border-0 bg-transparent">
                                             <h6 class="mb-2"><i class="fa-brands fa-facebook fa-lg"></i> Facebook</h6>
                                             <input class="form-control" name="socmed_facebook" value="{{$s->socmed_facebook}}" placeholder="{{$s->socmed_facebook}}">
                                         </li>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap border-0">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap border-0 bg-transparent">
                                             <h6 class="mb-2"><i class="fa-brands fa-youtube fa-lg"></i> Youtube</h6>
                                             <input class="form-control" name="socmed_youtube" value="{{$s->socmed_youtube}}" placeholder="{{$s->socmed_youtube}}">
                                         </li>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap border-0">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap border-0 bg-transparent">
                                             <h6 class="mb-2"><i class="fa-brands fa-tiktok fa-lg"></i> TikTok</h6>
                                             <input class="form-control" name="socmed_tiktok" value="{{$s->socmed_tiktok}}" placeholder="{{$s->socmed_tiktok}}">
                                         </li>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap border-0">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap border-0 bg-transparent">
                                             <h6 class="mb-2"><i class="fa-brands fa-instagram fa-lg"></i> Instagram</h6>
                                             <input class="form-control" name="socmed_instagram" value="{{$s->socmed_instagram}}" placeholder="{{$s->socmed_instagram}}">
                                         </li>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap border-0">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap border-0 bg-transparent">
                                             <h6 class="mb-2"><i class="fa-brands fa-linkedin fa-lg"></i> LinkedIn</h6>
                                             <input class="form-control" name="socmed_linkedin" value="{{$s->socmed_linkedin}}" placeholder="{{$s->socmed_linkedin}}">
                                         </li>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap border-0">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap border-0 bg-transparent">
                                             <button type="submit" class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i> Update</button>
                                         </li>
                                     </form>
@@ -840,6 +862,38 @@
                                         </table>
                                     </div>
                                 </div><!--End of community section.-->
+                            </div>
+
+                            <div class="container-fluid rounded border-gray border p-2 mb-3">
+                                <h6 class="d-flex align-items-center mb-3">Community</h6>
+                                <div class="row m-1" id="community-holder">
+
+                                    @foreach($groupId as $g)
+                                    <div class="container rounded h-50 m-2 p-2" id="communityBox"
+                                        style="background-image: linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5)) , url('http://127.0.0.1:8000/storage/ZwoKAcQljcJUH7vO1NncRMl1YJ4QoyovJDXfgXHt.jpg');">
+                                        <a type="button" class="w-100 h-100" title="See Comunity">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="d-flex flex-row align-items-center">
+                                                <div class="ms-2 c-details">
+                                                    <h6 class="mb-0 text-white" id="communityTitle">{{$g->groups_name}}</h6>
+                                                    <span class="text-white" style="font-size:12px;">{{$g->created_at}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="badge">{{$g->groups_type}}</div>
+                                        </div>
+                                        <div class="mt-5">
+                                            @foreach($user as $u2)
+                                                @if($u2->id == $g->founder_id)
+                                                    <h6 class="heading text-white"><i class="fa-solid fa-user"></i> {{$u2->username}}</h6>
+                                                @endif
+                                            @endforeach
+                                            <div class="mt-1 text-white">32 Member</div>
+                                        </div>
+                                        </a>
+                                    </div>
+                                    @endforeach
+
+                                </div><!--End of row.-->
                             </div>
 
                             </div>

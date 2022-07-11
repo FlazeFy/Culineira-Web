@@ -40,6 +40,14 @@ class ProfileController extends Controller
             ->where('username', session()->get('usernameKey'))
             ->orderBy('classroom.updated_at', 'ASC')->get();
 
+        //Show user's groups in profile.
+        $groupId = DB::table('groups-rel')
+            ->select('groups_name', 'groups.created_at as created_at', 'groups.groups_type as groups_type', 'groups.users_id as founder_id')
+            ->join('groups', 'groups.id', '=', 'groups-rel.groups_id')
+            ->join('users', 'users.id', '=', 'groups-rel.users_id')
+            ->where('username', session()->get('usernameKey'))
+            ->orderBy('groups-rel.created_at', 'ASC')->get();
+
         //Show social media in profile.
         $socmedId = DB::table('socmed')
             ->join('users', 'users.id', '=', 'socmed.users_id')
@@ -53,6 +61,7 @@ class ProfileController extends Controller
             ->with('userId', $userId)
             ->with('recipeId', $recipeId)
             ->with('classId', $classId)
+            ->with('groupId', $groupId)
             ->with('recipe', $recipe)
             ->with('user', $user)
             ->with('socmedId', $socmedId);
