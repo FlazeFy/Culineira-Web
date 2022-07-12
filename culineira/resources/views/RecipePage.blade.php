@@ -554,10 +554,10 @@
                 <!--Main Navbar.-->
                 <ul class="list-unstyled components mb-3">
                     <li class="active">
-                        <a href="#"><i class="fa-solid fa-book"></i> Recipes</a>
+                        <a href="{{ url('/recipe') }}"><i class="fa-solid fa-book"></i> Recipes</a>
                     </li>
                     <li>
-                    <a href="#"><i class="fa-solid fa-kitchen-set"></i> My Kitchen</a>
+                    <a href="{{ url('/kitchen') }}"><i class="fa-solid fa-kitchen-set"></i> My Kitchen</a>
                     </li>
                     <li>
                         <a href="#"><i class="fa-solid fa-people-group"></i> Community</a>

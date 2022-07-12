@@ -23,7 +23,11 @@ class RecipeController extends Controller
         $recipe = recipe::all();
         $steps = steps::all();
         $ingredients = ingredients::all();
-        return view ('RecipePage')->with('recipe', $recipe)->with('user', $user)->with('steps', $steps)->with('ingredients', $ingredients);
+        return view ('RecipePage')
+            ->with('recipe', $recipe)
+            ->with('user', $user)
+            ->with('steps', $steps)
+            ->with('ingredients', $ingredients);
     }
 
     /**

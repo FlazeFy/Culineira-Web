@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\DetailController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\KitchenController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,7 +22,7 @@ use App\Http\Controllers\ProfileController;
 //     return view('RecipePage');
 // });
 
-//Route::resource('/recipe', RecipeController::class);
+//Landing page.
 Route::get('/', [LandingController::class, 'index']);
 Route::post('/login', [LandingController::class, 'login']);
 Route::post('/create', [LandingController::class, 'create']);
@@ -46,3 +47,6 @@ Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 Route::post('/profile/updateSocmed/{id}', [ProfileController::class, 'updateSocmed']);
 Route::post('/profile/updateProfile/{id}', [ProfileController::class, 'updateProfile']);
 Route::post('/profile/updateImage/{id}', [ProfileController::class, 'updateImage']);
+
+//My kitchen page.
+Route::get('/kitchen', [KitchenController::class, 'index'])->name('kitchen');
