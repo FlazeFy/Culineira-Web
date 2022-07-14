@@ -716,9 +716,9 @@
                                     <h7 style="font-size:13px;">{{$data->recipe_main_ing}}</h7>
                                     <hr>
                                     <h6 class="mt-4" style="font-size:14px;">Created On</h6>
-                                    <h7 style="font-size:13px;">{{$data->created_at}}</h7>
+                                    <h7 style="font-size:13px;" id="recipe_created_at">{{$data->created_at}}</h7>
                                     <h6 style="font-size:14px;">Updated On</h6>
-                                    <h7 style="font-size:13px;">{{$data->updated_at}}</h7>
+                                    <h7 style="font-size:13px;" id="recipe_updated_at">{{$data->updated_at}}</h7>
                                 </div>
                                 <div class="col-md-6 mb-2">
                                     <div class="row">
@@ -744,7 +744,7 @@
                                                     <source src="http://127.0.0.1:8000/storage/{{ $data->recipe_video }}">
                                                 </video>
                                             @endif
-                                            <p><?php echo nl2br($data->recipe_desc);?></p>
+                                            <p id="recipe_desc"><?php echo nl2br($data->recipe_desc);?></p>
                                         </div>
 
                                         <div class="accordion" id="accordionMsgTls">
@@ -1047,7 +1047,7 @@
                                             <button class="btn btn-primary w-100 border-2" style="background:#B35387; border-color:#B35387;" title="Add to my list"><i class="fa-solid fa-paperclip"></i></button>
                                         </div>
                                         <div class="col-md-6">
-                                            <button class="btn btn-primary w-100 border-2" style="background:#00B6AB; border-color:#00B6AB;"><i class="fa-solid fa-share-from-square"></i> Share</button>
+                                            <button class="btn btn-primary w-100 border-2" style="background:#00B6AB; border-color:#00B6AB;" onclick='printRecipe();' title="Print as PDF"><i class="fa-solid fa-print"></i> Print</button>
                                         </div>
                                     </div>
                                     <h5 class="mt-2">Ingredients</h5>
@@ -1080,7 +1080,7 @@
                                                 <a href="">
                                                 <img class="img logo rounded-circle mb-3" src="http://127.0.0.1:8000/storage/{{ $data2->image_url }}" alt='{{ $data2->image_url }}'  class="rounded-circle mr-1"
                                                     style='display: block; margin-left: auto; margin-right: auto; width:40px;'>
-                                                <a style='font-size:11px; white-space: nowrap;  display: block; margin-left: auto; margin-right: auto; margin-top:-10px;'>{{$data2->username}}</a>
+                                                <a style='font-size:11px; white-space: nowrap;  display: block; margin-left: auto; margin-right: auto; margin-top:-10px;' id="recipe_maker">{{$data2->username}}</a>
                                                 </a>
                                             </div>
                                             @endif
@@ -1212,7 +1212,7 @@
                                 style='border-radius:100%; margin-top:-40px; margin-left:20px; width:40px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
                             <img src="http://127.0.0.1:8000/assets/image/country/<?php echo $data->recipe_country;?>.png" alt='<?php echo $data->recipe_country.".png";?>' title='<?php echo $data->recipe_country;?>'
                                 style='border-radius:100%; width:40px; margin-top:30px; margin-left:200px; position:absolute; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
-                            <h5 style='font-size:16px; text-align:center;'>{{$data->recipe_name}}</h5>
+                            <h5 style='font-size:16px; text-align:center;' id="recipe_name">{{$data->recipe_name}}</h5>
                             <div class='container' id='headingCard' style='padding:5px;'>
                                 <div class='row' style='justify-content:center; width:110%;'>
                                     <div class='col-md-5'>
@@ -1226,11 +1226,11 @@
                             <div class='container mt-2'>
                                 <div class='row' style='justify-content:center; width:110%;'>
                                     <div class='col-md-3'>
-                                        <a style='font-size:15px; font-weight:bold; text-align:center;'>{{$data->recipe_time_spend}}</a>
+                                        <a style='font-size:15px; font-weight:bold; text-align:center;' id="recipe_time_spend">{{$data->recipe_time_spend}}</a>
                                         <p style='font-size:12px;'>min</p>
                                     </div>
                                     <div class='col-md-3'>
-                                        <a style='font-size:15px; font-weight:bold; text-align:center;'>{{$data->recipe_calorie}}</a>
+                                        <a style='font-size:15px; font-weight:bold; text-align:center;' id="recipe_cal">{{$data->recipe_calorie}}</a>
                                         <p style='font-size:12px;'>cal</p>
                                     </div>
                                     <div class='col-md-4'>
@@ -1292,6 +1292,111 @@
                 }
             ?>
         })
+
+        //Print recipe to pdf
+        function printRecipe(){
+            var recipeName = document.getElementById('recipe_name');
+            var recipeMaker = document.getElementById('recipe_maker');
+            var recipeTime = document.getElementById('recipe_time_spend');
+            var recipeCal = document.getElementById('recipe_cal');
+            var recipeDesc = document.getElementById('recipe_desc');
+            var recipeCreated = document.getElementById('recipe_created_at');
+            var recipeUpdated = document.getElementById('recipe_updated_at');
+            var currentdate = new Date();
+
+            var newWin=window.open('','Print-Window');
+            newWin.document.open();
+
+            newWin.document.write(
+                "<html>" +
+                "<img src='{{asset('assets/Culineira_FullLogo.png')}}' alt='logo'" +
+                    " style='display: block; margin-left: auto; margin-right: auto; width:400px;'>" +
+
+                "<p class=MsoNormal><span class=SpellE><b><span style='font-size:20.0pt;" +
+                "line-height:107%'>" + recipeName.innerHTML+ "</b><span" +
+                "style='font-size:14.0pt;line-height:107%'>  by @" + recipeMaker.innerHTML+ "</span><b><span " +
+                "style='font-size:20.0pt;line-height:107%'><o:p></o:p></span></b></p>" +
+
+                "<p class=MsoNormal><i><span style='font-size:10.0pt;line-height:107%'>(Time <span" +
+                "class=GramE>spend :</span> " + recipeTime.innerHTML+ " Min, Calorie: " + recipeCal.innerHTML+ " Cal)<o:p></o:p></span></i></p>" +
+
+                "<p class=MsoNormal><i><span style='font-size:10.0pt;line-height:107%'><o:p>&nbsp;</o:p></span></i></p>" +
+
+                "<p class=MsoNormal><b><span style='font-size:14.0pt;line-height:107%'>How To " +
+                "Make<o:p></o:p></span></b></p>" +
+
+                <?php
+                    $i = 1;
+                    foreach($recipeId as $r){
+                        foreach($steps as $s){
+                            if(($r->id == $s->recipe_id)&&($s->steps_type == "Required")){
+                                echo '"'."<p class=MsoNormal><span style='font-size:13.0pt;line-height:107%'>Step #".$i."<o:p></o:p></span></p>".'" +';
+                                echo '"'."<p class=MsoNormal><span style='font-size:12.0pt;line-height:107%'>".$s->steps_body."<o:p></o:p></span></p>".'" +';
+                                $i++;
+                            } else if(($r->id == $s->recipe_id)&&($s->steps_type == "Optional")){
+                                echo '"'."<p class=MsoNormal><span style='font-size:13.0pt;line-height:107%'>Step #".$i." <b>(Optional)</b> <o:p></o:p></span></p>".'" +';
+                                echo '"'."<p class=MsoNormal><span style='font-size:12.0pt;line-height:107%'>".$s->steps_body."<o:p></o:p></span></p>".'" +';
+                                $i++;
+                            }
+                        }
+                    }
+                ?>
+
+                "<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%'><o:p>&nbsp;</o:p></span></p>" +
+
+                "<p class=MsoNormal><b><span style='font-size:14.0pt;line-height:107%'>Ingredients<o:p></o:p></span></b></p>" +
+
+                "<p class=MsoNormal><span style='font-size:12.0pt;line-height:107%'>Required<o:p></o:p></span></p>" +
+
+                <?php
+                    foreach($recipeId as $r){
+                        foreach($ingredients as $igr){
+                            if(($r->id == $igr->recipe_id)&&($igr->ingredients_type == "Required")){
+                                echo '"'."<p class=MsoNormal><span style='font-size:12.0pt;line-height:107%'>- ".$igr->ingredients_vol." ".$igr->ingredients_name."<o:p></o:p></span></p>".'" +';
+                            }
+                        }
+                    }
+                ?>
+
+                "<p class=MsoNormal><span style='font-size:12.0pt;line-height:107%'><o:p>&nbsp;</o:p></span></p>" +
+
+                "<p class=MsoNormal><span style='font-size:12.0pt;line-height:107%'>Optional<o:p></o:p></span></p>" +
+
+                <?php
+                    foreach($recipeId as $r){
+                        foreach($ingredients as $igr){
+                            if(($r->id == $igr->recipe_id)&&($igr->ingredients_type == "Optional")){
+                                echo '"'."<p class=MsoNormal><span style='font-size:12.0pt;line-height:107%'>- ".$igr->ingredients_vol." ".$igr->ingredients_name."<o:p></o:p></span></p>".'" +';
+                            }
+                        }
+                    }
+                ?>
+
+                "<p class=MsoNormal><span style='font-size:12.0pt;line-height:107%'><o:p>&nbsp;</o:p></span></p>" +
+
+                "<p class=MsoNormal><b><span style='font-size:14.0pt;line-height:107%'>Description<o:p></o:p></span></b></p>" +
+
+                "<p class=MsoNormal><span style='font-size:12.0pt;line-height:107%'>" + recipeDesc.innerHTML+ "<o:p></o:p></span></p>" +
+
+                "<p class=MsoNormal><span style='font-size:12.0pt;line-height:107%'><o:p>&nbsp;</o:p></span></p>" +
+
+                "<p class=MsoNormal align=right style='text-align:right; color:gray; font-size:11.5px;'><i>This recipe is " +
+                "created at<o:p></o:p></i>" + recipeCreated.innerHTML+ "</p>" +
+
+                "<p class=MsoNormal align=right style='text-align:right; color:gray; font-size:11.5px;'><i>Updated at <o:p></o:p></i>" + recipeUpdated.innerHTML + "</p>" +
+
+                "<p class=MsoNormal align=right style='text-align:right; color:gray; font-size:11.5px;'><i>And print at <o:p></o:p></i>" + currentdate.getFullYear() + "-" +
+                + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + " " + currentdate.getHours()  + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds() +"</p>" +
+
+                "<p class=MsoNormal align=center style='text-align:center'><i><span" +
+                "style='mso-spacerun:yes'></span><span class=SpellE>Culineira</span> <span" +
+                "class=GramE>~ <span style='mso-spacerun:yes'></span>Copyright</span> © 2022 " +
+                "All rights reserved<o:p></o:p></i></p>" +
+                "<body onload='window.print()'></body>" +
+                "</html>");
+            newWin.document.close();
+            setTimeout(function(){newWin.close();},10);
+        }
 
         var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
         var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
