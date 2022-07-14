@@ -530,16 +530,20 @@
                                         <p id='list_desc'>{{$l->list_description}}</p>
                                     </div>
                                     <div class="p-1" id="recipe_list_holder">
-                                        <div class='container mb-2 p-1' type="button" id='headingCard{{$l->id}}'>
-                                            <div class='row w-100' style='justify-content:center;'>
-                                                <div class='col-md-7'>
-                                                    <a style='font-size:12px;'> Mie Goreng Aceh</a>
+                                        @foreach($recipeInList as $rl)
+                                            @if($rl->list_id == $l->id)
+                                                <div class='container mb-2 p-1' type="button" id='headingCard{{$l->id}}'>
+                                                    <div class='row w-100' style='justify-content:center;'>
+                                                        <div class='col-md-7'>
+                                                            <a style='font-size:12px;'> {{$rl->recipe_name}}</a>
+                                                        </div>
+                                                        <div class='col-md-5'>
+                                                            <a style='font-size:12px; white-space:nowrap;'> {{$rl->recipe_type}}</a>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class='col-md-5'>
-                                                    <a style='font-size:12px; white-space:nowrap;'> Main Course</a>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            @endif
+                                        @endforeach
                                     </div><!--End of recipe list holder.-->
                                     <a class="btn btn-success my-2" id="add_recipe_list"><i class="fa-solid fa-plus"></i> Add Recipe</a>
                                     <button class='btn btn-primary' type="submit" href=""><i class="fa-solid fa-arrow-right"></i> Browse</button>

@@ -514,6 +514,12 @@
                 max-height: 400px;
                 overflow-y: scroll
             }
+            #list_dropdown_holder{
+                display: flex;
+                flex-direction: column;
+                max-height: 200px;
+                overflow-y: scroll
+            }
 
             .chat-message-left,
             .chat-message-right {
@@ -1044,7 +1050,32 @@
                                             </form>
                                         </div>
                                         <div class="col-md-3">
-                                            <button class="btn btn-primary w-100 border-2" style="background:#B35387; border-color:#B35387;" title="Add to my list"><i class="fa-solid fa-paperclip"></i></button>
+                                            <button class="btn btn-primary w-100 border-2" style="background:#B35387; border-color:#B35387;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-paperclip"></i></button>
+                                            <ul class="dropdown-menu p-2" aria-labelledby="dropdownMenuButton1">
+                                                <form action="/recipe/updateList/<?php echo $data->id; ?>" method="POST">
+                                                @csrf
+                                                <fieldset id="list_dropdown_holder">
+                                                    @php($count = 0)
+                                                    @foreach($list as $ls)
+                                                        <div class="form-check">
+                                                            @foreach($listRel as $lsr)
+                                                                @if($lsr->list_id == $ls->id)
+                                                                    @php($count++)
+                                                                @endif
+                                                            @endforeach
+                                                            @if($count == 0)
+                                                                <input class="form-check-input" type="checkbox" name="list_name" value="{{$ls->list_name}}" id="flexCheckDefault">
+                                                            @else
+                                                                <input class="form-check-input" type="checkbox" name="list_name" value="{{$ls->list_name}}" id="flexCheckChecked" checked>
+                                                            @endif
+                                                            <label class="form-check-label" for="flexCheckChecked">{{$ls->list_name}}</label>
+                                                        </div>
+                                                        @php($count = 0)
+                                                    @endforeach
+                                                </fieldset>
+                                                <button class="btn btn-success" type="submit"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                                                </form>
+                                            </ul>
                                         </div>
                                         <div class="col-md-6">
                                             <button class="btn btn-primary w-100 border-2" style="background:#00B6AB; border-color:#00B6AB;" onclick='printRecipe();' title="Print as PDF"><i class="fa-solid fa-print"></i> Print</button>

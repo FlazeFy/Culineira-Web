@@ -20,6 +20,14 @@ class KitchenController extends Controller
     {
         $user = user::all();
         $recipe = recipe::all();
+        $recipeInList = DB::table('recipes')
+            ->join('list-rel', 'list-rel.recipe_id', '=', 'recipes.id')
+            ->join('list', 'list-rel.list_id', '=', 'list.id')
+            ->join('users', 'list.user_id', '=', 'users.id')
+            ->where('username', session()->get('usernameKey'))
+            ->orderBy('list-rel.updated_at', 'ASC')
+            ->get();
+
         $list = DB::table('list')
             ->select('list.id', 'list_name', 'list_name', 'list_status', 'list_description', 'list.created_at as created_at', 'list.updated_at as updated_at')
             ->join('users', 'users.id', '=', 'list.user_id')
@@ -29,6 +37,7 @@ class KitchenController extends Controller
 
         return view ('KitchenPage')
             ->with('recipe', $recipe)
+            ->with('recipeInList', $recipeInList)
             ->with('user', $user)
             ->with('list', $list);
 

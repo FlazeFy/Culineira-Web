@@ -294,7 +294,7 @@ class RecipeController extends Controller
             'updated_at' => date("Y-m-d h:m:i"),
         ]);
 
-        return redirect('/recipe')->with('success_message', 'Recipe visibility changed to', $request->visibility);
+        return redirect('/recipe')->with('success_message', 'Recipe visibility changed to '.$request->visibility.'');
     }
 
     /**

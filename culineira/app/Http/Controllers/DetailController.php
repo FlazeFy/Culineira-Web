@@ -8,6 +8,8 @@ use App\Models\comment;
 use App\Models\user;
 use App\Models\steps;
 use App\Models\likes;
+use App\Models\list;
+use App\Models\list_rel;
 use App\Models\ingredients;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +26,16 @@ class DetailController extends Controller
         $user = user::all();
         $recipe = recipe::all();
         $recipeId = DB::table('recipes')->where('id', $id)->get();
+        $listRel = DB::table('list-rel')
+            ->join('recipes', 'recipes.id', '=', 'list-rel.recipe_id')
+            ->where('list-rel.recipe_id', $id)
+            ->get();
+        $list = DB::table('list')
+            ->select('list.id', 'list_name', 'list_name', 'list_status', 'list_description', 'list.created_at as created_at', 'list.updated_at as updated_at')
+            ->join('users', 'users.id', '=', 'list.user_id')
+            ->where('username', session()->get('usernameKey'))
+            ->orderBy('list.updated_at', 'ASC')
+            ->get();
         $comment = DB::table('comment')->where('recipe_id', $id)->orderBy('created_at', 'ASC')->get();
         $steps = DB::table('steps')->orderBy('id', 'ASC')->get();
         $ingredients = ingredients::all();
@@ -70,6 +82,8 @@ class DetailController extends Controller
             ->with('mayLikeRecipe', $mayLikeRecipe)
             ->with('similar', $results)
             ->with('likesUser', $likesUser)
+            ->with('list', $list)
+            ->with('listRel', $listRel)
             ->with('likesId', $likesId);
     }
 
@@ -111,14 +125,14 @@ class DetailController extends Controller
                 'created_at' => date("Y-m-d h:m:i"),
                 'updated_at' => date("Y-m-d h:m:i"),
             ]);
-            return redirect()->route('detail', ['id' => $id])->with('flash_message', 'Recipe liked!');;
+            return redirect()->route('detail', ['id' => $id])->with('flash_message', 'Recipe liked!');
         } else {
             //Disliked.
             foreach($check as $c){
                 $id_likes = $c->id;
             }
             likes::destroy($id_likes);
-            return redirect()->route('detail', ['id' => $id])->with('flash_message', 'Recipe disliked!');;
+            return redirect()->route('detail', ['id' => $id])->with('flash_message', 'Recipe disliked!');
         }
 
     }
@@ -143,6 +157,18 @@ class DetailController extends Controller
     public function edit($id)
     {
         //
+    }
+
+    public function addList($id)
+    {
+        list_rel::create([
+            'list_id' => $request->list_id,
+            'recipe_id' => $id,
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        return redirect()->route('detail', ['id' => $id])->with('flash_message', 'Recipe added to '.$request->list_name.'');
     }
 
     /**
