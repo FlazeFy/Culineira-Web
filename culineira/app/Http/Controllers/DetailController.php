@@ -159,16 +159,42 @@ class DetailController extends Controller
         //
     }
 
-    public function addList($id)
+    public function updateList(Request $request, $id)
     {
-        list_rel::create([
-            'list_id' => $request->list_id,
-            'recipe_id' => $id,
-            'created_at' => date("Y-m-d h:m:i"),
-            'updated_at' => date("Y-m-d h:m:i"),
-        ]);
+        //Get list id.
+        $checkList = DB::table('list')
+            ->where('list_name', $request->list_name)
+            ->get();
 
-        return redirect()->route('detail', ['id' => $id])->with('flash_message', 'Recipe added to '.$request->list_name.'');
+        foreach($checkList as $c){
+            $list_id = $c->id;
+        }
+
+        //Check recipe in list relation.
+        $checkRel = DB::table('list-rel')
+            ->where('recipe_id', $id)
+            ->where('list_id', $list_id)
+            ->get();
+
+        if(count($checkRel) != 0){
+            //If there's a relation between recipe and list.
+            //Delete relation.
+            foreach($checkRel as $r){
+                $idRel = $r->id;
+            }
+            list_rel::destroy($idRel);
+            return redirect()->route('detail', ['id' => $id])->with('success_message', 'Recipe removed from '.$request->list_name.' list!');
+        } else {
+            //If there's no relation between recipe and list.
+            //Create relation.
+            list_rel::create([
+                'list_id' => $list_id,
+                'recipe_id' => $id,
+                'created_at' => date("Y-m-d h:m:i"),
+                'updated_at' => date("Y-m-d h:m:i"),
+            ]);
+            return redirect()->route('detail', ['id' => $id])->with('success_message', 'Recipe added to '.$request->list_name.' list!');
+        }
     }
 
     /**

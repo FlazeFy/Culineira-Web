@@ -1052,29 +1052,23 @@
                                         <div class="col-md-3">
                                             <button class="btn btn-primary w-100 border-2" style="background:#B35387; border-color:#B35387;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-paperclip"></i></button>
                                             <ul class="dropdown-menu p-2" aria-labelledby="dropdownMenuButton1">
-                                                <form action="/recipe/updateList/<?php echo $data->id; ?>" method="POST">
-                                                @csrf
-                                                <fieldset id="list_dropdown_holder">
-                                                    @php($count = 0)
+                                                @php($count = 0)
                                                     @foreach($list as $ls)
-                                                        <div class="form-check">
-                                                            @foreach($listRel as $lsr)
-                                                                @if($lsr->list_id == $ls->id)
-                                                                    @php($count++)
-                                                                @endif
-                                                            @endforeach
-                                                            @if($count == 0)
-                                                                <input class="form-check-input" type="checkbox" name="list_name" value="{{$ls->list_name}}" id="flexCheckDefault">
-                                                            @else
-                                                                <input class="form-check-input" type="checkbox" name="list_name" value="{{$ls->list_name}}" id="flexCheckChecked" checked>
-                                                            @endif
-                                                            <label class="form-check-label" for="flexCheckChecked">{{$ls->list_name}}</label>
-                                                        </div>
-                                                        @php($count = 0)
+                                                    <form action="/detail/updateList/<?php echo $data->id; ?>" method="POST">
+                                                    @csrf
+                                                    @foreach($listRel as $lsr)
+                                                        @if($lsr->list_id == $ls->id)
+                                                            @php($count++)
+                                                        @endif
                                                     @endforeach
-                                                </fieldset>
-                                                <button class="btn btn-success" type="submit"><i class="fa-solid fa-floppy-disk"></i> Save</button>
-                                                </form>
+                                                    @if($count == 0)
+                                                        <li><input hidden name="list_name" value="{{$ls->list_name}}"><button class="dropdown-item" type="submit">{{$ls->list_name}}</button></li>
+                                                    @else
+                                                        <li><input hidden name="list_name" value="{{$ls->list_name}}"><button class="dropdown-item" type="submit"><i class="fa-solid fa-check" style="color:green;"></i> {{$ls->list_name}}</button></li>
+                                                    @endif
+                                                    </form>
+                                                    @php($count = 0)
+                                                @endforeach
                                             </ul>
                                         </div>
                                         <div class="col-md-6">
@@ -1280,6 +1274,22 @@
 
         </div>
     </div>
+
+    @if(Session::has('success_message'))
+        <div class="position-fixed bottom-0 end-0 p-4" style="z-index: 11">
+        <div id="detail_toast" class="toast hide shadow rounded-top" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <img class="mx-2" src="{{asset('assets/image/icon/Success.png')}}" alt='success.png' style='width:22px;'>
+                <h6 class="me-auto mt-1 ">Success</h6>
+                <small>Just now</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body rounded-bottom">
+                {{ Session::get('success_message') }}
+            </div>
+        </div>
+        </div>
+    @endif
 
     <!--Others CDN.-->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
@@ -1487,6 +1497,12 @@
         $('#sidebar').toggleClass('active');
         });
         })(jQuery);
+
+        //Modal setting.
+        $(window).on('load', function() {
+            $('#detail_modal').modal('show');
+            $('#detail_toast').toast('show');
+        });
 
 
         //Search input.

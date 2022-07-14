@@ -41,6 +41,7 @@ Route::post('/recipe/destroy/{id}', [RecipeController::class, 'destroy']);
 Route::get('/detail/{id}', [DetailController::class, 'index'])->name('detail');
 Route::post('/detail/sendComment/{id}', [DetailController::class, 'sendComment']);
 Route::post('/detail/likes/{id}', [DetailController::class, 'likes']);
+Route::post('/detail/updateList/{id}', [DetailController::class, 'updateList']);
 
 //Profile page.
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');

@@ -534,7 +534,7 @@
                                             @if($rl->list_id == $l->id)
                                                 <div class='container mb-2 p-1' type="button" id='headingCard{{$l->id}}'>
                                                     <div class='row w-100' style='justify-content:center;'>
-                                                        <div class='col-md-7'>
+                                                        <div class='col-md-7' style='overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 1; line-clamp: 1; -webkit-box-orient: vertical;'>
                                                             <a style='font-size:12px;'> {{$rl->recipe_name}}</a>
                                                         </div>
                                                         <div class='col-md-5'>
