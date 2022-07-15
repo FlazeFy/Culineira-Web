@@ -361,6 +361,12 @@
                 height: 200px;
                 overflow-y: scroll;
             }
+            #recipe_list_add_holder{
+                display: flex;
+                flex-direction: column;
+                height: 450px;
+                overflow-y: scroll;
+            }
             #list_title{
                 font-size:16px;
                 text-align:center;
@@ -545,7 +551,7 @@
                                             @endif
                                         @endforeach
                                     </div><!--End of recipe list holder.-->
-                                    <a class="btn btn-success my-2" id="add_recipe_list"><i class="fa-solid fa-plus"></i> Add Recipe</a>
+                                    <a class="btn btn-success my-2" id="add_recipe_list" data-bs-toggle="modal" data-bs-target="#addRecipeList{{$l->id}}"><i class="fa-solid fa-plus"></i> Add Recipe</a>
                                     <button class='btn btn-primary' type="submit" href=""><i class="fa-solid fa-arrow-right"></i> Browse</button>
                                 </div><!--End of list card.-->
                                 @endforeach
@@ -576,6 +582,86 @@
 
         </div>
     </div>
+
+    <!-- Add recipe to list modal -->
+    @foreach($list as $l)
+        <div class="modal fade" id="addRecipeList{{$l->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form action="/kitchen/addRecipeToList" method="POST">
+            @csrf
+            <div class="modal-content">
+            <div class="modal-header">
+                <input hidden name="list_name" value="{{$l->list_name}}">
+                <input hidden name="list_id" value="{{$l->id}}">
+                <h5 class="modal-title" id="exampleModalLabel">{{$l->list_name}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="recipe_list_add_holder">
+                @foreach($recipe as $r)
+                    <div class="card mb-2 rounded w-100 shadow p-3">
+                        <div class='row'>
+                            <div class='col-md-3'>
+                                <img src="http://127.0.0.1:8000/storage/{{ $r->recipe_url }}?>" alt='{{$r->recipe_name}}'
+                                    class='rounded img-fluid'>
+                            </div>
+                            <div class='col-md-7'>
+                                <h6>{{$r->recipe_name}}</h6>
+                                <a>{{$r->recipe_type}}</a><br>
+                                <a>{{$r->recipe_main_ing}}</a>
+                            </div>
+                            <div class='col-md-1 h-40 mt-1 pt-2 pb-2'>
+                                <div class="form-check">
+                                    <input class="form-check-input" name="recipe_id[]" title="Select" style="cursor:pointer; height:25px; width:25px;" type="checkbox" value="{{$r->id}}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success"><i class="fa-solid fa-pen-to-square"></i> Add To List</button>
+            </div>
+            </form>
+            </div>
+        </div>
+        </div>
+    @endforeach
+
+    <!--Modal validation-->
+    @if(Session::has('failed_message'))
+        <div class="modal fade" id="recipe_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Error</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="{{asset('assets/image/icon/Failed.png')}}" alt='failed.png' style='width:30%;'><br>
+                    <h7 class="m-2">{{ Session::get('failed_message') }}</h7>
+                </div>
+            </div>
+        </div>
+        </div>
+    @endif
+
+    @if(Session::has('success_message'))
+        <div class="position-fixed bottom-0 end-0 p-4" style="z-index: 11">
+        <div id="recipe_toast" class="toast hide shadow rounded-top" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <img class="mx-2" src="{{asset('assets/image/icon/Success.png')}}" alt='success.png' style='width:22px;'>
+                <h6 class="me-auto mt-1 ">Success</h6>
+                <small>Just now</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body rounded-bottom">
+                {{ Session::get('success_message') }}
+            </div>
+        </div>
+        </div>
+    @endif
 
     <!--Others CDN.-->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
@@ -665,6 +751,12 @@
                     ";
                 }
             ?>
+        });
+
+        //Modal setting.
+        $(window).on('load', function() {
+            $('#recipe_modal').modal('show');
+            $('#recipe_toast').toast('show');
         });
     </script>
 

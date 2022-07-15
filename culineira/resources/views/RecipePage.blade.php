@@ -660,7 +660,7 @@
                                 @if(strtotime($data->created_at) > strtotime('-7 day'))
                                 <div class="card border-gray" style='min-width:100px; width:120px; border:none; background:transparent; margin-top:5px;' type='button'>
                                     <a href="{{ url('/detail/' . $data->id) }}">
-                                    <img src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
+                                    <img src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" alt='{{$data->recipe_url}}'
                                         style='border-radius:100%; margin-top:-10px; width:100px; display: block; margin-left: auto; margin-right: auto;'>
                                     <img src="http://127.0.0.1:8000/storage/{{ $data2->image_url }}" alt='{{ $data2->image_url }}'
                                         style='border-radius:100%; margin-top:-80px; width:40px; border:3px solid #eb7336; box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 15px;'>
@@ -721,7 +721,7 @@
                                             @endforeach
                                             @if(($i == 0)||($j == 0))
                                             <div class="card border-gray" style='min-width:100px; width:120px; border:none; background:transparent;' type='button' data-bs-toggle="modal" data-bs-target="#dependenciesRecipe<?php echo "_".$data->id; ?>">
-                                                <img src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
+                                                <img src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" alt='{{$data->recipe_url}}'
                                                     style='border-radius:100%; margin-top:-10px; width:100px; display: block; margin-left: auto; margin-right: auto;'>
                                                 <img src="http://127.0.0.1:8000/assets/image/icon/Continue.png" alt='Add.png' id="addRecipeButton" style='padding:5px;'>
                                                 <a style='font-size:11px; white-space: nowrap;  display: block; margin-left: auto; margin-right: auto;'>{{$data->recipe_name}}</a>
@@ -746,7 +746,7 @@
                                 @foreach($user as $data2)
                                 @if($data->user_id == $data2->id)
                                 <div class="card border-gray w-25 p-2 border m-3" style='min-width:250px;'>
-                                    <img src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
+                                    <img src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" alt='{{$data->recipe_url}}'
                                         style='margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
                                     <img src="http://127.0.0.1:8000/storage/{{ $data2->image_url }}" alt='{{ $data2->image_url }}'
                                         style='border-radius:100%; margin-top:-40px; margin-left:20px; width:40px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
@@ -798,7 +798,7 @@
                                 @foreach($user as $data2)
                                 @if($data->user_id == $data2->id)
                                 <div class="card border-gray w-25 p-2 border m-3" style='min-width:250px;'>
-                                    <img src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
+                                    <img src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" alt='{{$data->recipe_url}}'
                                         style='margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
                                     <img src="http://127.0.0.1:8000/storage/{{ $data2->image_url }}" alt='{{ $data2->image_url }}'
                                         style='border-radius:100%; margin-top:-40px; margin-left:20px; width:40px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
@@ -850,7 +850,7 @@
                                 @foreach($user as $data2)
                                 @if($data->user_id == $data2->id)
                                 <div class="card border-gray w-25 p-2 border m-3" style='min-width:250px;'>
-                                    <img src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
+                                    <img src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" alt='{{$data->recipe_url}}'
                                         style='margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
                                     <img src="http://127.0.0.1:8000/storage/{{ $data2->image_url }}" alt='{{ $data2->image_url }}'
                                         style='border-radius:100%; margin-top:-40px; margin-left:20px; width:40px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
@@ -932,7 +932,7 @@
                                                     @foreach($recipe as $data)
                                                         @if(($data->user_id == $data2->id)&&($data2->username == session()->get('usernameKey')))
                                                             <tr>
-                                                                <td><img src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
+                                                                <td><img src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" alt='{{$data->recipe_url}}'
                                                                     style='width:80px;'></td>
                                                                 <td><h6 style='font-size:12px;'>{{$data->recipe_name}}</h6></td>
                                                                 <td>

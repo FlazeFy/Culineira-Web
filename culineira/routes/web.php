@@ -51,3 +51,4 @@ Route::post('/profile/updateImage/{id}', [ProfileController::class, 'updateImage
 
 //My kitchen page.
 Route::get('/kitchen', [KitchenController::class, 'index'])->name('kitchen');
+Route::post('/kitchen/addRecipeToList', [KitchenController::class, 'addRecipeToList']);
