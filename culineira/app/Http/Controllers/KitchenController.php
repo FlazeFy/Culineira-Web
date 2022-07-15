@@ -87,6 +87,52 @@ class KitchenController extends Controller
         }
     }
 
+    public function addNewList(Request $request, recipe $recipe)
+    {
+        if($request->has('recipe_id')){
+            //Create list with recipe
+            $list = list_recipe::create([
+                'user_id' => 1, //For testing
+                'list_name' => $request-> list_name,
+                'list_status' => 'null', //For now
+                'list_description' => $request-> list_description,
+                'created_at' => date("Y-m-d h:m:i"),
+                'updated_at' => date("Y-m-d h:m:i"),
+            ]);
+
+            $recipe_count = count($request-> recipe_id);
+            for($i=0; $i < $recipe_count; $i++){
+                list_rel::create([
+                    'list_id' => $list->id,
+                    'recipe_id' => $request-> recipe_id[$i],
+                    'created_at' => date("Y-m-d h:m:i"),
+                    'updated_at' => date("Y-m-d h:m:i"),
+                ]);
+            }
+
+            if(count($request-> recipe_id) > 1){
+                return redirect('/kitchen')->with('success_message', 'Successfully added new '.$request-> list_name.' list, with '.count($request->recipe_id).' Recipes');
+            } else {
+                $check = DB::table('recipes')->where('id', $request->recipe_id)->get();
+                foreach($check as $c){
+                    $recipe_name = $c->recipe_name;
+                }
+                return redirect('/kitchen')->with('success_message', 'Successfully added new '.$request-> list_name.' list, with '.$recipe_name.' Recipes');
+            }
+        } else {
+            //Create list only
+            $list = list_recipe::create([
+                'user_id' => 1, //For testing
+                'list_name' => $request-> list_name,
+                'list_status' => 'null', //For now
+                'list_description' => $request-> list_description,
+                'created_at' => date("Y-m-d h:m:i"),
+                'updated_at' => date("Y-m-d h:m:i"),
+            ]);
+            return redirect('/kitchen')->with('success_message', 'Successfully added new '.$request-> list_name.' list');
+        }
+    }
+
     /**
      * Display the specified resource.
      *
