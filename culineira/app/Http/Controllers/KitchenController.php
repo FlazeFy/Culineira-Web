@@ -162,9 +162,14 @@ class KitchenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function starred(Request $request, $id)
     {
-        //
+        list_recipe::where('id', $id)->update([
+            'list_status' => $request->list_status,
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        return redirect('/kitchen')->with('success_message', 'List status changed');
     }
 
     /**
@@ -173,8 +178,13 @@ class KitchenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function deleteList(Request $request)
     {
-        //
+        $list_count = count($request-> list_id);
+        for($i=0; $i < $list_count; $i++){
+            list_recipe::destroy($request-> list_id[$i]);
+            DB::table('list-rel')->where('list_id', $request-> list_id[$i])->delete();
+        }
+        return redirect('/kitchen')->with('success_message', $list_count.' List deleted!');
     }
 }

@@ -493,7 +493,9 @@
                                 <h5 style='font-size:16px; text-align:center; color:white;'>Make New List</h5>
                                 <img src="{{asset('assets/storyset/List.png')}}" class="w-75 mb-1">
                                 <a class='btn btn-success mb-2 w-100' data-bs-toggle="modal" data-bs-target="#createList"><i class="fa-solid fa-arrow-right"></i> Create Now</a>
-                                <a class='btn btn-danger mb-2 w-100' href=""><i class="fa-solid fa-trash-can"></i> Delete</a>
+                                <form action="/kitchen/deleteList" method="POST">
+                                    @csrf
+                                    <button class='btn btn-danger mb-2 w-100' type='submit'><i class="fa-solid fa-trash-can"></i> Delete</button>
                                 <a class='btn btn-primary mb-2 border-0 w-100' style="background:#77568D;" href=""><i class="fa-solid fa-right-left"></i> Convert</a>
                             </div>
                         </div>
@@ -516,7 +518,7 @@
                                         </div>
                                         <div class='col-md-2'>
                                             <div class="form-check">
-                                                <input class="form-check-input" title="Select" style="cursor:pointer; height:20px; width:20px;" type="checkbox" value="" id="list_check{{$l->id}}">
+                                                <input class="form-check-input" title="Select" style="cursor:pointer; height:20px; width:20px;" type="checkbox" name="list_id[]" value="{{$l->id}}" id="list_check{{$l->id}}">
                                             </div>
                                         </div>
                                     </div>
@@ -524,7 +526,15 @@
                                         <div class='row' style='justify-content:center; width:110%;'>
                                             <div class='col-md'>
                                                 <b style='font-size:13px; text-align:center;'>Recipe</b><br>
-                                                <a style='font-size:11px;'>6</a>
+                                                <a style='font-size:11px;'>
+                                                @php($countR = 0)
+                                                @foreach($recipeInList as $rl)
+                                                    @if($rl->list_id == $l->id)
+                                                        @php($countR++)
+                                                    @endif
+                                                @endforeach
+                                                {{$countR}}
+                                                </a>
                                             </div>
                                             <div class='col-md'>
                                                 <b style='font-size:13px; text-align:center;'>Updated At</b><br>
@@ -552,11 +562,12 @@
                                         @endforeach
                                     </div><!--End of recipe list holder.-->
                                     <a class="btn btn-success my-2" id="add_recipe_list" data-bs-toggle="modal" data-bs-target="#addRecipeList{{$l->id}}"><i class="fa-solid fa-plus"></i> Add Recipe</a>
-                                    <button class='btn btn-primary' type="submit" href=""><i class="fa-solid fa-arrow-right"></i> Browse</button>
+                                    <a class='btn btn-primary'><i class="fa-solid fa-arrow-right"></i> Browse</a>
                                 </div><!--End of list card.-->
                                 @endforeach
                             </div>
                         </div>
+                        </form>
                     </div>
                 </div>
 
@@ -632,6 +643,25 @@
         </form>
         </div>
     </div>
+    </div>
+
+    <!-- Delete list Modal -->
+    <div class="modal fade" id="deleteList" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Are you sure want to delete selected list?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                <form action="/kitchen/deleteList" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-primary">Yes</button>
+                </form>
+            </div>
+            </div>
+        </div>
     </div>
 
     <!-- Add recipe to list modal -->
