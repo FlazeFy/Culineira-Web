@@ -1346,8 +1346,8 @@
 
             </div><!--End of accordion-->
 
-            <!-- Footer -->
-            @include('landing.footer')
+            <!-- Footer
+            @include('footer_main') -->
 
         </div>
     </div>

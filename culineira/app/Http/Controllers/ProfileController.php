@@ -57,7 +57,7 @@ class ProfileController extends Controller
         $userId = DB::table('users')
             ->where('username', session()->get('usernameKey'))->get();
 
-        return view ('ProfilePage')
+        return view ('profile.index')
             ->with('userId', $userId)
             ->with('recipeId', $recipeId)
             ->with('classId', $classId)
