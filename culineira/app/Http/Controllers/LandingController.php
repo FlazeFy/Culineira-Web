@@ -33,7 +33,7 @@ class LandingController extends Controller
             ->limit(3)
             ->get();
 
-        return view ('LandingPage')->with('recipe', $recipe)->with('user', $user)->with('review', $review);
+        return view ('landing.index')->with('recipe', $recipe)->with('user', $user)->with('review', $review);
     }
 
     /**
