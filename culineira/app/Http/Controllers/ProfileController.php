@@ -14,6 +14,7 @@ use App\Models\classroom;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Arr;
 
 class ProfileController extends Controller
 {
@@ -64,7 +65,18 @@ class ProfileController extends Controller
             ->with('groupId', $groupId)
             ->with('recipe', $recipe)
             ->with('user', $user)
-            ->with('socmedId', $socmedId);
+            ->with('socmedId', $socmedId)
+            ->with('achievement1', $this->achievement1())
+            ->with('achievement2', $this->achievement2())
+            ->with('achievement3', $this->achievement3())
+            ->with('achievement4', $this->achievement4())
+            ->with('achievement5', $this->achievement5())
+            ->with('achievement6', $this->achievement6())
+            ->with('achievement7', $this->achievement7())
+            ->with('achievement8', $this->achievement8())
+            ->with('achievement9', $this->achievement9())
+            ->with('achievement10', $this->achievement10())
+            ->with('achievement11', $this->achievement11());
     }
 
     /**
@@ -94,10 +106,111 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function achievement1()
     {
-        //
+        $check = DB::table('recipes')
+            ->join('users', 'users.id', '=', 'recipes.user_id')
+            ->join('likes', 'recipes.id', '=', 'likes.recipe_id')
+            ->where('username', session()->get('usernameKey'))
+            ->get();
+        if(count($check) > 0){
+            return 'http://127.0.0.1:8000/assets/achievement/achievement-1.png';
+        } else {
+            return 'http://127.0.0.1:8000/assets/achievement/achievement-lock.png';
+        }
     }
+    public function achievement2()
+    {
+
+    }
+    public function achievement3()
+    {
+
+    }
+    public function achievement4()
+    {
+
+    }
+    public function achievement5()
+    {
+
+    }
+    public function achievement6()
+    {
+
+    }
+    public function achievement7()
+    {
+        $check = DB::table('recipes')
+            ->select('recipes.id')
+            ->join('users', 'users.id', '=', 'recipes.user_id')
+            ->join('steps', 'recipes.id', '=', 'steps.recipe_id')
+            ->join('ingredients', 'recipes.id', '=', 'ingredients.recipe_id')
+            ->where('username', session()->get('usernameKey'))
+            ->where('recipe_type', 'Desserts')
+            ->groupBy('recipes.id')
+            ->get();
+        if(count($check) > 0){
+            return 'http://127.0.0.1:8000/assets/achievement/achievement-7.png';
+        } else {
+            return 'http://127.0.0.1:8000/assets/achievement/achievement-lock.png';
+        }
+    }
+    public function achievement8()
+    {
+
+    }
+    public function achievement9()
+    {
+        $check = DB::table('recipes')
+            ->select('recipes.id')
+            ->join('users', 'users.id', '=', 'recipes.user_id')
+            ->join('steps', 'recipes.id', '=', 'steps.recipe_id')
+            ->join('ingredients', 'recipes.id', '=', 'ingredients.recipe_id')
+            ->where('username', session()->get('usernameKey'))
+            ->groupBy('recipes.id')
+            ->get();
+        if(count($check) >= 5){
+            return 'http://127.0.0.1:8000/assets/achievement/achievement-9.png';
+        } else {
+            return 'http://127.0.0.1:8000/assets/achievement/achievement-lock.png';
+        }
+    }
+    public function achievement10()
+    {
+        $check = DB::table('recipes')
+            ->select('recipes.id')
+            ->join('users', 'users.id', '=', 'recipes.user_id')
+            ->join('steps', 'recipes.id', '=', 'steps.recipe_id')
+            ->join('ingredients', 'recipes.id', '=', 'ingredients.recipe_id')
+            ->where('username', session()->get('usernameKey'))
+            ->where('recipe_time_spend', '<=' , 15)
+            ->groupBy('recipes.id')
+            ->get();
+        if(count($check) > 0){
+            return 'http://127.0.0.1:8000/assets/achievement/achievement-10.png';
+        } else {
+            return 'http://127.0.0.1:8000/assets/achievement/achievement-lock.png';
+        }
+    }
+    public function achievement11()
+    {
+        $check = DB::table('recipes')
+            ->select('recipes.id')
+            ->join('users', 'users.id', '=', 'recipes.user_id')
+            ->join('steps', 'recipes.id', '=', 'steps.recipe_id')
+            ->join('ingredients', 'recipes.id', '=', 'ingredients.recipe_id')
+            ->where('username', session()->get('usernameKey'))
+            ->where('recipe_time_spend', '>=' , 60)
+            ->groupBy('recipes.id')
+            ->get();
+        if(count($check) > 0){
+            return 'http://127.0.0.1:8000/assets/achievement/achievement-11.png';
+        } else {
+            return 'http://127.0.0.1:8000/assets/achievement/achievement-lock.png';
+        }
+    }
+
 
     /**
      * Show the form for editing the specified resource.

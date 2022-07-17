@@ -5,7 +5,7 @@
 <h6 class="d-flex align-items-center mb-3">Achievement</h6>
 <div class="scrolling-wrapper py-2">
     <div class="card border-0 bg-transparent m-0">
-        <img class="img rounded-circle m-1 border-0 shadow" style="width:65px;" src="http://127.0.0.1:8000/assets/achievement/achievement-1.png" type="button" role="button" data-bs-toggle="popover"
+        <img class="img rounded-circle m-1 border-0 shadow" style="width:65px;" src="{{$achievement1}}" type="button" role="button" data-bs-toggle="popover"
             title="Good start!" data-bs-content="Get first like in your recipe">
     </div>
     <div class="card border-0 bg-transparent m-0">
@@ -29,7 +29,7 @@
             title="Vegan Friendly" data-bs-content="Have first recipe that doesnt have meet in ingredients">
     </div>
     <div class="card border-0 bg-transparent m-0">
-        <img class="img rounded-circle m-1 border-0 shadow" style="width:65px;" src="http://127.0.0.1:8000/assets/achievement/achievement-7.png" type="button" role="button" data-bs-toggle="popover"
+        <img class="img rounded-circle m-1 border-0 shadow" style="width:65px;" src="{{$achievement7}}" type="button" role="button" data-bs-toggle="popover"
             title="Snack Time" data-bs-content="Have first desserts recipe">
     </div>
     <div class="card border-0 bg-transparent m-0">
@@ -37,15 +37,15 @@
             title="Healthy First" data-bs-content="Have first recipe that have fruit in ingredients">
     </div>
     <div class="card border-0 bg-transparent m-0">
-        <img class="img rounded-circle m-1 border-0 shadow" style="width:65px;" src="http://127.0.0.1:8000/assets/achievement/achievement-9.png" type="button" role="button" data-bs-toggle="popover"
+        <img class="img rounded-circle m-1 border-0 shadow" style="width:65px;" src="{{$achievement9}}" type="button" role="button" data-bs-toggle="popover"
             title="Food Enthusiast" data-bs-content="Have 5 recipes">
     </div>
     <div class="card border-0 bg-transparent m-0">
-        <img class="img rounded-circle m-1 border-0 shadow" style="width:65px;" src="http://127.0.0.1:8000/assets/achievement/achievement-10.png" type="button" role="button" data-bs-toggle="popover"
+        <img class="img rounded-circle m-1 border-0 shadow" style="width:65px;" src="{{$achievement10}}" type="button" role="button" data-bs-toggle="popover"
             title="Easy peasy lemon squeezy" data-bs-content="Have first recipe that have time spend cooking less than 15 min">
     </div>
     <div class="card border-0 bg-transparent m-0">
-        <img class="img rounded-circle m-1 border-0 shadow" style="width:65px;" src="http://127.0.0.1:8000/assets/achievement/achievement-11.png" type="button" role="button" data-bs-toggle="popover"
+        <img class="img rounded-circle m-1 border-0 shadow" style="width:65px;" src="{{$achievement11}}" type="button" role="button" data-bs-toggle="popover"
             title="What kind of food is this?" data-bs-content="Have first recipe that have time spend cooking more than 60 min">
     </div>
 </div>
