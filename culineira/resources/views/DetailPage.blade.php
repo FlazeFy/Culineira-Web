@@ -647,48 +647,6 @@
                     </div>
                 </nav>
 
-
-                    <!--Control Section.-->
-                    <div class='container-fluid mb-1 bg-transparent' style='margin-top:-30px;'>
-                        <div class='row'>
-                            <div class='col-sm-4'>
-                                <form autocomplete="off" action="" method="POST">
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text"><button class="btn btn-primary p-1" style="height:30px; width:30px;"><i class="fa-solid fa-magnifying-glass fa-xs"></i></button></span>
-                                    <input type="text" class="form-control" id="searchInput" name="search" placeholder="recipe, @creator, or #community" aria-label="Username" aria-describedby="basic-addon1">
-                                </div>
-                                </form>
-                            </div>
-                            <div class='col-sm-2 mt-1'>
-                                <select class="form-select" aria-label="Default select example">
-                                    <option value="Oriental">Oriental</option>
-                                    <option value="Middle Eastern">Middle Eastern</option>
-                                    <option value="Continental">Continental</option>
-                                    <option value="Indian">Indian</option>
-                                    <option value="Chinese">Chinese</option>
-                                    <option value="Korean & Japanese">Korean & Japanese</option>
-                                </select>
-                            </div>
-                            <div class='col-sm-2 mt-1'>
-                                <select class="form-select" aria-label="Default select example">
-                                    <option value="Beginner">Beginner</option>
-                                    <option value="Intermediate">Intermediate</option>
-                                    <option value="Expert">Expert</option>
-                                </select>
-                            </div>
-                            <div class='col-sm-2 mt-1'>
-                                <select class="form-select" aria-label="Default select example">
-                                    <option value="20">< 20 min</option>
-                                    <option value="<45">< 45 min</option>
-                                    <option value=">45">> 45 min</option>
-                                </select>
-                            </div>
-                            <div class='col-sm-2 mt-1'>
-                                <button class="btn btn-primary"><i class="fa-solid fa-filter"></i> Filter</button>
-                            </div>
-                        </div>
-                    </div>
-
                     <!--Recipes Detail.-->
                     @foreach($recipeId as $data)
                         <div class='container-fluid mb-3 p-3'>
@@ -1119,15 +1077,75 @@
 
             </div><!--End of accordion-->
 
-            <div class='container-fluid mb-3 p-3'>
-                <h3 class="mb-2">Similar Recipe <i class="fa-solid fa-circle-exclamation fa-2xs" type="button" data-bs-toggle="popover" title="Information" data-bs-content="Show others recipe with same main ingredients"></i></h3>
-                <div class="row">
-                @foreach($similar as $data)
-                    @foreach($recipeId as $rcp)
-                        @if(($data->recipe_visibility != 'Private')&&($rcp->id != $data->id))
+            <!--Control section.-->
+            <div class='mt-5'>
+                @include('others.control')
+            </div>
+
+            <div id="recipe_list_holder">
+                <div class='container-fluid mb-3 p-3'>
+                    <h3 class="mb-2">Similar Recipe <i class="fa-solid fa-circle-exclamation fa-2xs" type="button" data-bs-toggle="popover" title="Information" data-bs-content="Show others recipe with same main ingredients"></i></h3>
+                    <div class="row">
+                    @foreach($similar as $data)
+                        @foreach($recipeId as $rcp)
+                            @if(($data->recipe_visibility != 'Private')&&($rcp->id != $data->id))
+                                @foreach($user as $data2)
+                                @if($data->user_id == $data2->id)
+                                <li class="card border-gray w-25 p-2 border m-3" style='min-width:250px;'>
+                                    <img src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
+                                        style='margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
+                                    <img src="http://127.0.0.1:8000/storage/{{ $data2->image_url }}" alt='{{ $data2->image_url }}'
+                                        style='border-radius:100%; margin-top:-40px; margin-left:20px; width:40px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
+                                    <img src="http://127.0.0.1:8000/assets/image/country/<?php echo $data->recipe_country;?>.png" alt='<?php echo $data->recipe_country.".png";?>' title='<?php echo $data->recipe_country;?>'
+                                        style='border-radius:100%; width:40px; margin-top:30px; margin-left:200px; position:absolute; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
+                                    <h5 style='font-size:16px; text-align:center;'>{{$data->recipe_name}}</h5>
+                                    <div class='container' id='headingCard' style='padding:5px;'>
+                                        <div class='row' style='justify-content:center; width:110%;'>
+                                            <div class='col-md-5'>
+                                                <a style='font-size:12px; color:#5cb85c;'>{{$data->recipe_level}}</a>
+                                            </div>
+                                            <div class='col-md-5'>
+                                                <a style='font-size:12px;'>{{$data->recipe_type}}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='container mt-2'>
+                                        <div class='row' style='justify-content:center; width:110%;'>
+                                            <div class='col-md-3'>
+                                                <a style='font-size:15px; font-weight:bold; text-align:center;'>{{$data->recipe_time_spend}}</a>
+                                                <p style='font-size:12px;'>min</p>
+                                            </div>
+                                            <div class='col-md-3'>
+                                                <a style='font-size:15px; font-weight:bold; text-align:center;'>{{$data->recipe_calorie}}</a>
+                                                <p style='font-size:12px;'>cal</p>
+                                            </div>
+                                            <div class='col-md-4'>
+                                                <p style='font-size:12px; justify-content:center; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical;'>{{$data->recipe_main_ing}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a class='btn btn-primary' href="{{ url('/detail/' . $data->id) }}"><i class="fa-solid fa-arrow-right"></i> Cook Now</a>
+                                </li>
+                                @endif
+                                @endforeach
+                            @endif
+                        @endforeach
+                    @endforeach
+                    </div>
+                </div>
+
+                <div class='container-fluid mb-3 p-3'>
+                    <h3 class="mb-2">Wanna Make Complete Dish <i class="fa-solid fa-circle-exclamation fa-2xs" type="button" data-bs-toggle="popover" title="Information" data-bs-content="Show different type of recipe to make full dished"></i></h3>
+                    <div class="row">
+                    @foreach($recipeId as $d)
+                        @php($type = $d->recipe_type)
+                        @php($id = $d->id)
+                    @endforeach
+                    @foreach($recipe as $data)
+                        @if(($data->recipe_type != $type)&&($data->recipe_visibility != 'Private')&&($data->id != $id))
                             @foreach($user as $data2)
                             @if($data->user_id == $data2->id)
-                            <div class="card border-gray w-25 p-2 border m-3" style='min-width:250px;'>
+                            <li class="card border-gray w-25 p-2 border m-3" style='min-width:250px;'>
                                 <img src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
                                     style='margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
                                 <img src="http://127.0.0.1:8000/storage/{{ $data2->image_url }}" alt='{{ $data2->image_url }}'
@@ -1161,114 +1179,61 @@
                                     </div>
                                 </div>
                                 <a class='btn btn-primary' href="{{ url('/detail/' . $data->id) }}"><i class="fa-solid fa-arrow-right"></i> Cook Now</a>
-                            </div>
+                            </li>
                             @endif
                             @endforeach
                         @endif
                     @endforeach
-                @endforeach
+                    </div>
                 </div>
-            </div>
 
-            <div class='container-fluid mb-3 p-3'>
-                <h3 class="mb-2">Wanna Make Complete Dish <i class="fa-solid fa-circle-exclamation fa-2xs" type="button" data-bs-toggle="popover" title="Information" data-bs-content="Show different type of recipe to make full dished"></i></h3>
-                <div class="row">
-                @foreach($recipeId as $d)
-                    @php($type = $d->recipe_type)
-                    @php($id = $d->id)
-                @endforeach
-                @foreach($recipe as $data)
-                    @if(($data->recipe_type != $type)&&($data->recipe_visibility != 'Private')&&($data->id != $id))
-                        @foreach($user as $data2)
-                        @if($data->user_id == $data2->id)
-                        <div class="card border-gray w-25 p-2 border m-3" style='min-width:250px;'>
-                            <img src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
-                                style='margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
-                            <img src="http://127.0.0.1:8000/storage/{{ $data2->image_url }}" alt='{{ $data2->image_url }}'
-                                style='border-radius:100%; margin-top:-40px; margin-left:20px; width:40px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
-                            <img src="http://127.0.0.1:8000/assets/image/country/<?php echo $data->recipe_country;?>.png" alt='<?php echo $data->recipe_country.".png";?>' title='<?php echo $data->recipe_country;?>'
-                                style='border-radius:100%; width:40px; margin-top:30px; margin-left:200px; position:absolute; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
-                            <h5 style='font-size:16px; text-align:center;'>{{$data->recipe_name}}</h5>
-                            <div class='container' id='headingCard' style='padding:5px;'>
-                                <div class='row' style='justify-content:center; width:110%;'>
-                                    <div class='col-md-5'>
-                                        <a style='font-size:12px; color:#5cb85c;'>{{$data->recipe_level}}</a>
-                                    </div>
-                                    <div class='col-md-5'>
-                                        <a style='font-size:12px;'>{{$data->recipe_type}}</a>
+                <div class='container-fluid mb-3 p-3'>
+                    <h3 class="mb-2">You May Also Like <i class="fa-solid fa-circle-exclamation fa-2xs" type="button" data-bs-toggle="popover" title="Information" data-bs-content="Show others recipe with same country or level"></i></h3>
+                    <div class="row">
+                    @foreach($mayLikeRecipe as $data)
+                        @if($data->recipe_visibility != 'Private')
+                            @foreach($user as $data2)
+                            @if($data->user_id == $data2->id)
+                            <li class="card border-gray w-25 p-2 border m-3" style='min-width:250px;'>
+                                <img src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
+                                    style='margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
+                                <img src="http://127.0.0.1:8000/storage/{{ $data2->image_url }}" alt='{{ $data2->image_url }}'
+                                    style='border-radius:100%; margin-top:-40px; margin-left:20px; width:40px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
+                                <img src="http://127.0.0.1:8000/assets/image/country/<?php echo $data->recipe_country;?>.png" alt='<?php echo $data->recipe_country.".png";?>' title='<?php echo $data->recipe_country;?>'
+                                    style='border-radius:100%; width:40px; margin-top:30px; margin-left:200px; position:absolute; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
+                                <h5 style='font-size:16px; text-align:center;' id="recipe_name">{{$data->recipe_name}}</h5>
+                                <div class='container' id='headingCard' style='padding:5px;'>
+                                    <div class='row' style='justify-content:center; width:110%;'>
+                                        <div class='col-md-5'>
+                                            <a style='font-size:12px; color:#5cb85c;'>{{$data->recipe_level}}</a>
+                                        </div>
+                                        <div class='col-md-5'>
+                                            <a style='font-size:12px;'>{{$data->recipe_type}}</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class='container mt-2'>
-                                <div class='row' style='justify-content:center; width:110%;'>
-                                    <div class='col-md-3'>
-                                        <a style='font-size:15px; font-weight:bold; text-align:center;'>{{$data->recipe_time_spend}}</a>
-                                        <p style='font-size:12px;'>min</p>
-                                    </div>
-                                    <div class='col-md-3'>
-                                        <a style='font-size:15px; font-weight:bold; text-align:center;'>{{$data->recipe_calorie}}</a>
-                                        <p style='font-size:12px;'>cal</p>
-                                    </div>
-                                    <div class='col-md-4'>
-                                        <p style='font-size:12px; justify-content:center; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical;'>{{$data->recipe_main_ing}}</p>
+                                <div class='container mt-2'>
+                                    <div class='row' style='justify-content:center; width:110%;'>
+                                        <div class='col-md-3'>
+                                            <a style='font-size:15px; font-weight:bold; text-align:center;' id="recipe_time_spend">{{$data->recipe_time_spend}}</a>
+                                            <p style='font-size:12px;'>min</p>
+                                        </div>
+                                        <div class='col-md-3'>
+                                            <a style='font-size:15px; font-weight:bold; text-align:center;' id="recipe_cal">{{$data->recipe_calorie}}</a>
+                                            <p style='font-size:12px;'>cal</p>
+                                        </div>
+                                        <div class='col-md-4'>
+                                            <p style='font-size:12px; justify-content:center; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical;'>{{$data->recipe_main_ing}}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <a class='btn btn-primary' href="{{ url('/detail/' . $data->id) }}"><i class="fa-solid fa-arrow-right"></i> Cook Now</a>
-                        </div>
+                                <a class='btn btn-primary' href="{{ url('/detail/' . $data->id) }}"><i class="fa-solid fa-arrow-right"></i> Cook Now</a>
+                            </li>
+                            @endif
+                            @endforeach
                         @endif
-                        @endforeach
-                    @endif
-                @endforeach
-                </div>
-            </div>
-
-            <div class='container-fluid mb-3 p-3'>
-                <h3 class="mb-2">You May Also Like <i class="fa-solid fa-circle-exclamation fa-2xs" type="button" data-bs-toggle="popover" title="Information" data-bs-content="Show others recipe with same country or level"></i></h3>
-                <div class="row">
-                @foreach($mayLikeRecipe as $data)
-                    @if($data->recipe_visibility != 'Private')
-                        @foreach($user as $data2)
-                        @if($data->user_id == $data2->id)
-                        <div class="card border-gray w-25 p-2 border m-3" style='min-width:250px;'>
-                            <img src="http://127.0.0.1:8000/storage/{{ $data->recipe_url }}?>" alt='<?php echo $data->recipe_name."_".$data->user_id;?>'
-                                style='margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
-                            <img src="http://127.0.0.1:8000/storage/{{ $data2->image_url }}" alt='{{ $data2->image_url }}'
-                                style='border-radius:100%; margin-top:-40px; margin-left:20px; width:40px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
-                            <img src="http://127.0.0.1:8000/assets/image/country/<?php echo $data->recipe_country;?>.png" alt='<?php echo $data->recipe_country.".png";?>' title='<?php echo $data->recipe_country;?>'
-                                style='border-radius:100%; width:40px; margin-top:30px; margin-left:200px; position:absolute; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
-                            <h5 style='font-size:16px; text-align:center;' id="recipe_name">{{$data->recipe_name}}</h5>
-                            <div class='container' id='headingCard' style='padding:5px;'>
-                                <div class='row' style='justify-content:center; width:110%;'>
-                                    <div class='col-md-5'>
-                                        <a style='font-size:12px; color:#5cb85c;'>{{$data->recipe_level}}</a>
-                                    </div>
-                                    <div class='col-md-5'>
-                                        <a style='font-size:12px;'>{{$data->recipe_type}}</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class='container mt-2'>
-                                <div class='row' style='justify-content:center; width:110%;'>
-                                    <div class='col-md-3'>
-                                        <a style='font-size:15px; font-weight:bold; text-align:center;' id="recipe_time_spend">{{$data->recipe_time_spend}}</a>
-                                        <p style='font-size:12px;'>min</p>
-                                    </div>
-                                    <div class='col-md-3'>
-                                        <a style='font-size:15px; font-weight:bold; text-align:center;' id="recipe_cal">{{$data->recipe_calorie}}</a>
-                                        <p style='font-size:12px;'>cal</p>
-                                    </div>
-                                    <div class='col-md-4'>
-                                        <p style='font-size:12px; justify-content:center; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical;'>{{$data->recipe_main_ing}}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <a class='btn btn-primary' href="{{ url('/detail/' . $data->id) }}"><i class="fa-solid fa-arrow-right"></i> Cook Now</a>
-                        </div>
-                        @endif
-                        @endforeach
-                    @endif
-                @endforeach
+                    @endforeach
+                    </div>
                 </div>
             </div>
 
