@@ -36,7 +36,7 @@ class KitchenController extends Controller
             ->orderBy('list.updated_at', 'ASC')
             ->get();
 
-        return view ('KitchenPage')
+        return view ('kitchen.index')
             ->with('recipe', $recipe)
             ->with('recipeInList', $recipeInList)
             ->with('user', $user)
@@ -162,15 +162,6 @@ class KitchenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function starred(Request $request, $id)
-    {
-        list_recipe::where('id', $id)->update([
-            'list_status' => $request->list_status,
-            'updated_at' => date("Y-m-d h:m:i"),
-        ]);
-
-        return redirect('/kitchen')->with('success_message', 'List status changed');
-    }
 
     /**
      * Remove the specified resource from storage.

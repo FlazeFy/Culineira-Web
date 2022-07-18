@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-    <title>Culineira | Recipes</title>
+    <title>Recipes | @foreach($recipeId as $data){{$data->recipe_name}}@endforeach</title>
     <!--Meta tags-->
     <meta charset="utf-8" name="color-scheme" content="light dark">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">

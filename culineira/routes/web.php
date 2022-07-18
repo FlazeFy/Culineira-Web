@@ -7,6 +7,8 @@ use App\Http\Controllers\LandingController;
 use App\Http\Controllers\DetailController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KitchenController;
+use App\Http\Controllers\Browse\ListController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -55,3 +57,8 @@ Route::post('/kitchen/addRecipeToList', [KitchenController::class, 'addRecipeToL
 Route::post('/kitchen/addNewList', [KitchenController::class, 'addNewList']);
 Route::post('/kitchen/deleteList', [KitchenController::class, 'deleteList']);
 Route::post('/kitchen/starred/{id}', [KitchenController::class, 'starred']);
+
+//Browse page.
+    //List page.
+    Route::get('/kitchen/browse-list/{id}', [ListController::class, 'index']);
+    Route::post('/kitchen/browse-list/starred/{id}', [ListController::class, 'starred']);
