@@ -601,19 +601,22 @@
                         </h3>
                         <div class="row">
                             <div class="col-md-3 text-center mb-2">
-                                <h6 style="font-size:14px;">Description</h6>
-                                <h7 style="font-size:13px;">{{$data->list_description}}</h7>
+                                <form action="/kitchen/browse-list/update/{{$data->id}}" method="POST">
+                                    @csrf
+                                    <h6 class="mt-2" style="font-size:14px;">List Name</h6>
+                                    <input class="form-control" name="list_name" value="{{$data->list_name}}" required>
+                                    <h6 class="mt-2" style="font-size:14px;">Description</h6>
+                                    <textarea class="form-control" name="list_description" rows="3">{{$data->list_description}}</textarea>
+                                    <button class="btn btn-success mt-2" type="submit"><i class="fa-solid fa-pen-to-square"></i> Update</button>
+                                </form>
                                 <hr>
                                 <h6 class="mt-4" style="font-size:14px;">Created On</h6>
                                 <h7 style="font-size:13px;" id="recipe_created_at">{{$data->created_at}}</h7>
                                 <h6 style="font-size:14px;">Updated On</h6>
                                 <h7 style="font-size:13px;" id="recipe_updated_at">{{$data->updated_at}}</h7>
                                 <hr>
-                                <form action="/kitchen/browse-list/destroy/{{$data->id}}" method="POST">
-                                    @csrf
-                                    <button class='btn btn-danger mb-2 w-100' type='submit'><i class="fa-solid fa-trash-can"></i> Delete</button>
-                                </form>
-                                <a class='btn btn-primary mb-2 border-0 w-100' style="background:#77568D;" href=""><i class="fa-solid fa-right-left"></i> Convert</a>
+                                <button class='btn btn-danger mb-2 w-50' data-bs-toggle="modal" data-bs-target="#deleteList"><i class="fa-solid fa-trash-can"></i> Delete</button>
+                                <a class='btn btn-primary mb-2 border-0 w-50' style="background:#77568D;" href=""><i class="fa-solid fa-right-left"></i> Convert</a>
                             </div>
                             <div class="col-md-9 mb-2">
                                 <div class="row">
@@ -627,7 +630,6 @@
                                     <form action="/kitchen/browse-list/deleteRecipeList/{{$data->id}}" method="POST">
                                         @csrf
                                         <button class='btn btn-danger border-2 bg-transparent text-danger' type='submit' style='float:right; position:relative; margin-top:-50px;'><i class="fa-solid fa-trash-can"></i> Remove Recipe</button>
-                                    </form>
                                 </div>
                                 <div class="row py-4" id="recipe_list_holder">
                                     @foreach($recipeInList as $rl)
@@ -673,6 +675,7 @@
                                         @endforeach
                                     @endforeach
                                 </div><!--End of recipe list holder.-->
+                                </form><!--End of delete recipe in list form.-->
                             </div>
                         </div>
                     </div>
@@ -704,6 +707,9 @@
     <!--Modal validation-->
     @include('popup.failed')
     @include('popup.success')
+
+    <!--Delete List Modal-->
+    @include('kitchen.browse-list.deleteList')
 
     <!--Others CDN.-->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>

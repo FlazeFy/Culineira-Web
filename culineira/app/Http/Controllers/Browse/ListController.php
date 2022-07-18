@@ -96,7 +96,13 @@ class ListController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        list_recipe::where('id', $id)->update([
+            'list_name' => $request-> list_name,
+            'list_description' => $request-> list_description,
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        return redirect()->back()->with('success_message', 'List Updated');
     }
 
     /**
@@ -105,9 +111,28 @@ class ListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        if($request->validation == $request->list_name){
+            list_recipe::destroy($id);
+            DB::table('list-rel')->where('list_id', $id)->delete();
+            return redirect('/kitchen')->with('success_message', 'List deleted!');
+        } else {
+            return redirect()->back()->with('failed_message', 'Delete failed, please input same list name!');
+        }
+    }
+
+    public function deleteRecipeList(Request $request, $id)
+    {
+        if($request->has('recipe_id')){
+            $recipe_count = count($request-> recipe_id);
+            for($i=0; $i < $recipe_count; $i++){
+                DB::table('list-rel')->where('recipe_id', $request-> recipe_id[$i])->where('list_id', $id)->delete();
+            }
+            return redirect()->back()->with('success_message', $recipe_count.' Recipe removed!');
+        } else {
+            return redirect()->back()->with('failed_message', 'Nothing has changed, please select min 1 list');
+        }
     }
 
     public function starred(Request $request, $id)

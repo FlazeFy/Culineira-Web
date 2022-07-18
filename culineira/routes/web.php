@@ -62,3 +62,6 @@ Route::post('/kitchen/starred/{id}', [KitchenController::class, 'starred']);
     //List page.
     Route::get('/kitchen/browse-list/{id}', [ListController::class, 'index']);
     Route::post('/kitchen/browse-list/starred/{id}', [ListController::class, 'starred']);
+    Route::post('/kitchen/browse-list/update/{id}', [ListController::class, 'update']);
+    Route::post('/kitchen/browse-list/destroy/{id}', [ListController::class, 'destroy']); //For delete list
+    Route::post('/kitchen/browse-list/deleteRecipeList/{id}', [ListController::class, 'deleteRecipeList']); //For delete recipe in a list

@@ -171,11 +171,15 @@ class KitchenController extends Controller
      */
     public function deleteList(Request $request)
     {
-        $list_count = count($request-> list_id);
-        for($i=0; $i < $list_count; $i++){
-            list_recipe::destroy($request-> list_id[$i]);
-            DB::table('list-rel')->where('list_id', $request-> list_id[$i])->delete();
+        if($request->has('list_id')){
+            $list_count = count($request-> list_id);
+            for($i=0; $i < $list_count; $i++){
+                list_recipe::destroy($request-> list_id[$i]);
+                DB::table('list-rel')->where('list_id', $request-> list_id[$i])->delete();
+            }
+            return redirect('/kitchen')->with('success_message', $list_count.' List deleted!');
+        } else {
+            return redirect()->back()->with('failed_message', 'Nothing has changed, please select min 1 list');
         }
-        return redirect('/kitchen')->with('success_message', $list_count.' List deleted!');
     }
 }
