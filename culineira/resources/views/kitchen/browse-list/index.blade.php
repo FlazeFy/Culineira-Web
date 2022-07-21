@@ -632,6 +632,7 @@
                                     </h5>
                                     <form action="/kitchen/browse-list/deleteRecipeList/{{$data->id}}" method="POST">
                                         @csrf
+                                        <a class='btn btn-success border-2 bg-transparent text-success' data-bs-toggle="modal" data-bs-target="#addRecipeList" style='float:right; position:relative; margin-top:-50px; margin-right:180px;'><i class="fa-solid fa-plus"></i> Add Recipe</a>
                                         <button class='btn btn-danger border-2 bg-transparent text-danger' type='submit' style='float:right; position:relative; margin-top:-50px;'><i class="fa-solid fa-trash-can"></i> Remove Recipe</button>
                                 </div>
                                 <!--Recipe list-->
@@ -672,6 +673,9 @@
 
     <!--Delete List Modal-->
     @include('kitchen.browse-list.deleteList')
+
+    <!-- Add recipe to list modal -->
+    @include('kitchen.browse-list.addRecipeList')
 
     <!--Others CDN.-->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>

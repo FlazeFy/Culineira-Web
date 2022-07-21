@@ -58,6 +58,11 @@ class ProfileController extends Controller
         $userId = DB::table('users')
             ->where('username', session()->get('usernameKey'))->get();
 
+        //Show user login data in profile.
+        $activityId = DB::table('activity')
+            ->join('users', 'users.id', '=', 'activity.users_id')
+            ->where('username', session()->get('usernameKey'))->get();
+
         return view ('profile.index')
             ->with('userId', $userId)
             ->with('recipeId', $recipeId)
@@ -66,6 +71,7 @@ class ProfileController extends Controller
             ->with('recipe', $recipe)
             ->with('user', $user)
             ->with('socmedId', $socmedId)
+            ->with('activityId', $activityId)
             ->with('achievement1', $this->achievement1())
             ->with('achievement2', $this->achievement2())
             ->with('achievement3', $this->achievement3())

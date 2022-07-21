@@ -547,9 +547,6 @@
                                     <a class="nav-link" href="" role="button" data-bs-toggle="collapse" data-bs-target="#activityCollapse" aria-expanded="false" aria-controls="CollapseExample2">Activity</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="" role="button" data-bs-toggle="collapse" data-bs-target="#historyCollapse" aria-expanded="false" aria-controls="CollapseExample2">History</a>
-                                </li>
-                                <li class="nav-item">
                                     <a class="nav-link" href="" role="button" data-bs-toggle="collapse" data-bs-target="#settingCollapse" aria-expanded="false" aria-controls="CollapseExample2">Setting</a>
                                 </li>
                             </ul>
@@ -603,6 +600,14 @@
                         @endforeach
 
                     </div>
+                </div>
+                <div class="collapse" id="activityCollapse" data-bs-parent="#accordionProfile">
+                    @foreach($userId as $u)
+                    <div class='container-fluid mb-3'>
+                        <!-- Activity -->
+                        @include('profile.activity.list')
+                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>

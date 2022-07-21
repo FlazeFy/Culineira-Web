@@ -60,9 +60,31 @@ class ListController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function addRecipeToList(Request $request, recipe $recipe, $id)
     {
-        //
+        if($request->has('recipe_id')){
+            $recipe_count = count($request-> recipe_id);
+            for($i=0; $i < $recipe_count; $i++){
+                list_rel::create([
+                    'list_id' => $id,
+                    'recipe_id' => $request-> recipe_id[$i],
+                    'created_at' => date("Y-m-d h:m:i"),
+                    'updated_at' => date("Y-m-d h:m:i"),
+                ]);
+            }
+
+            if(count($request-> recipe_id) > 1){
+                return redirect('/kitchen/browse-list/'.$id)->with('success_message', 'Successfully added '.count($request->recipe_id).' Recipes to '.$request->list_name.' list!');
+            } else {
+                $check = DB::table('recipes')->where('id', $request->recipe_id)->get();
+                foreach($check as $c){
+                    $recipe_name = $c->recipe_name;
+                }
+                return redirect('/kitchen/browse-list/'.$id)->with('success_message', 'Successfully added '.$recipe_name.' to '.$request->list_name.' list!');
+            }
+        } else {
+            return redirect('/kitchen/browse-list/'.$id)->with('failed_message', 'Nothing has changed. You must select min 1 recipe');
+        }
     }
 
     /**
