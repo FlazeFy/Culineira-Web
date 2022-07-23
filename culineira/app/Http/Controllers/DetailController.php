@@ -11,6 +11,7 @@ use App\Models\likes;
 use App\Models\list;
 use App\Models\list_rel;
 use App\Models\ingredients;
+use App\Models\activity;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -125,12 +126,37 @@ class DetailController extends Controller
                 'created_at' => date("Y-m-d h:m:i"),
                 'updated_at' => date("Y-m-d h:m:i"),
             ]);
+
+            //Activity record
+            activity::create([
+                'users_id' => $id_user,
+                'activity_from' => $id,
+                'activity_type' => 'recipes',
+                'activity_description' => 'liked your recipes',
+                'created_at' => date("Y-m-d h:m:i"),
+                'updated_at' => date("Y-m-d h:m:i"),
+            ]);
+
             return redirect()->route('detail', ['id' => $id])->with('flash_message', 'Recipe liked!');
         } else {
             //Disliked.
             foreach($check as $c){
                 $id_likes = $c->id;
             }
+
+            $users_id = DB::table('users')->where('username', session()->get('usernameKey'))->get();
+            foreach($users_id as $us){
+                $id_user = $us->id;
+            }
+
+            $activity_id = DB::table('activity')->where('activity_from', $id)->where('users_id', $id_user)->get();
+            foreach($activity_id as $as){
+                $ac_id = $as->id;
+            }
+
+            //Activity record
+            activity::destroy($ac_id);
+
             likes::destroy($id_likes);
             return redirect()->route('detail', ['id' => $id])->with('flash_message', 'Recipe disliked!');
         }

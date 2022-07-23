@@ -7,6 +7,7 @@ use App\Models\recipe;
 use App\Models\comment;
 use App\Models\user;
 use App\Models\steps;
+use App\Models\activity;
 use App\Models\likes;
 use App\Models\ingredients;
 use App\Models\socmed;
@@ -247,6 +248,16 @@ class ProfileController extends Controller
             'updated_at' => date("Y-m-d h:m:i"),
         ]);
 
+        //Activity record
+        activity::create([
+            'users_id' => $id,
+            'activity_from' => $id,
+            'activity_type' => 'profile',
+            'activity_description' => 'modified your social media data',
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
         return redirect('/profile')->with('success_message', 'Social Media Updated');
     }
 
@@ -256,6 +267,16 @@ class ProfileController extends Controller
             'password' => $request-> password,
             'description' => $request-> description,
             'country' => $request-> country,
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        //Activity record
+        activity::create([
+            'users_id' => $id,
+            'activity_from' => $id,
+            'activity_type' => 'profile',
+            'activity_description' => 'modified your account data',
+            'created_at' => date("Y-m-d h:m:i"),
             'updated_at' => date("Y-m-d h:m:i"),
         ]);
 
@@ -287,6 +308,16 @@ class ProfileController extends Controller
 
         user::where('id', $id)->update([
             'image_url' => $imageURL,
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        //Activity record
+        activity::create([
+            'users_id' => $id,
+            'activity_from' => $id,
+            'activity_type' => 'profile',
+            'activity_description' => 'changed your profile image',
+            'created_at' => date("Y-m-d h:m:i"),
             'updated_at' => date("Y-m-d h:m:i"),
         ]);
 
