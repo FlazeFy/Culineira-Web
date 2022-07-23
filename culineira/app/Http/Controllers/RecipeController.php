@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\recipe;
 use App\Models\user;
 use App\Models\steps;
+use App\Models\activity;
 use App\Models\ingredients;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -71,6 +72,16 @@ class RecipeController extends Controller
             'recipe_visibility' => $request->recipe_visibility,
             'recipe_url' => $image->hashName(),
             'recipe_video' => "null",
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        //Activity record
+        activity::create([
+            'users_id' => 1,
+            'activity_from' => $id_recipe->id,
+            'activity_type' => 'recipes',
+            'activity_description' => 'created a recipe called "'.$request-> recipe_name.'"',
             'created_at' => date("Y-m-d h:m:i"),
             'updated_at' => date("Y-m-d h:m:i"),
         ]);
@@ -161,6 +172,16 @@ class RecipeController extends Controller
             ]);
         }
 
+        //Activity record
+        activity::create([
+            'users_id' => 1,
+            'activity_from' => $recipeData->id,
+            'activity_type' => 'recipes',
+            'activity_description' => 'created a recipe called "'.$request-> recipe_name.'"',
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
         return redirect('/recipe')->with('success_message', 'Recipe added!');
     }
 
@@ -205,6 +226,23 @@ class RecipeController extends Controller
                 'updated_at' => date("Y-m-d h:m:i"),
             ]);
         }
+
+        //Get recipe name
+        $recipes_name = DB::table('recipes')->where('id', $request-> recipe_id)->get();
+        foreach($recipes_name as $r){
+            $recipeName = $r->recipe_name;
+        }
+
+        //Activity record
+        activity::create([
+            'users_id' => 1,
+            'activity_from' => $request-> recipe_id,
+            'activity_type' => 'recipes',
+            'activity_description' => 'modified "'.$recipeName.'" recipe dependencies',
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
         return redirect('/recipe')->with('success_message', 'Dependencies added!');
     }
 
@@ -285,12 +323,44 @@ class RecipeController extends Controller
             ]);
         }
 
+        //Get recipe name
+        $recipes_name = DB::table('recipes')->where('id', $id)->get();
+        foreach($recipes_name as $r){
+            $recipeName = $r->recipe_name;
+        }
+
+        //Activity record
+        activity::create([
+            'users_id' => 1,
+            'activity_from' => $id,
+            'activity_type' => 'recipes',
+            'activity_description' => 'modified "'.$recipeName.'" recipe data',
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
         return redirect('/recipe')->with('success_message', 'Recipe updated!');
     }
     public function updateVisibility(Request $request, $id)
     {
         recipe::where('id', $id)->update([
             'recipe_visibility' => $request-> visibility,
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        //Get recipe name
+        $recipes_name = DB::table('recipes')->where('id', $id)->get();
+        foreach($recipes_name as $r){
+            $recipeName = $r->recipe_name;
+        }
+
+        //Activity record
+        activity::create([
+            'users_id' => 1,
+            'activity_from' => $id,
+            'activity_type' => 'recipes',
+            'activity_description' => 'modified "'.$recipeName.'" recipe visibility',
+            'created_at' => date("Y-m-d h:m:i"),
             'updated_at' => date("Y-m-d h:m:i"),
         ]);
 
@@ -307,7 +377,24 @@ class RecipeController extends Controller
     public function destroy(Request $request, $id)
     {
         if($request->validation == $request->recipe_name){
+            //Get recipe name
+            $recipes_name = DB::table('recipes')->where('id', $id)->get();
+            foreach($recipes_name as $r){
+                $recipeName = $r->recipe_name;
+            }
+
+            //Activity record
+            activity::create([
+                'users_id' => 1,
+                'activity_from' => $id,
+                'activity_type' => 'recipes',
+                'activity_description' => 'deleted "'.$recipeName.'" recipe',
+                'created_at' => date("Y-m-d h:m:i"),
+                'updated_at' => date("Y-m-d h:m:i"),
+            ]);
+
             recipe::destroy($id);
+
             return redirect('/recipe')->with('success_message', 'Recipe deleted!');
         } else {
             return redirect('/recipe')->with('failed_message', 'Delete failed, please input same recipe name!');

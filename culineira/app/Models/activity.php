@@ -11,5 +11,5 @@ class activity extends Model
 
     protected $table = 'activity';
     protected $primaryKey = 'id';
-    protected $fillable = ['users_id', 'activity_form', 'activity_type', 'activity_description', 'created_at', 'updated_at'];
+    protected $fillable = ['users_id', 'activity_from', 'activity_type', 'activity_description', 'created_at', 'updated_at'];
 }

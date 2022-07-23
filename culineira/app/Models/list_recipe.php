@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 //This model for "list" table. The name "list" is CONFLICT with php file.
 class list_recipe extends Model
 {
-    use HasFactory;
+    //use HasFactory;
 
     protected $table = 'list';
     protected $primaryKey = 'id';

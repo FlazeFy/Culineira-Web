@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\recipe;
 use App\Models\user;
+use App\Models\activity;
 use App\Models\list_recipe;
 use App\Models\list_rel;
 use Illuminate\Support\Facades\DB;
@@ -100,6 +101,16 @@ class KitchenController extends Controller
                 'updated_at' => date("Y-m-d h:m:i"),
             ]);
 
+            //Activity record
+            activity::create([
+                'users_id' => 1,
+                'activity_from' => $list->id,
+                'activity_type' => 'list',
+                'activity_description' => 'created a list called "'.$request-> list_name.'"',
+                'created_at' => date("Y-m-d h:m:i"),
+                'updated_at' => date("Y-m-d h:m:i"),
+            ]);
+
             $recipe_count = count($request-> recipe_id);
             for($i=0; $i < $recipe_count; $i++){
                 list_rel::create([
@@ -126,6 +137,16 @@ class KitchenController extends Controller
                 'list_name' => $request-> list_name,
                 'list_status' => 'null', //For now
                 'list_description' => $request-> list_description,
+                'created_at' => date("Y-m-d h:m:i"),
+                'updated_at' => date("Y-m-d h:m:i"),
+            ]);
+
+            //Activity record
+            activity::create([
+                'users_id' => 1,
+                'activity_from' => $list->id,
+                'activity_type' => 'list',
+                'activity_description' => 'created a list called "'.$request-> list_name.'"',
                 'created_at' => date("Y-m-d h:m:i"),
                 'updated_at' => date("Y-m-d h:m:i"),
             ]);
