@@ -517,7 +517,7 @@
                 <!--Shelf.-->
                 <div class='container-fluid mb-3'>
                     <h3 class="mb-2">Shelf</h3>
-
+                    @include('kitchen.shelf')
                 </div>
 
                 <!--Recipes.-->

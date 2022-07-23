@@ -37,10 +37,18 @@ class KitchenController extends Controller
             ->orderBy('list.updated_at', 'ASC')
             ->get();
 
+        $shelf = DB::table('shelf')
+            ->select('shelf.id as id', 'item_name', 'item_description', 'item_qty', 'shelf.created_at as created_at', 'shelf.updated_at as updated_at')
+            ->join('users', 'users.id', '=', 'shelf.users_id')
+            ->where('username', session()->get('usernameKey'))
+            ->orderBy('shelf.updated_at', 'ASC')
+            ->get();
+
         return view ('kitchen.index')
             ->with('recipe', $recipe)
             ->with('recipeInList', $recipeInList)
             ->with('user', $user)
+            ->with('shelf', $shelf)
             ->with('list', $list);
 
     }
