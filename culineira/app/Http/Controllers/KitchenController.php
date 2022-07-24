@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\recipe;
 use App\Models\user;
+use App\Models\shelf;
 use App\Models\activity;
 use App\Models\list_recipe;
 use App\Models\list_rel;
@@ -160,6 +161,31 @@ class KitchenController extends Controller
             ]);
             return redirect('/kitchen')->with('success_message', 'Successfully added new '.$request-> list_name.' list');
         }
+    }
+
+    public function addItemShelf(Request $request)
+    {
+        //Create item
+        $item = shelf::create([
+            'users_id' => 1, //For testing
+            'item_name' => $request-> item_name,
+            'item_description' => $request-> item_description,
+            'item_qty' => $request-> item_qty,
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        //Activity record
+        activity::create([
+            'users_id' => 1,
+            'activity_from' => $item->id,
+            'activity_type' => 'shelf',
+            'activity_description' => 'added a new item to shelf called "'.$request-> item_name.'"',
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        return redirect('/kitchen')->with('success_message', 'Successfully added new item '.$request-> item_name.' to shelf');
     }
 
     /**

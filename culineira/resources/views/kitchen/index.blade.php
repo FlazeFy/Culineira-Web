@@ -517,7 +517,14 @@
                 <!--Shelf.-->
                 <div class='container-fluid mb-3'>
                     <h3 class="mb-2">Shelf</h3>
-                    @include('kitchen.shelf')
+                    <form action="/kitchen/deleteItemShelf" method="POST">
+                        <div class="row m-2 w-50">
+                            @csrf
+                            <a class="btn btn-success mb-2 mx-2 w-25" id="add_item_shelf" data-bs-toggle="modal" data-bs-target="#addItemShelf"><i class="fa-solid fa-plus"></i> Add Item</a>
+                            <button class='btn btn-danger mb-2 w-25' type='submit'><i class="fa-solid fa-trash-can"></i> Delete</button>
+                        </div>
+                        @include('kitchen.shelf')
+                    </form>
                 </div>
 
                 <!--Recipes.-->
@@ -533,6 +540,9 @@
 
     <!-- Modal Create New List -->
     @include('kitchen.form.createList')
+
+    <!-- Modal Add New Item -->
+    @include('kitchen.form.addItem')
 
     <!-- Delete list Modal -->
     @include('kitchen.form.deleteList')
