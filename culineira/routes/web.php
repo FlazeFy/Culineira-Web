@@ -57,6 +57,7 @@ Route::post('/kitchen/addRecipeToList', [KitchenController::class, 'addRecipeToL
 Route::post('/kitchen/addNewList', [KitchenController::class, 'addNewList']);
 Route::post('/kitchen/addItemShelf', [KitchenController::class, 'addItemShelf']);
 Route::post('/kitchen/deleteList', [KitchenController::class, 'deleteList']);
+Route::post('/kitchen/deleteItemShelf', [KitchenController::class, 'deleteItemShelf']);
 Route::post('/kitchen/starred/{id}', [KitchenController::class, 'starred']);
 
 //Browse page.

@@ -237,4 +237,18 @@ class KitchenController extends Controller
             return redirect()->back()->with('failed_message', 'Nothing has changed, please select min 1 list');
         }
     }
+
+    public function deleteItemShelf(Request $request)
+    {
+        if($request->has('shelf_id')){
+            $item_count = count($request->shelf_id);
+            for($i=0; $i < $item_count; $i++){
+                shelf::destroy($request-> shelf_id[$i]);
+            }
+
+            return redirect('/kitchen')->with('success_message', $item_count.' item deleted!');
+        } else {
+            return redirect()->back()->with('failed_message', 'Nothing has changed, please select min 1 item');
+        }
+    }
 }

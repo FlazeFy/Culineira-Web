@@ -367,6 +367,10 @@
                 height: 450px;
                 overflow-y: scroll;
             }
+            #shelf_holder{
+                height: 400px;
+                overflow-y: scroll;
+            }
             #list_title{
                 font-size:16px;
                 text-align:center;
