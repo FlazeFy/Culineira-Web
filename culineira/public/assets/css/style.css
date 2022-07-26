@@ -1,0 +1,12 @@
+/*Loading*/
+.img-load{
+    width:200px !important;
+    height:200px !important;
+    border-radius:100px;
+}
+.text-load{
+    font-size:26px !important;
+    color:#eb7336 !important;
+    position: relative !important;
+    margin-top:-400px !important;
+}
