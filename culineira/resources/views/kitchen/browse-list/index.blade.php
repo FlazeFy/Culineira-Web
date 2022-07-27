@@ -27,29 +27,6 @@
                 --prm-gray: #b1b1b1;
             }
             /*Main style*/
-            body.Light {
-                --text: #414141;
-                --text2: #2F4858;
-                --background: #fff4eb;
-                --background2: white; /*For container*/
-                --background3: white; /*For container*/
-                --background4: #f0f0f0;
-                --background5: #CED4DA; /*For input border*/
-                --background6: #F0F0F0;
-                --background7: transparent; /*For modal, dropdown, popover border*/
-                --background8: #f1f1f1; /*For bubble chat*/
-            }
-            body.Dark {
-                --text: whitesmoke;
-                --text2: whitesmoke;
-                --background: #18191A;
-                --background2: #18191A;
-                --background3: #3A3B3C;
-                --background4: #5e5d5d;
-                --background6: #3A3B3C;
-                --background7: #EB7336;
-                --background8: #3A3B3C;
-            }
 
             .flex-shrink-1.rounded.py-2.px-3.mr-3{
                 background:var(--background8);

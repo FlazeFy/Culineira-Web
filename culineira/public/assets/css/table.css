@@ -1,0 +1,7 @@
+/*Table*/
+td h6{
+    color: var(--text);
+}
+thead{
+    color: var(--text);
+}

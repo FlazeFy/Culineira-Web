@@ -1,0 +1,42 @@
+.nav-pills-custom .nav-link {
+    color: var(--text2);
+    background: var(--background3);
+    position: relative;
+    font-size:14px;
+}
+.nav-pills-custom .nav-link:hover {
+    color: white;
+    background: #e8a382;
+    position: relative;
+}
+.nav-pills-custom .nav-link.active {
+    color: white;
+    background: #EB7336;
+}
+@media (min-width: 992px) {
+    .nav-pills-custom .nav-link::before {
+        content: '';
+        display: block;
+        border-top: 8px solid transparent;
+        border-left: 10px solid #EB7336;
+        border-bottom: 8px solid transparent;
+        position: absolute;
+        top: 50%;
+        right: -10px;
+        transform: translateY(-50%);
+        opacity: 0;
+    }
+}
+.nav-pills-custom .nav-link.active::before {
+    opacity: 1;
+}
+.nav-link.scrollto.rounded{
+    font-size:14px;
+    background:#00a34d;
+}
+.tab-content .tab-pane.fade.shadow.rounded.show.active.p-2{
+    background: var(--background2);
+}
+.tab-pane.fade.shadow.rounded h5{
+    color:var(--text2);
+}

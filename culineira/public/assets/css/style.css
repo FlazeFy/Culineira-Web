@@ -1,3 +1,49 @@
+/*Main Style*/
+body.Light {
+    --text: #414141;
+    --text2: #2F4858;
+    --background: #fff4eb;
+    --background2: white; /*For container*/
+    --background3: white; /*For container*/
+    --background4: #f0f0f0;
+    --background5: #CED4DA; /*For input border*/
+    --background6: #F0F0F0;
+    --background7: transparent; /*For modal, dropdown, popover border*/
+    --toast1: white;
+    --toast2: white;
+}
+body.Dark {
+    --text: whitesmoke;
+    --text2: whitesmoke;
+    --background: #18191A;
+    --background2: #18191A;
+    --background3: #3A3B3C;
+    --background4: #5e5d5d;
+    --background6: #3A3B3C;
+    --background7: #EB7336;
+    --toast1: #E39168;
+    --toast2: #EB7336;
+}
+body {
+    font-family: "Poppins", Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.8;
+    font-weight: normal;
+    color: var(--text);
+    background: var(--background);
+}
+.wrapper {
+    width: 100%;
+}
+#content {
+    width: 100%;
+    padding: 0;
+    min-height: 100vh;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
 /*Loading*/
 .img-load{
     width:200px !important;
@@ -9,4 +55,284 @@
     color:#eb7336 !important;
     position: relative !important;
     margin-top:-400px !important;
+}
+
+/*Autocomplete search*/
+.autocomplete {
+    position: relative;
+    display: inline-block;
+}
+.autocomplete-items {
+    position: absolute;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    /*position the autocomplete items to be the same width as the container:*/
+    top: 100%;
+    left: 0;
+    right: 0;
+    border-radius:5px;
+}
+.autocomplete-items div {
+    padding: 10px;
+    cursor: pointer;
+    background-color: var(--background6);
+    border-bottom: 1px solid transparent;
+    border-radius:5px;
+}
+/*when hovering an item:*/
+.autocomplete-items div:hover {
+    background-color: #EB7336;
+    color: #ffffff;
+}
+/*when navigating through the items using the arrow keys:*/
+.autocomplete-active {
+    background-color: #EB7336 !important;
+    color: #ffffff;
+}
+
+/*Collapse*/
+#dropIcon{
+    transition: all .3s ease-in;
+}
+
+/*Dropdown*/
+.dropdown-menu{
+    background: var(--background4);
+    border: 2px solid var(--background7);
+}
+.dropdown-item .btn.btn-light{
+    color: var(--text);
+}
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+/*Input*/
+.form-control{
+    background: var(--background3);
+    border-color: #CED4DA;
+    color: var(--text);
+}
+.form-select{
+    background: var(--background3);
+    border-color: #CED4DA;
+    color: var(--text);
+}
+
+/*Typography*/
+a {
+    -webkit-transition: .3s all ease;
+    -o-transition: .3s all ease;
+    transition: .3s all ease;
+    color: grey;
+    text-decoration: none;
+}
+a:hover, a:focus {
+    text-decoration: none !important;
+    outline: none !important;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+a[data-toggle="collapse"] {
+    position: relative;
+}
+h1, h2, h3, h4, h5, .h1, .h2, .h3, .h4, .h5 {
+    line-height: 1.5;
+    font-weight: 400;
+    font-family: "Poppins", Arial, sans-serif;
+    color: var(--text);
+}
+p {
+    color: gray;
+}
+
+/*Button*/
+button {
+    -webkit-transition: .3s all ease;
+    -o-transition: .3s all ease;
+    transition: .3s all ease;
+}
+.btn.btn-primary {
+    background: #eb7336;
+    border-color: #eb7336;
+}
+#addRecipeButton{
+    border-radius:100%;
+    margin-top:-40px;
+    width:40px;
+    background:var(--background3);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 15px;
+}
+button:hover, button:focus {
+    text-decoration: none !important;
+    outline: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}
+.btn-circle.btn-xl {
+    width: 35px;
+    height: 35px;
+    padding: 5px;
+    border-radius: 35px;
+    font-size: 16px;
+    line-height: 1.33;
+}
+
+/*Section*/
+.ftco-section {
+    padding: 7em 0;
+}
+.ftco-no-pt {
+    padding-top: 0;
+}
+.ftco-no-pb {
+    padding-bottom: 0;
+}
+.heading-section {
+    font-size: 28px;
+    color: #000;
+}
+.heading-section small {
+    font-size: 18px;
+}
+
+/*Navbar*/
+.navbar {
+    padding: 15px 10px;
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 40px;
+    -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+.navbar-btn {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+}
+.navbar-light .navbar-nav .nav-item .nav-link{
+    color:white;
+}
+.navbar-light .navbar-nav .nav-item.active .nav-link{
+    bottom:3px;
+    font-weight:500;
+    position: relative;
+}
+
+/*Sidebar*/
+#sidebar {
+    min-width: 300px;
+    max-width: 300px;
+    background: var(--background3);
+    color: #fff;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+#sidebar.active {
+    margin-left: -300px;
+}
+#sidebar .logo {
+    display: block;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+}
+#sidebar .logo span {
+    display: block;
+}
+#sidebar ul.components {
+    padding: 0;
+}
+#sidebar ul li {
+    font-size: 16px;
+    padding:4px;
+}
+#sidebar ul li > ul {
+    margin-left: 10px;
+}
+#sidebar ul li > ul li {
+    font-size: 14px;
+}
+#sidebar ul li a {
+    padding: 10px;
+    display: block;
+    color: var(--text2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+#sidebar ul li:hover {
+    background: var(--background4);
+    border-radius: 6px;
+    color: whitesmoke;
+}
+#sidebar ul li.active > a {
+    background: transparent;
+    border-left: 4px solid var(--text2);
+}
+@media (max-width: 991.98px) {
+    #sidebar {
+    margin-left: -300px; }
+    #sidebar.active {
+    margin-left: 0; }
+}
+@media (max-width: 991.98px) {
+    #sidebarCollapse span {
+        display: none;
+    }
+}
+/*Profil container sidebar.*/
+.p-4.pt-2 .container-fluid.p-2.pt-3.rounded-3{
+    transition: width 2s, height 2s, transform 1s;
+    margin-top:-10px;
+    background: var(--background4);
+    will-change: transform;
+    box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+    margin-bottom:15px;
+}
+.p-4.pt-2 .container-fluid.p-2.pt-3.rounded-3:hover{
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+
+/*Column*/
+.col-md-3 {
+    color: var(--text2);
+}
+
+/*Container & Card*/
+.container-fluid.mb-3{
+    background: var(--background2);
+}
+.card.border-gray{
+    background: var(--background3);
+}
+.container-fluid.mb-3 #headingCard{
+    background: var(--background4);
+    border-radius:6px;
+}
+.card.border-0{
+    background: var(--background2);
+}
+#recipe_list_holder .container.mb-2.p-1{
+    background: var(--background4);
+    border-radius:6px;
+}
+.card.card-body{
+    background:var(--background2);
+}
+
+/*Others*/
+.img {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
 }
