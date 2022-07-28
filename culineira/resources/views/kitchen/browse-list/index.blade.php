@@ -645,6 +645,9 @@
 
             </div>
 
+            <!--Footer-->
+            @include('footer_main')
+
         </div>
     </div>
 

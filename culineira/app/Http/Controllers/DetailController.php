@@ -73,7 +73,7 @@ class DetailController extends Controller
         $likesUser = DB::table('likes')->where('recipe_id', $id)->where('users_id', $id_user)->get();
         $likesId = DB::table('likes')->where('recipe_id', $id)->get();
 
-        return view ('DetailPage')
+        return view ('recipe.detail.index')
             ->with('recipeId', $recipeId)
             ->with('recipe', $recipe)
             ->with('comment', $comment)
@@ -137,7 +137,7 @@ class DetailController extends Controller
                 'updated_at' => date("Y-m-d h:m:i"),
             ]);
 
-            return redirect()->route('detail', ['id' => $id])->with('flash_message', 'Recipe liked!');
+            return redirect()->route('detail', ['id' => $id])->with('success_message', 'Recipe liked!');
         } else {
             //Disliked.
             foreach($check as $c){
@@ -158,7 +158,7 @@ class DetailController extends Controller
             activity::destroy($ac_id);
 
             likes::destroy($id_likes);
-            return redirect()->route('detail', ['id' => $id])->with('flash_message', 'Recipe disliked!');
+            return redirect()->route('detail', ['id' => $id])->with('success_message', 'Recipe disliked!');
         }
 
     }

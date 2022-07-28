@@ -3,11 +3,12 @@
     .deneb_footer .widget_wrapper {
         background-repeat: no-repeat;
         background-size: cover;
-        padding-top: 200px;
-        padding-left: 50px;
-        padding-left: 50px;
-        padding-bottom: 70px;
-
+        background-image: linear-gradient(to right, #eb7336, #eb8d36);
+        border-radius: 50px 50px 8px 8px !important;
+        padding-top: 35px;
+        padding-left: 35px;
+        padding-left: 35px;
+        padding-bottom: 50px;
     }
     @media (max-width: 767px) {
         .deneb_footer .widget_wrapper .widget {
@@ -92,15 +93,18 @@
         color: #fff;
     }
 
-    .deneb_footer{
-        width:105%;
+    /* .deneb_footer{
+        width:110%;
+        max-width: 110%;
+        overflow-x: hidden;
         margin-left:-50px;
         margin-right:0px;
-    }
+        margin-bottom:-50px;
+    } */
 </style>
 
 <footer class="deneb_footer">
-    <div class="widget_wrapper" style="background-image: url({{asset('assets/Culineira_Footer.png')}});">
+    <div class="widget_wrapper shadow">
         <div class="container">
             <div class="row mt-5">
                 <div class="col-lg-4 col-md-6 col-12">

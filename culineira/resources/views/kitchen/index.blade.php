@@ -220,6 +220,8 @@
 
                 </div>
 
+                <!--Footer-->
+                @include('footer_main')
             </div><!--End of accordion-->
 
         </div>
