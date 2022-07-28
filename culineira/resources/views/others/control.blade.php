@@ -10,26 +10,32 @@
         </div>
         <div class='col-sm-2 mt-1'>
             <select class="form-select" aria-label="Default select example">
-                <option value="Oriental">Oriental</option>
-                <option value="Middle Eastern">Middle Eastern</option>
-                <option value="Continental">Continental</option>
-                <option value="Indian">Indian</option>
-                <option value="Chinese">Chinese</option>
-                <option value="Korean & Japanese">Korean & Japanese</option>
+                <option value="All" selected>All</option>
+                @foreach (\App\Models\search_config::all() as $item)
+                    @if($item->config_type == 'type')
+                    <option value="{{$item->config_value}}">{{$item->config_value}}</option>
+                    @endif
+                @endforeach
             </select>
         </div>
         <div class='col-sm-2 mt-1'>
             <select class="form-select" aria-label="Default select example">
-                <option value="Beginner">Beginner</option>
-                <option value="Intermediate">Intermediate</option>
-                <option value="Expert">Expert</option>
+                <option value="All" selected>All</option>
+                @foreach (\App\Models\search_config::all() as $item)
+                    @if($item->config_type == 'level')
+                    <option value="{{$item->config_value}}">{{$item->config_value}}</option>
+                    @endif
+                @endforeach
             </select>
         </div>
         <div class='col-sm-2 mt-1'>
             <select class="form-select" aria-label="Default select example">
-                <option value="20">< 20 min</option>
-                <option value="<45">< 45 min</option>
-                <option value=">45">> 45 min</option>
+                <option value="All" selected>All</option>
+                @foreach (\App\Models\search_config::all() as $item)
+                    @if($item->config_type == 'time')
+                    <option value="{{$item->config_value}}">{{$item->config_value}}</option>
+                    @endif
+                @endforeach
             </select>
         </div>
         <div class='col-sm-2 mt-1'>

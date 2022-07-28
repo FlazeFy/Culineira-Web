@@ -72,3 +72,6 @@ Route::post('/kitchen/starred/{id}', [KitchenController::class, 'starred']);
 
 //Community page.
 Route::get('/community', [CommunityController::class, 'index'])->name('community');
+Route::post('/community/openChat/{id}', [CommunityController::class, 'openChat']);
+Route::post('/community/sendChat/{id}', [CommunityController::class, 'sendChat']);
+
