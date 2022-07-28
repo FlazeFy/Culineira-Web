@@ -7,6 +7,7 @@ use App\Http\Controllers\LandingController;
 use App\Http\Controllers\DetailController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KitchenController;
+use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\Browse\ListController;
 
 /*
@@ -68,3 +69,6 @@ Route::post('/kitchen/starred/{id}', [KitchenController::class, 'starred']);
     Route::post('/kitchen/browse-list/destroy/{id}', [ListController::class, 'destroy']); //For delete list
     Route::post('/kitchen/browse-list/deleteRecipeList/{id}', [ListController::class, 'deleteRecipeList']); //For delete recipe in a list
     Route::post('/kitchen/browse-list/addRecipeToList/{id}', [ListController::class, 'addRecipeToList']);
+
+//Community page.
+Route::get('/community', [CommunityController::class, 'index'])->name('community');

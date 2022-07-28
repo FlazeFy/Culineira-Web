@@ -523,7 +523,7 @@
                     <a href="{{ url('/kitchen') }}"><i class="fa-solid fa-kitchen-set"></i> My Kitchen</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa-solid fa-people-group"></i> Community</a>
+                        <a href="{{ url('/community') }}"><i class="fa-solid fa-people-group"></i> Community</a>
                     </li>
                     <li>
                         <a href="#"><i class="fa-solid fa-circle-info"></i> Guide</a>
@@ -669,65 +669,17 @@
     <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
     <script src="http://127.0.0.1:8000/assets/js/loading.js"></script>
 
+    <!--Sidebar-->
+    <script src="http://127.0.0.1:8000/assets/js/sidebar.js"></script>
+
+    <!--Dark & Light Mode-->
+    <script src="http://127.0.0.1:8000/assets/js/dark-light-mode.js"></script>
+
     <script>
         var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
         var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
         return new bootstrap.Popover(popoverTriggerEl)
         })
-
-        //Darkmode setting.
-        function getTheme() {
-            return localStorage.getItem('theme') || 'Light';
-        }
-        function saveTheme(theme) {
-            localStorage.setItem('theme', theme);
-        }
-
-        const colorScheme = document.querySelector('meta[name="color-scheme"]');
-        function applyTheme(theme) {
-            document.body.className = theme;
-            colorScheme.content = theme;
-        }
-
-        function rotateTheme(theme) {
-        if (theme === 'Light') {
-            return 'Dark'
-        }
-            return 'Light';
-        }
-
-        const themeDisplay = document.getElementById('theme');
-        const themeToggler = document.getElementById('theme-toggle');
-
-        setTimeout(() => {
-        let theme = getTheme();
-        applyTheme(theme);
-        themeDisplay.innerText = theme;
-
-        themeToggler.onclick = () => {
-            const newTheme = rotateTheme(theme);
-            applyTheme(newTheme);
-            themeDisplay.innerText = newTheme;
-            saveTheme(newTheme);
-
-            theme = newTheme;
-        }
-        }, 1000);
-
-        //Sidebar setting.
-        (function($) {
-        "use strict";
-        var fullHeight = function() {
-            $('.js-fullheight').css('height', $(window).height());
-            $(window).resize(function(){
-                $('.js-fullheight').css('height', $(window).height());
-            });
-        };
-        fullHeight();
-        $('#sidebarCollapse').on('click', function () {
-        $('#sidebar').toggleClass('active');
-        });
-        })(jQuery);
 
         //Modal setting.
         $(window).on('load', function() {

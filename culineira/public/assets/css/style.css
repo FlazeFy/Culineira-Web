@@ -24,6 +24,7 @@ body.Dark {
     --toast1: #E39168;
     --toast2: #EB7336;
 }
+
 body {
     font-family: "Poppins", Arial, sans-serif;
     font-size: 14px;
@@ -289,6 +290,7 @@ button:hover, button:focus {
         display: none;
     }
 }
+
 /*Profil container sidebar.*/
 .p-4.pt-2 .container-fluid.p-2.pt-3.rounded-3{
     transition: width 2s, height 2s, transform 1s;
@@ -328,6 +330,9 @@ button:hover, button:focus {
 }
 .card.card-body{
     background:var(--background2);
+}
+.container-fluid.rounded.shadow.mt-2.p-2{
+    background: var(--background2);
 }
 
 /*Others*/

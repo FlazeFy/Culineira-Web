@@ -114,7 +114,7 @@
                     <a href="{{ url('/kitchen') }}"><i class="fa-solid fa-kitchen-set"></i> My Kitchen</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa-solid fa-people-group"></i> Community</a>
+                        <a href="{{ url('/community') }}"><i class="fa-solid fa-people-group"></i> Community</a>
                     </li>
                     <li>
                         <a href="#"><i class="fa-solid fa-circle-info"></i> Guide</a>
