@@ -75,4 +75,5 @@ Route::get('/community', [CommunityController::class, 'index'])->name('community
 Route::post('/community/openChat/{id}', [CommunityController::class, 'openChat']);
 Route::post('/community/sendChat/{id}', [CommunityController::class, 'sendChat']);
 Route::post('/community/createGroup', [CommunityController::class, 'createGroup']);
+Route::post('/community/editGroup/{id}', [CommunityController::class, 'editGroup']);
 

@@ -28,17 +28,24 @@ class CommunityController extends Controller
     {
         $user = user::all();
 
-        //Show user login data in profile.
+        //Show user login data.
         $userId = DB::table('users')
             ->where('username', session()->get('usernameKey'))->get();
 
-        //Show user's groups in profile.
+        //Show user's groups.
         $groupId = DB::table('groups-rel')
-            ->select('groups.id as id','groups_name', 'groups.created_at as created_at', 'groups.groups_type as groups_type', 'groups.users_id as founder_id')
+            ->select('groups.id as id', 'groups_name', 'groups_description', 'groups_image' ,'groups.created_at as created_at', 'groups.groups_type as groups_type', 'groups.users_id as founder_id')
             ->join('groups', 'groups.id', '=', 'groups-rel.groups_id')
             ->join('users', 'users.id', '=', 'groups-rel.users_id')
             ->where('username', session()->get('usernameKey'))
             ->orderBy('groups-rel.created_at', 'ASC')->get();
+
+        //Show last message
+        $lastMsg = DB::table('message')
+            ->select('groups.id as id', 'message.message_body as message_body', 'message.created_at as created_at', 'users.username')
+            ->join('groups', 'groups.id', '=', 'message.groups_id')
+            ->join('users', 'users.id', '=', 'message.users_id')
+            ->orderBy('message.created_at', 'DESC')->get();
 
         //Show community detail //CHECK AGAIN...
         if(session()->get('groupKey')){
@@ -56,6 +63,7 @@ class CommunityController extends Controller
             ->where('message.groups_id', session()->get('groupKey'))
             ->orderBy('message.created_at', 'ASC')->get();
         } else {
+            //Initial state.
             $member = DB::table('groups-rel')
             ->select('groups.id as id', 'users.username', 'users.image_url as image_url', 'groups.id as id', 'groups.users_id as founder_id')
             ->join('groups', 'groups.id', '=', 'groups-rel.groups_id')
@@ -75,6 +83,7 @@ class CommunityController extends Controller
             ->with('groupId', $groupId)
             ->with('member', $member)
             ->with('message', $message)
+            ->with('lastMsg', $lastMsg)
             ->with('userId', $userId);
     }
 
@@ -194,9 +203,59 @@ class CommunityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function editGroup(Request $request, $id)
     {
-        //
+        if($request->hasFile('group_image')){
+            //Validate image.
+            $this->validate($request, [
+                'group_image'     => 'required|image|mimes:jpeg,png,jpg|max:5000',
+            ]);
+
+            $groups_id = DB::table('groups')->where('id', $id)->get();
+
+            //Get old image url.
+            foreach($groups_id as $g){
+                $old_image = $g->groups_image;
+            }
+
+            //Upload new image.
+            $image = $request->file('group_image');
+            $image->storeAs('public', $image->hashName());
+
+            //Delete old image if new image is uploaded.
+            if($request->file('group_image')->isValid()){
+                Storage::delete('public/'.$old_image);
+            }
+
+            //Update data.
+            groups::where('id', $id)->update([
+                'groups_name' => $request-> group_name,
+                'groups_description' => $request-> group_description,
+                'groups_type' => $request-> group_type,
+                'groups_image' => $image->hashName(),
+                'updated_at' => date("Y-m-d h:m:i"),
+            ]);
+        } else {
+            //Update data.
+            groups::where('id', $id)->update([
+                'groups_name' => $request-> group_name,
+                'groups_description' => $request-> group_description,
+                'groups_type' => $request-> group_type,
+                'updated_at' => date("Y-m-d h:m:i"),
+            ]);
+        }
+
+        //Activity record
+        activity::create([
+            'users_id' => 1, //For now.
+            'activity_from' => $id,
+            'activity_type' => 'group',
+            'activity_description' => 'modified group profile',
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        return redirect('/community')->with('success_message', 'Group Updated');
     }
 
     /**

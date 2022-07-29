@@ -176,7 +176,7 @@
 
     <!--Loading-->
     <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
-    <script src="http://127.0.0.1:8000/assets/js/loading.js"></script>
+    <!-- <script src="http://127.0.0.1:8000/assets/js/loading.js"></script> --> <!--Loading only when open the page, not the message too-->
 
     <!--Sidebar-->
     <script src="http://127.0.0.1:8000/assets/js/sidebar.js"></script>
