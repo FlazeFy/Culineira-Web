@@ -125,10 +125,10 @@
     	</nav>
 
         <!-- Page Content  -->
-        <div id="content" class="px-4 pt-md-5" style='width:100%; max-height: calc(90vh - 140px); overflow-x: auto;'>
+        <div id="content" class="px-5 pt-3" style='width:100%; max-height: calc(90vh - 140px); overflow-x: auto;'>
             <div class="accordion" id="accordionCommunity">
                 <!--Secondary Navbar.-->
-                <nav class="navbar navbar-expand-lg navbar-light" style='background: rgba(60, 60, 60, 0.4); position:sticky; top: 0; z-index:100; margin-bottom:10px !important;'>
+                <nav class="navbar navbar-expand-lg navbar-light mb-2" style='background: rgba(60, 60, 60, 0.4); position:sticky; top: 0; z-index:100;'>
                     <div class="container-fluid">
                         <button type="button" id="sidebarCollapse" class="btn btn-primary">
                         <i class="fa fa-bars"></i>
@@ -189,6 +189,15 @@
         var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
         return new bootstrap.Popover(popoverTriggerEl)
         })
+
+        //Image upload preview.
+        function preview() {
+            frame.src = URL.createObjectURL(event.target.files[0]);
+        }
+        function clearImage() {
+            document.getElementById('formFile').value = null;
+            frame.src = "http://127.0.0.1:8000/assets/NoImage.png";
+        }
     </script>
 
 	</body>

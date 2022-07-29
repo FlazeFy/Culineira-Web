@@ -10,6 +10,8 @@ use App\Models\socmed;
 use App\Models\classroom;
 use App\Models\message;
 use App\Models\likes;
+use App\Models\groups;
+use App\Models\groups_rel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
@@ -39,19 +41,19 @@ class CommunityController extends Controller
             ->orderBy('groups-rel.created_at', 'ASC')->get();
 
         //Show community detail //CHECK AGAIN...
-        if(session()->get('communityKey')){
+        if(session()->get('groupKey')){
             $member = DB::table('groups-rel')
             ->select('groups.id as id', 'users.username', 'users.image_url  as image_url', 'groups.id as id', 'groups.users_id as founder_id')
             ->join('groups', 'groups.id', '=', 'groups-rel.groups_id')
             ->join('users', 'users.id', '=', 'groups-rel.users_id')
-            ->where('groups-rel.groups_id', session()->get('communityKey'))
+            ->where('groups-rel.groups_id', session()->get('groupKey'))
             ->orderBy('groups-rel.created_at', 'ASC')->get();
 
             $message = DB::table('message')
             ->select('message.id as id', 'message.groups_id as groups_id',  'users.username', 'users.id as users_id' ,'users.image_url  as image_url', 'message.created_at', 'message.message_body', 'message.message_type')
             ->join('groups', 'groups.id', '=', 'message.groups_id')
             ->join('users', 'users.id', '=', 'message.users_id')
-            ->where('message.groups_id', session()->get('communityKey'))
+            ->where('message.groups_id', session()->get('groupKey'))
             ->orderBy('message.created_at', 'ASC')->get();
         } else {
             $member = DB::table('groups-rel')
@@ -81,9 +83,49 @@ class CommunityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function createGroup(Request $request)
     {
-        //
+        //validate image
+        $this->validate($request, [
+            'group_image'     => 'required|image|mimes:jpeg,png,jpg|max:5000',
+        ]);
+
+        //upload image
+        $image = $request->file('group_image');
+        $image->storeAs('public', $image->hashName());
+
+        //Create group
+        $group = groups::create([
+            'users_id' => 1, //For testing
+            'groups_name' => $request->group_name,
+            'groups_type' => $request->group_type,
+            'groups_description' => $request->group_description,
+            'groups_image' => $image->hashName(),
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        //Group Relation
+        groups_rel::create([
+            'users_id' => 1, //For testing
+            'groups_id' => $group->id,
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+            'groups_role' => 'founder',
+        ]);
+
+        //Activity record
+        activity::create([
+            'users_id' => 1,
+            'activity_from' => $group->id,
+            'activity_type' => 'group',
+            'activity_description' => 'created a group called "'.$request->group_name.'"',
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        $request->session()->put('groupKey', $group->id);
+        return redirect('/community')->with('success_message', 'Successfully created new '.$request->group_name.' group');
     }
 
     /**
@@ -166,7 +208,7 @@ class CommunityController extends Controller
      */
     public function openChat(Request $request, $id)
     {
-        $request->session()->put('communityKey', $id);
+        $request->session()->put('groupKey', $id);
         return redirect()->back();
     }
 
