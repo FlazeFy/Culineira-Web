@@ -8,6 +8,7 @@ use App\Models\comment;
 use App\Models\user;
 use App\Models\steps;
 use App\Models\likes;
+use App\Models\message;
 use App\Models\list;
 use App\Models\list_rel;
 use App\Models\ingredients;
@@ -27,16 +28,27 @@ class DetailController extends Controller
         $user = user::all();
         $recipe = recipe::all();
         $recipeId = DB::table('recipes')->where('id', $id)->get();
+
         $listRel = DB::table('list-rel')
             ->join('recipes', 'recipes.id', '=', 'list-rel.recipe_id')
             ->where('list-rel.recipe_id', $id)
             ->get();
+
         $list = DB::table('list')
             ->select('list.id', 'list_name', 'list_name', 'list_status', 'list_description', 'list.created_at as created_at', 'list.updated_at as updated_at')
             ->join('users', 'users.id', '=', 'list.user_id')
             ->where('username', session()->get('usernameKey'))
             ->orderBy('list.updated_at', 'ASC')
             ->get();
+
+        //Show user's groups.
+        $groupId = DB::table('groups-rel')
+            ->select('groups.id as id', 'groups_name', 'groups_description', 'groups_image' ,'groups.created_at as created_at', 'groups.groups_type as groups_type', 'groups.users_id as founder_id')
+            ->join('groups', 'groups.id', '=', 'groups-rel.groups_id')
+            ->join('users', 'users.id', '=', 'groups-rel.users_id')
+            ->where('username', session()->get('usernameKey'))
+            ->orderBy('groups-rel.created_at', 'ASC')->get();
+
         $comment = DB::table('comment')->where('recipe_id', $id)->orderBy('created_at', 'ASC')->get();
         $steps = DB::table('steps')->orderBy('id', 'ASC')->get();
         $ingredients = ingredients::all();
@@ -85,6 +97,7 @@ class DetailController extends Controller
             ->with('likesUser', $likesUser)
             ->with('list', $list)
             ->with('listRel', $listRel)
+            ->with('groupId', $groupId)
             ->with('likesId', $likesId);
     }
 
@@ -169,9 +182,27 @@ class DetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function forwardRecipe(Request $request, $id)
     {
-        //
+        //Get group name.
+        $check = DB::table('groups')
+            ->where('id', $request->group_id)
+            ->get();
+
+        foreach($check as $c){
+            $group_name = $c->groups_name;
+        }
+
+        message::create([
+            'users_id' => 1, //for now
+            'groups_id' => $request->group_id,
+            'message_body' => $id,
+            'message_type' => "forward-recipe",
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        return redirect()->back()->with('success_message', 'Recipe has forwaded to "'.$group_name.'" group');
     }
 
     /**

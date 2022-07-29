@@ -27,6 +27,7 @@ class CommunityController extends Controller
     public function index()
     {
         $user = user::all();
+        $recipe = recipe::all();
 
         //Show user login data.
         $userId = DB::table('users')
@@ -80,6 +81,7 @@ class CommunityController extends Controller
 
         return view ('community.index')
             ->with('user', $user)
+            ->with('recipe', $recipe)
             ->with('groupId', $groupId)
             ->with('member', $member)
             ->with('message', $message)
@@ -255,6 +257,16 @@ class CommunityController extends Controller
             'updated_at' => date("Y-m-d h:m:i"),
         ]);
 
+        //Show record to group chat
+        message::create([
+            'users_id' => 1, //For now
+            'groups_id' => $id,
+            'message_body' => 'changed group profile',
+            'message_type' => 'notification',
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
         return redirect('/community')->with('success_message', 'Group Updated');
     }
 
@@ -277,8 +289,9 @@ class CommunityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function unsendChat($id)
     {
-        //
+        message::destroy($id);
+        return redirect('/community')->with('success_message', 'Message unsend');
     }
 }

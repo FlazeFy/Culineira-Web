@@ -11,8 +11,8 @@
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
-        -webkit-line-clamp: 2;
-        line-clamp: 2;
+        -webkit-line-clamp: 1;
+        line-clamp: 1;
         -webkit-box-orient: vertical;
     }
     #community-holder{
@@ -28,7 +28,7 @@
 
     @foreach($groupId as $g)
     <div class="container rounded h-50 m-2 p-2" id="communityBox"
-        style="background-image: linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5)) , url('http://127.0.0.1:8000/storage/ZwoKAcQljcJUH7vO1NncRMl1YJ4QoyovJDXfgXHt.jpg');">
+        style="background-image: linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5)) , url('http://127.0.0.1:8000/storage/{{$g->groups_image}}');">
         <a type="button" class="w-100 h-100" title="See Comunity">
         <div class="d-flex justify-content-between">
             <div class="d-flex flex-row align-items-center">

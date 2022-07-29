@@ -42,9 +42,9 @@ class ProfileController extends Controller
             ->where('username', session()->get('usernameKey'))
             ->orderBy('classroom.updated_at', 'ASC')->get();
 
-        //Show user's groups in profile.
+        //Show user's groups.
         $groupId = DB::table('groups-rel')
-            ->select('groups_name', 'groups.created_at as created_at', 'groups.groups_type as groups_type', 'groups.users_id as founder_id')
+            ->select('groups.id as id', 'groups_name', 'groups_description', 'groups_image' ,'groups.created_at as created_at', 'groups.groups_type as groups_type', 'groups.users_id as founder_id')
             ->join('groups', 'groups.id', '=', 'groups-rel.groups_id')
             ->join('users', 'users.id', '=', 'groups-rel.users_id')
             ->where('username', session()->get('usernameKey'))

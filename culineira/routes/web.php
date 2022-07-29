@@ -45,6 +45,7 @@ Route::get('/detail/{id}', [DetailController::class, 'index'])->name('detail');
 Route::post('/detail/sendComment/{id}', [DetailController::class, 'sendComment']);
 Route::post('/detail/likes/{id}', [DetailController::class, 'likes']);
 Route::post('/detail/updateList/{id}', [DetailController::class, 'updateList']);
+Route::post('/detail/forwardRecipe/{id}', [DetailController::class, 'forwardRecipe']);
 
 //Profile page.
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
@@ -77,4 +78,5 @@ Route::post('/community/openChat/{id}', [CommunityController::class, 'openChat']
 Route::post('/community/sendChat/{id}', [CommunityController::class, 'sendChat']);
 Route::post('/community/createGroup', [CommunityController::class, 'createGroup']);
 Route::post('/community/editGroup/{id}', [CommunityController::class, 'editGroup']);
+Route::post('/community/unsendChat/{id}', [CommunityController::class, 'unsendChat']);
 

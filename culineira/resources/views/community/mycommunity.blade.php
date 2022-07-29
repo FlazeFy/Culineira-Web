@@ -41,6 +41,26 @@
     .chat-messages{
         max-height:460px;
     }
+
+    .chat-message-right #control-msg {
+        padding : 4px;
+        color : whitesmoke;
+        text-align : center;
+        visibility : hidden;
+        opacity : 0;
+        transition : 0.3s ease-in-out;
+    }
+    .chat-message-right:hover #control-msg {
+        margin-top : 2px;
+        visibility : visible;
+        opacity : 1;
+        transition-delay: 0.2s;
+    }
+
+    #headingCard{
+        background: var(--background4);
+        border-radius:6px;
+    }
 </style>
 
 <div class="row">
@@ -109,15 +129,15 @@
                             @endforeach
 
                             <!--Edit groups-->
-                            @include('community.edit')
+                            @include('community.form.edit')
                         </div>
                     </div>
 
-                        <div class="chat-messages p-2" style="height:460px !important;">
-                            @php($c=0)
-                            @foreach($message as $msg)
-                                @foreach($user as $u)
-                                    @if($u->id == $msg->users_id)
+                    <div class="chat-messages p-2" style="height:460px !important;" id="chat-messages-box">
+                        @php($c=0)
+                        @foreach($message as $msg)
+                            @foreach($user as $u)
+                                @if(($u->id == $msg->users_id)&&($msg->message_type != "notification")&&($msg->message_type != "forward-recipe"))
                                     <div class="chat-message-<?php if($u->username == session()->get('usernameKey')){echo "right ms-5 ps-5";}else{echo "left me-5 pe-5";}?> pb-4">
                                         <div>
                                             <img src="http://127.0.0.1:8000/storage/{{ $u->image_url }}" alt='{{ $u->image_url }}' class="rounded-circle mr-1 shadow" width="35" >
@@ -132,18 +152,90 @@
                                                 <a>{{$msg->message_body}}</a>
                                             @endif
                                         </div>
+                                        @if($u->username == session()->get('usernameKey'))
+                                        <div id='control-msg'>
+                                            <form action="/community/unsendChat/{{$msg->id}}" method="POST">
+                                                @csrf
+											    <button class="btn btn-primary bg-transparent border-0 p-0" type='submit' title="Unsend message"><i class="fa-solid fa-trash text-danger fa-lg mx-2 my-4"></i></button>
+                                            </form>
+                                        </div>
+                                        @endif
                                     </div>
                                     @php($c++)
-                                    @endif
-                                @endforeach
+                                @elseif(($u->id == $msg->users_id)&&($msg->message_type == "notification"))
+                                    <div class="container w-50 px-5 mx-auto text-center d-block rounded">
+                                        <a style="color:#EB7336; font-style:italic; font-size:14px;">- {{$u->username}} {{$msg->message_body}} -</a><br>
+                                        <a class="text-secondary fst-italic" id="dateMsg">{{$msg->created_at}}</a>
+                                    </div>
+                                    @php($c++)
+                                @elseif(($u->id == $msg->users_id)&&($msg->message_type == "forward-recipe"))
+                                    @foreach($recipe as $r)
+                                        @if($r->id == $msg->message_body)
+                                            @foreach($user as $ru)
+                                                @if($r->user_id == $ru->id)
+                                                <div class="chat-message-<?php if($u->username == session()->get('usernameKey')){echo "right ms-5 ps-5 mt-4";}else{echo "left me-5 pe-5 mt-4";}?> pb-4">
+                                                    <div>
+                                                        <img src="http://127.0.0.1:8000/storage/{{ $u->image_url }}" alt='{{ $u->image_url }}' class="rounded-circle mr-1 shadow" width="35" >
+                                                    </div>
+                                                    <li class="card border-gray p-2 border m-3 shadow" style='width:300px;'>
+                                                        <img src="http://127.0.0.1:8000/storage/{{ $r->recipe_url }}?>" alt='{{$r->recipe_url}}'
+                                                            style='margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
+                                                        <img src="http://127.0.0.1:8000/storage/{{ $ru->image_url }}" alt='{{ $ru->image_url }}'
+                                                            style='border-radius:100%; margin-top:-40px; margin-left:20px; width:40px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
+                                                        <img src="http://127.0.0.1:8000/assets/image/country/<?php echo $r->recipe_country;?>.png" alt='<?php echo $r->recipe_country.".png";?>' title='<?php echo $r->recipe_country;?>'
+                                                            style='border-radius:100%; width:40px; margin-top:40px; margin-left:220px; position:absolute; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
+                                                        <h5 style='font-size:16px; text-align:center;'>{{$r->recipe_name}}</h5>
+                                                        <div class='container' id='headingCard' style='padding:5px;'>
+                                                            <div class='row' style='justify-content:center; width:110%;'>
+                                                                <div class='col-md-5'>
+                                                                    <a style='font-size:12px; color:#5cb85c;'>{{$r->recipe_level}}</a>
+                                                                </div>
+                                                                <div class='col-md-5'>
+                                                                    <a style='font-size:12px;'>{{$r->recipe_type}}</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class='container mt-2'>
+                                                            <div class='row' style='justify-content:center; width:110%;'>
+                                                                <div class='col-md-3'>
+                                                                    <a style='font-size:15px; font-weight:bold; text-align:center;'>{{$r->recipe_time_spend}}</a>
+                                                                    <p style='font-size:12px;'>min</p>
+                                                                </div>
+                                                                <div class='col-md-3'>
+                                                                    <a style='font-size:15px; font-weight:bold; text-align:center;'>{{$r->recipe_calorie}}</a>
+                                                                    <p style='font-size:12px;'>cal</p>
+                                                                </div>
+                                                                <div class='col-md-4'>
+                                                                    <p style='font-size:12px; justify-content:center; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical;'>{{$r->recipe_main_ing}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <a class='btn btn-primary' href="{{ url('/detail/' . $r->id) }}"><i class="fa-solid fa-arrow-right"></i> Cook Now</a>
+                                                    </li>
+                                                    @if($u->username == session()->get('usernameKey'))
+                                                    <div id='control-msg'>
+                                                        <form action="/community/unsendChat/{{$msg->id}}" method="POST">
+                                                            @csrf
+                                                            <button class="btn btn-primary bg-transparent border-0 p-0" type='submit' title="Unsend message"><i class="fa-solid fa-trash text-danger fa-lg mx-2 my-4"></i></button>
+                                                        </form>
+                                                    </div>
+                                                    @endif
+                                                </div>
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    @endforeach
+                                    @php($c++)
+                                @endif
                             @endforeach
-                        </div>
+                        @endforeach
+                    </div>
 
                     <form action="/community/sendChat/{{$g->id}}" method="POST">
                         @csrf
                         <div class='input-group' style="position:absolute; bottom:10px; width:95%;">
                             <a class='btn btn-primary'><i class='fa-solid fa-paperclip'></i></a>
-                            <input type='text' class='form-control' placeholder='Type your message' name='message_body'>
+                            <input type='text' class='form-control' placeholder='Type your message...' name='message_body'>
                             <button class='btn btn-success' type='submit'><i class='fa-solid fa-paper-plane'></i> Send</button>
                         </div>
                     </form>
