@@ -205,9 +205,26 @@ class KitchenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function updateItemShelf(Request $request, $id)
     {
-        //
+        shelf::where('id', $id)->update([
+            'item_name' => $request-> item_name,
+            'item_description' => $request-> item_description,
+            'item_qty' => $request-> item_qty,
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        //Activity record
+        activity::create([
+            'users_id' => 1, //for now.
+            'activity_from' => $id,
+            'activity_type' => 'shelf',
+            'activity_description' => 'updated "'.$request-> item_name.'" item from shelf',
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        return redirect('/kitchen')->with('success_message', 'Item updated!');
     }
 
     /**

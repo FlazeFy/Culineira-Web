@@ -6,7 +6,7 @@
     @foreach($shelf as $s)
     <li class="card border-gray p-2 border mx-2 my-2" style='min-width:250px; width:250px; height:150px;' id="shelf_box{{$s->id}}"> <!--If error, change <li> to <div>-->
         <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-9">
                 <h6 class="mb-4">{{$s->item_name}}</h6>
                 <div class="row">
                     <div class="col-md-9">
@@ -20,7 +20,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
+                <a title="Edit Item" data-bs-toggle="modal" data-bs-target="#updateItem-{{$s->id}}"><i class="fa-solid fa-pen-to-square"></i></a>
+            </div>
+            <div class="col-md-1">
                 <div class="form-check">
                     <input class="form-check-input" title="Select" style="cursor:pointer; height:20px; width:20px;" type="checkbox" name="shelf_id[]" value="{{$s->id}}" id="shelf_check{{$s->id}}">
                 </div>

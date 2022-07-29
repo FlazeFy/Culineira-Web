@@ -233,6 +233,9 @@
     <!-- Modal Add New Item -->
     @include('kitchen.form.addItem')
 
+    <!-- Modal Update Item -->
+    @include('kitchen.form.updateItem')
+
     <!-- Delete list Modal -->
     @include('kitchen.form.deleteList')
 
