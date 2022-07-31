@@ -16,6 +16,7 @@
     <!--Custom css-->
     <link rel="stylesheet" type="text/css" href="http://127.0.0.1:8000/assets/css/style.css"/>
     <link rel="stylesheet" type="text/css" href="http://127.0.0.1:8000/assets/css/chat.css"/>
+    <link rel="stylesheet" type="text/css" href="http://127.0.0.1:8000/assets/css/attach.css"/>
 
     <!-- Jquery -->
     <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -175,6 +176,28 @@
             document.getElementById('formFile').value = null;
             frame.src = "http://127.0.0.1:8000/assets/NoImage.png";
         }
+
+        //Attach Image upload
+        $(document).on('change', '.file-input', function() {
+            var filesCount = $(this)[0].files.length;
+            var textbox = $(this).prev();
+            if (filesCount === 1) {
+                var fileName = $(this).val().split('\\').pop();
+                textbox.text(fileName);
+            } else {
+                textbox.text(filesCount + ' files selected');
+            }
+        });
+
+        //Popover attached
+        var options = {
+            html: true,
+            sanitize: false,
+            content: $('[data-name="popover-content-message"]')
+        }
+        var exampleEl = document.getElementById('button-content-message')
+        var popover = new bootstrap.Popover(exampleEl, options);
+
     </script>
 
 	</body>

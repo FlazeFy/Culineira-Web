@@ -268,14 +268,14 @@ class DetailController extends Controller
             $id_user = $u->id;
         }
 
-        if($request->hasFile('comment_image')){
+        if($request->hasFile('image')){
             //Validate image.
             $this->validate($request, [
-                'comment_image'     => 'required|image|mimes:jpeg,png,jpg|max:5000',
+                'image'     => 'required|image|mimes:jpeg,png,jpg|max:5000',
             ]);
 
             //Store image.
-            $image = $request->file('comment_image');
+            $image = $request->file('image');
             $image->storeAs('public', $image->hashName());
             $imageURL = $image->hashName();
         } else {

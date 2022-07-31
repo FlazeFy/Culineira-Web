@@ -159,14 +159,14 @@ class CommunityController extends Controller
                 $id_user = $u->id;
             }
 
-            if($request->hasFile('message_image')){
+            if($request->hasFile('image')){
                 //Validate image.
                 $this->validate($request, [
-                    'message_image'     => 'required|image|mimes:jpeg,png,jpg|max:5000',
+                    'image'     => 'required|image|mimes:jpeg,png,jpg|max:5000',
                 ]);
 
                 //Store image.
-                $image = $request->file('message_image');
+                $image = $request->file('image');
                 $image->storeAs('public', $image->hashName());
                 $imageURL = $image->hashName();
             } else {
@@ -291,6 +291,15 @@ class CommunityController extends Controller
      */
     public function unsendChat($id)
     {
+        //Delete message image if exist.
+        $message = DB::table('message')->where('id', $id)->get();
+        foreach($message as $m){
+            $image = $m->message_type;
+        }
+        if(($image != 'text')&&($image != 'notification')&&($image != 'forward-recipe')){
+            Storage::delete('public/'.$image);
+        }
+
         message::destroy($id);
         return redirect('/community')->with('success_message', 'Message unsend');
     }

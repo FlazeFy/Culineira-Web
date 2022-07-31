@@ -36,12 +36,12 @@
                                     @if(($cmt->steps_id == $stp->id)&&($u->id == $cmt->users_id))
                                     <div class="chat-message-<?php if($u->username == session()->get('usernameKey')){echo "right";}else{echo "left";}?> pb-4">
                                         <div>
-                                            <img src="http://127.0.0.1:8000/storage/{{ $u->image_url }}" alt='{{ $u->image_url }}' class="rounded-circle mr-1" width="35" >
+                                            <img src="http://127.0.0.1:8000/storage/{{ $u->image_url }}" alt='{{ $u->image_url }}' class="rounded-circle mx-1" width="35" >
                                         </div>
-                                        <div class="flex-shrink-1 rounded py-2 px-3 mr-3" style="<?php if($cmt->users_id == $data->user_id){echo "border:2px #EB7336 solid;";}?>">
+                                        <div class="flex-shrink-1 rounded py-2 px-3 mr-3 shadow" style="<?php if($cmt->users_id == $data->user_id){echo "border:2px #EB7336 solid;";}?>">
                                             <div class="font-weight-bold mb-1" style="color:#EB7336;">{{$u->username}}<span class="text-secondary" id="dateMsg"> {{$cmt->created_at}}</span></div>
                                             @if($cmt->comment_image != "null")
-                                                <img src="http://127.0.0.1:8000/storage/{{ $cmt->comment_image }}" alt='{{ $cmt->comment_image }}'  class="rounded-circle mr-1"
+                                                <img src="http://127.0.0.1:8000/storage/{{ $cmt->comment_image }}" alt='{{ $cmt->comment_image }}'  class="rounded mr-1"
                                                     style='width:30%; display: block; margin-left: auto; margin-right: auto;'>
                                                 <a>{{$cmt->comment_body}}</a>
                                             @else
@@ -63,9 +63,9 @@
                         <div class="col-1">
                             <div hidden>
                                 <div data-name="popover-content-custom-<?php echo $stp->id;?>">
-                                    <button type="button" class="btn btn-primary btn-circle btn-xl" title="Image" data-bs-toggle="collapse" href="#collapseAddImage"><i class="fa-solid fa-image"></i></button>
-                                    <button type="button" class="btn btn-primary btn-circle btn-xl" title="Video" data-bs-toggle="collapse" href="#collapseAddVideo"><i class="fa-solid fa-video"></i></button>
-                                    <button type="button" class="btn btn-primary btn-circle btn-xl" title="Tips" data-bs-toggle="collapse" href="#collapseAddTips"><i class="fa-solid fa-lightbulb"></i></button>
+                                    <button type="button" class="btn btn-primary btn-circle btn-xl" title="Image" data-bs-toggle="modal" data-bs-target="#attachImage-tls-{{$stp->id}}"><i class="fa-solid fa-image"></i></button>
+                                    <button type="button" class="btn btn-primary btn-circle btn-xl" title="Video" ><i class="fa-solid fa-video"></i></button>
+                                    <button type="button" class="btn btn-primary btn-circle btn-xl" title="Tips"><i class="fa-solid fa-lightbulb"></i></button>
                                 </div>
                             </div>
                             <a id="btn_popover_<?php echo $stp->id;?>" class="btn btn-primary" data-bs-toggle="popover-custom" data-html="true" title="Attached" ><i class="fa-solid fa-paperclip"></i></a>
@@ -78,40 +78,29 @@
                             </div>
                         </div>
                     </div>
-                    <div id="accordionAtchTls">
-                        <div class="collapse" id="collapseAddImage" data-bs-parent="#accordionAtchTls">
-                            <div class="container-fluid py-1">
-                                <h7><i class="fa-solid fa-circle-info"></i> Maximum size image is 5 mb</h7>
-                                <div class="input-group">
-                                    <img id="frame" src="http://127.0.0.1:8000/assets/NoImage.png" class="img-fluid d-block mx-auto" style="width:150px; border-radius:100%; border:3px solid #EB7736;"/>
-                                    <div class="row mt-2">
-                                        <div class="col-md-3">
-                                            <a onclick="clearImageComment()" class="btn btn-danger w-100"><i class="fa-solid fa-trash"></i> Reset</a>
-                                        </div>
-                                        <div class="col-md-9">
-                                            <input class="form-control w-100" type="file" id="formFileComment" onchange="previewComment()" name="comment_image" accept="image/png, image/jpg, image/jpeg">
-                                        </div>
-                                    </div>
+                    <!--Attach-->
+                    <div class="modal fade" id="attachImage-tls-{{$stp->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Attach Image</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <img id="frameMsg" src="http://127.0.0.1:8000/assets/NoImage.png" class="img-fluid d-block mx-auto my-2" style="width:150px; border-radius:100%; border:3px solid #EB7736;"/>
+                                <a onclick="clearImageMsg()" class="btn btn-danger w-50 my-3 d-block mx-auto"><i class="fa-solid fa-trash"></i> Reset</a>
+                                <div class="file-drop-area">
+                                    <span class="btn btn-primary mx-3">Choose files</span>
+                                    <span style="color:#EB7336;">or drag and drop files here</span>
+                                    <input class="file-input" type="file" id="formFileImg" onchange="previewMsg()" name="image" multiple accept="image/png, image/jpg, image/jpeg">
                                 </div>
                             </div>
-                        </div>
-                        <div class="collapse" id="collapseAddVideo" data-bs-parent="#accordionAtchTls">
-                            <div class="container-fluid py-1">
-                                <h7><i class="fa-solid fa-circle-info"></i> Maximum size video is 5 mb</h7>
-                                <div class="input-group">
-
-                                </div>
+                            <div class="modal-footer">
+                                <h7><i class="fa-solid fa-circle-info"></i> Maximum image size is 5 mb (jpg, png, jpeg)</h7>
+                            </div>
                             </div>
                         </div>
-                        <div class="collapse" id="collapseAddTips" data-bs-parent="#accordionAtchTls">
-                            <div class="container-fluid py-1">
-                                <h7><i class="fa-solid fa-circle-info"></i> ...</h7>
-                                <div class="input-group">
-
-                                </div>
-                            </div>
-                        </div>
-                    </div><!--End of accordion attached-->
+                    </div>
                     </form>
                 </div>
             </div>
@@ -120,3 +109,14 @@
     @php($i++)
     @endif
 @endforeach
+
+<script>
+    //Image upload preview.
+    function previewMsg() {
+        frameMsg.src = URL.createObjectURL(event.target.files[0]);
+    }
+    function clearImageMsg() {
+        document.getElementById('formFileImg').value = null;
+        frameMsg.src = "http://127.0.0.1:8000/assets/NoImage.png";
+    }
+</script>

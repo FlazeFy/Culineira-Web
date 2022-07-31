@@ -17,6 +17,7 @@
     <link rel="stylesheet" type="text/css" href="http://127.0.0.1:8000/assets/css/style.css"/>
     <link rel="stylesheet" type="text/css" href="http://127.0.0.1:8000/assets/css/chat.css"/>
     <link rel="stylesheet" type="text/css" href="http://127.0.0.1:8000/assets/css/stepper/detail-recipe.css"/>
+    <link rel="stylesheet" type="text/css" href="http://127.0.0.1:8000/assets/css/attach.css"/>
 
     <!-- Jquery -->
     <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -348,6 +349,18 @@
     <script src="http://127.0.0.1:8000/assets/js/dark-light-mode.js"></script>
 
     <script>
+        //Attach Image upload
+        $(document).on('change', '.file-input', function() {
+            var filesCount = $(this)[0].files.length;
+            var textbox = $(this).prev();
+            if (filesCount === 1) {
+                var fileName = $(this).val().split('\\').pop();
+                textbox.text(fileName);
+            } else {
+                textbox.text(filesCount + ' files selected');
+            }
+        });
+
         //Custom popover
         $(document).ready(function() {
             //For tiles.

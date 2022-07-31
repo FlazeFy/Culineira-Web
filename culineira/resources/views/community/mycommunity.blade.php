@@ -231,13 +231,22 @@
                         @endforeach
                     </div>
 
-                    <form action="/community/sendChat/{{$g->id}}" method="POST">
+                    <form action="/community/sendChat/{{$g->id}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class='input-group' style="position:absolute; bottom:10px; width:95%;">
-                            <a class='btn btn-primary'><i class='fa-solid fa-paperclip'></i></a>
+                            <div hidden>
+                                <div data-name="popover-content-message">
+                                    <button type="button" class="btn btn-primary btn-circle btn-xl" title="Image" data-bs-toggle="modal" data-bs-target="#attachImage"><i class="fa-solid fa-image"></i></button>
+                                    <button type="button" class="btn btn-primary btn-circle btn-xl" title="Video"><i class="fa-solid fa-video"></i></button>
+                                    <button type="button" class="btn btn-primary btn-circle btn-xl" title="Tips"><i class="fa-solid fa-lightbulb"></i></button>
+                                </div>
+                            </div>
+                            <a class='btn btn-primary' id="button-content-message" data-bs-toggle="popover-custom" data-html="true" title="Attached"><i class='fa-solid fa-paperclip'></i></a>
                             <input type='text' class='form-control' placeholder='Type your message...' name='message_body'>
                             <button class='btn btn-success' type='submit'><i class='fa-solid fa-paper-plane'></i> Send</button>
                         </div>
+                        <!--Attach-->
+                        @include('others.attachImage')
                     </form>
                     @php($count++)
                 @endif
