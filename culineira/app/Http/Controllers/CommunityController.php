@@ -280,6 +280,89 @@ class CommunityController extends Controller
         return redirect()->back()->with('success_message', 'Group member updated!');
     }
 
+    public function demote(Request $request ,$id)
+    {
+        //Role 0 = Login user's role
+        //Role 1 = Target member's role
+
+        if($request->role1 == "founder"){
+            if($request->role0 == "admin"){
+                //Promote to admin
+                $newrole = "member";
+                groups_rel::where('id', $id)->update([
+                    'groups_role' => $newrole,
+                    'updated_at' => date("Y-m-d h:m:i"),
+                ]);
+            }
+        }
+
+        //Get target user's username by relation id
+        $users = DB::table('users')
+            ->where('id', $request->id_member)->get();
+
+        foreach($users as $us){
+            $username = $us->username;
+        }
+
+        //Show record to group chat
+        message::create([
+            'users_id' => 1, //For now
+            'groups_id' => session()->get('groupKey'),
+            'message_body' => $username.' is now a '.$newrole.'  ',
+            'message_type' => 'role',
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        return redirect()->back()->with('success_message', 'Group member updated!');
+    }
+
+    public function kick(Request $request ,$id)
+    {
+        //Role 0 = Login user's role
+        //Role 1 = Target member's role
+
+        if($request->role1 == "founder"){
+            if($request->role0 == "member"){
+                groups_rel::destroy($id);
+            }
+        } else if($request->role1 == "admin"){
+            if($request->role0 == "member"){
+                groups_rel::destroy($id);
+            }
+        }
+
+        //Get target user's username by relation id
+        $users = DB::table('users')
+            ->where('id', $request->id_member)->get();
+
+        foreach($users as $us){
+            $username = $us->username;
+        }
+
+        //Show record to group chat
+        message::create([
+            'users_id' => 1, //For now
+            'groups_id' => session()->get('groupKey'),
+            'message_body' => $username.' has been kicked out',
+            'message_type' => 'role',
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        //Activity record
+        activity::create([
+            'users_id' => $request->id_member,
+            'activity_from' => 1,
+            'activity_type' => 'group-kick',
+            'activity_description' => 'has been kicked out from "'.session()->get('groupKey').'" group',
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        return redirect()->back()->with('success_message', 'Group member updated!');
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

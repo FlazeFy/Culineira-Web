@@ -84,6 +84,7 @@
             </div>
         </form>
         <div class="container-fluid rounded shadow mt-2 p-2 w-100" id="scroll_contact">
+            @php($count = 0)
             @foreach($groupId as $g)
             <form action="/community/openChat/{{$g->id}}" method="POST">
                 @csrf
@@ -106,7 +107,14 @@
                     </button>
                 </div>
             </form>
+            @php($count++)
             @endforeach
+
+            @if($count == 0)
+                <img class="d-block mx-auto mt-4" src="{{asset('assets/storyset/Empty.png')}}" style="width:200px;">
+                <h2 class="text-center mx-3" style="color:#Eb7336;">Contact Empty</h2>
+                <h6 class="text-center mx-3">You haven't joined any group yet. &nbsp; <a class="btn btn-link text-success m-0 p-0">Join Now</a></h6>
+            @endif
         </div>
     </div>
     <div class="col-md-9">
@@ -273,7 +281,7 @@
                 <img id="frame3" src="http://127.0.0.1:8000/assets/storyset/Discussion.png" class="img-fluid mx-auto d-block mt-5 pt-3" style="width:200px;"/>
                 <h2 class="text-center mt-3 mx-3" style="color:#Eb7336;">Welcome to community</h2>
                 <h6 class="text-center mt-1 mx-3">In this feature, you can have a discussion with other user around the world</h6>
-                <h7 class="text-center mt-3 mx-3 text-secondary d-block">I'm new with this feature &nbsp; <a class="btn btn-link text-decoration-none text-success m-0 p-0">See how to use</a></h7>
+                <h7 class="text-center mt-3 mx-3 text-secondary d-block">I'm new with this feature &nbsp; <a class="btn btn-link text-success m-0 p-0">See how to use</a></h7>
             @endif
 
             <!--Create group.-->
@@ -282,3 +290,9 @@
     </div>
     @endforeach
 </div>
+
+<script>
+    //Chat box start from the bottom.
+	var myDiv = document.getElementById("chat-messages-box");
+	myDiv.scrollTop = myDiv.scrollHeight;
+</script>

@@ -19,7 +19,13 @@
                         {{$av->username}}
                     @endif
                 </h6>
-                <a class="text-secondary">Notification ~ {{$av->activity_type}}</a>
+                <a class="text-secondary">Notification ~
+                    @if($av->activity_type == "group-kick")
+                        group
+                    @else
+                        {{$av->activity_type}}
+                    @endif
+                </a>
             </div>
         </div>
         <a>

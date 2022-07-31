@@ -48,6 +48,9 @@
                                             <div class="col-md-5">
                                                 <form action="community/kick/{{$m->id_rel}}" method="POST">
                                                     @csrf
+                                                    <input hidden value="{{$m->role}}" name="role0">
+                                                    <input hidden value="{{$me}}" name="role1">
+                                                    <input hidden value="{{$m->id_user}}" name="id_member">
                                                     <button class="btn btn-danger m-1" style="font-size:12px;">Kick</button>
                                                 </form>
                                             </div>
@@ -57,6 +60,7 @@
                                                     @csrf
                                                     <input hidden value="{{$m->role}}" name="role0">
                                                     <input hidden value="{{$me}}" name="role1">
+                                                    <input hidden value="{{$m->id_user}}" name="id_member">
                                                     <button class="btn btn-danger m-1" style="font-size:12px;">Demote</button>
                                                 </form>
                                             </div>
@@ -77,6 +81,7 @@
                                                     @csrf
                                                     <input hidden value="{{$m->role}}" name="role0">
                                                     <input hidden value="{{$me}}" name="role1">
+                                                    <input hidden value="{{$m->id_user}}" name="id_member">
                                                     <button class="btn btn-danger m-1" style="font-size:12px;">Demote</button>
                                                 </form>
                                             </div>
