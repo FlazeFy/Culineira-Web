@@ -78,5 +78,10 @@ Route::post('/community/openChat/{id}', [CommunityController::class, 'openChat']
 Route::post('/community/sendChat/{id}', [CommunityController::class, 'sendChat']);
 Route::post('/community/createGroup', [CommunityController::class, 'createGroup']);
 Route::post('/community/editGroup/{id}', [CommunityController::class, 'editGroup']);
-Route::post('/community/unsendChat/{id}', [CommunityController::class, 'unsendChat']);
+Route::post('/community/promote/{id}', [CommunityController::class, 'promote']);
+Route::post('/community/demote/{id}', [CommunityController::class, 'demote']);
+Route::post('/community/kick/{id}', [CommunityController::class, 'kick']);
+Route::post('/community/invite/{id}', [CommunityController::class, 'invite']);
+Route::post('/community/uninvite/{id}', [CommunityController::class, 'uninvite']);
+Route::post('/community/deleteGroup/{id}', [CommunityController::class, 'deleteGroup']);
 

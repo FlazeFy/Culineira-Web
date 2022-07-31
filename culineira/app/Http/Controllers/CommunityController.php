@@ -51,7 +51,7 @@ class CommunityController extends Controller
         //Show community detail //CHECK AGAIN...
         if(session()->get('groupKey')){
             $member = DB::table('groups-rel')
-            ->select('groups.id as id', 'users.username', 'users.image_url  as image_url', 'groups.id as id', 'groups.users_id as founder_id')
+            ->select('groups.id as id', 'groups-rel.id as id_rel', 'users.username', 'users.id as id_user', 'users.image_url  as image_url', 'groups.id as id', 'groups.users_id as founder_id', 'groups-rel.created_at as joined_at', 'groups-rel.groups_role as role')
             ->join('groups', 'groups.id', '=', 'groups-rel.groups_id')
             ->join('users', 'users.id', '=', 'groups-rel.users_id')
             ->where('groups-rel.groups_id', session()->get('groupKey'))
@@ -66,7 +66,7 @@ class CommunityController extends Controller
         } else {
             //Initial state.
             $member = DB::table('groups-rel')
-            ->select('groups.id as id', 'users.username', 'users.image_url as image_url', 'groups.id as id', 'groups.users_id as founder_id')
+            ->select('groups.id as id', 'groups-rel.id as id_rel', 'users.username', 'users.id as id_user', 'users.image_url as image_url', 'groups.id as id', 'groups.users_id as founder_id', 'groups-rel.created_at as joined_at', 'groups-rel.groups_role as role')
             ->join('groups', 'groups.id', '=', 'groups-rel.groups_id')
             ->join('users', 'users.id', '=', 'groups-rel.users_id')
             ->orderBy('groups-rel.created_at', 'ASC');
@@ -194,9 +194,90 @@ class CommunityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function promote(Request $request ,$id)
     {
-        //
+        //Role 0 = Login user's role
+        //Role 1 = Target member's role
+
+        $newFounder = 0;
+
+        if($request->role1 == "founder"){
+            if($request->role0 == "member"){
+                //Promote to admin
+                $newrole = "admin";
+                groups_rel::where('id', $id)->update([
+                    'groups_role' => $newrole,
+                    'updated_at' => date("Y-m-d h:m:i"),
+                ]);
+            } else if($request->role0 == "admin"){
+                //Promote to founder
+                $newrole = "founder";
+                groups_rel::where('id', $id)->update([
+                    'groups_role' => $newrole,
+                    'updated_at' => date("Y-m-d h:m:i"),
+                ]);
+
+                //Get user login id & demote
+                $users_id = DB::table('groups-rel')
+                    ->select('groups-rel.id as id')
+                    ->join('users', 'groups-rel.users_id', '=', 'users.id')
+                    ->where('users.username', session()->get('usernameKey'))
+                    ->where('groups-rel.groups_id', session()->get('groupKey'))->get();
+
+                foreach($users_id as $u){
+                    $id_rel = $u->id;
+                }
+
+                //Demote to admin
+                groups_rel::where('id', $id_rel)->update([
+                    'groups_role' => "admin",
+                    'updated_at' => date("Y-m-d h:m:i"),
+                ]);
+
+                $newFounder = 1;
+            }
+        } else if($request->role1 == "admin"){
+            if($request->role0 == "member"){
+                //Promote to admin
+                $newrole = "admin";
+                groups_rel::where('id', $id)->update([
+                    'groups_role' => $newrole,
+                    'updated_at' => date("Y-m-d h:m:i"),
+                ]);
+            }
+        }
+
+        //Get target user's username by relation id
+        $users = DB::table('users')
+            ->where('id', $request->id_member)->get();
+
+        foreach($users as $us){
+            $username = $us->username;
+        }
+
+        //Show record to group chat
+        message::create([
+            'users_id' => 1, //For now
+            'groups_id' => session()->get('groupKey'),
+            'message_body' => $username.' is now a '.$newrole.'  ',
+            'message_type' => 'role',
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        if($newFounder == 1){
+            //Show record to group chat if there's a new founder
+            message::create([
+                'users_id' => 1, //For now
+                'groups_id' => session()->get('groupKey'),
+                'message_body' => session()->get('usernameKey').' is no longer a founder ',
+                'message_type' => 'role',
+                'created_at' => date("Y-m-d h:m:i"),
+                'updated_at' => date("Y-m-d h:m:i"),
+            ]);
+        }
+
+        return redirect()->back()->with('success_message', 'Group member updated!');
     }
 
     /**

@@ -118,6 +118,10 @@
                         <h6 class="mb-1 text-white">{{$g->groups_name}}</h6>
                         <button class="btn btn-success bg-transparent border-0 float-end" data-bs-toggle="modal" data-bs-target="#editGroup"
                             title="Setting" style="margin-top:-20px;"><i class="fa-solid fa-gear"></i></button>
+                        <button class="btn btn-success bg-transparent border-0 float-end" data-bs-toggle="modal" data-bs-target="#manageMember"
+                            title="Manage Member" style="margin-top:-20px;"><i class="fa-solid fa-people-group"></i></button>
+                        <button class="btn btn-success bg-transparent border-0 float-end" data-bs-toggle="modal" data-bs-target="#invitation"
+                            title="Invitation" style="margin-top:-20px;"><i class="fa-solid fa-envelope"></i></button>
                         <div class="row">
                             @foreach($member as $m)
                             <div class="card border-gray mx-1" id='member_image' type='button'>
@@ -130,6 +134,12 @@
 
                             <!--Edit groups-->
                             @include('community.form.edit')
+
+                            <!--Manage member-->
+                            @include('community.form.manageMember')
+
+                            <!--Invitation-->
+                            @include('community.form.invitation')
                         </div>
                     </div>
 
@@ -137,7 +147,7 @@
                         @php($c=0)
                         @foreach($message as $msg)
                             @foreach($user as $u)
-                                @if(($u->id == $msg->users_id)&&($msg->message_type != "notification")&&($msg->message_type != "forward-recipe"))
+                                @if(($u->id == $msg->users_id)&&($msg->message_type != "notification")&&($msg->message_type != "forward-recipe")&&($msg->message_type != "role"))
                                     <div class="chat-message-<?php if($u->username == session()->get('usernameKey')){echo "right ms-5 ps-5";}else{echo "left me-5 pe-5";}?> pb-4">
                                         <div>
                                             <img src="http://127.0.0.1:8000/storage/{{ $u->image_url }}" alt='{{ $u->image_url }}' class="rounded-circle mr-1 shadow" width="35" >
@@ -165,6 +175,12 @@
                                 @elseif(($u->id == $msg->users_id)&&($msg->message_type == "notification"))
                                     <div class="container w-50 px-5 mx-auto text-center d-block rounded">
                                         <a style="color:#EB7336; font-style:italic; font-size:14px;">- {{$u->username}} {{$msg->message_body}} -</a><br>
+                                        <a class="text-secondary fst-italic" id="dateMsg">{{$msg->created_at}}</a>
+                                    </div>
+                                    @php($c++)
+                                @elseif(($u->id == $msg->users_id)&&($msg->message_type == "role"))
+                                    <div class="container w-50 px-5 mx-auto text-center d-block rounded">
+                                        <a style="color:#EB7336; font-style:italic; font-size:14px;">- {{$msg->message_body}} -</a><br>
                                         <a class="text-secondary fst-italic" id="dateMsg">{{$msg->created_at}}</a>
                                     </div>
                                     @php($c++)
