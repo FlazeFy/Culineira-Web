@@ -107,7 +107,7 @@ class CommunityController extends Controller
 
         //Create group
         $group = groups::create([
-            'users_id' => 1, //For testing
+            'users_id' => session()->get('idKey'),
             'groups_name' => $request->group_name,
             'groups_type' => $request->group_type,
             'groups_description' => $request->group_description,
@@ -118,7 +118,7 @@ class CommunityController extends Controller
 
         //Group Relation
         groups_rel::create([
-            'users_id' => 1, //For testing
+            'users_id' => session()->get('idKey'),
             'groups_id' => $group->id,
             'created_at' => date("Y-m-d h:m:i"),
             'updated_at' => date("Y-m-d h:m:i"),
@@ -127,7 +127,7 @@ class CommunityController extends Controller
 
         //Activity record
         activity::create([
-            'users_id' => 1,
+            'users_id' => session()->get('idKey'),
             'activity_from' => $group->id,
             'activity_type' => 'group',
             'activity_description' => 'created a group called "'.$request->group_name.'"',
@@ -257,7 +257,7 @@ class CommunityController extends Controller
 
         //Show record to group chat
         message::create([
-            'users_id' => 1, //For now
+            'users_id' => session()->get('idKey'),
             'groups_id' => session()->get('groupKey'),
             'message_body' => $username.' is now a '.$newrole.'  ',
             'message_type' => 'role',
@@ -268,7 +268,7 @@ class CommunityController extends Controller
         if($newFounder == 1){
             //Show record to group chat if there's a new founder
             message::create([
-                'users_id' => 1, //For now
+                'users_id' => session()->get('idKey'),
                 'groups_id' => session()->get('groupKey'),
                 'message_body' => session()->get('usernameKey').' is no longer a founder ',
                 'message_type' => 'role',
@@ -306,7 +306,7 @@ class CommunityController extends Controller
 
         //Show record to group chat
         message::create([
-            'users_id' => 1, //For now
+            'users_id' => session()->get('idKey'),
             'groups_id' => session()->get('groupKey'),
             'message_body' => $username.' is now a '.$newrole.'  ',
             'message_type' => 'role',
@@ -342,7 +342,7 @@ class CommunityController extends Controller
 
         //Show record to group chat
         message::create([
-            'users_id' => 1, //For now
+            'users_id' => session()->get('idKey'),
             'groups_id' => session()->get('groupKey'),
             'message_body' => $username.' has been kicked out',
             'message_type' => 'role',
@@ -353,7 +353,7 @@ class CommunityController extends Controller
         //Activity record
         activity::create([
             'users_id' => $request->id_member,
-            'activity_from' => 1,
+            'activity_from' => session()->get('idKey'),
             'activity_type' => 'group-kick',
             'activity_description' => 'has been kicked out from "'.session()->get('groupKey').'" group',
             'created_at' => date("Y-m-d h:m:i"),
@@ -413,7 +413,7 @@ class CommunityController extends Controller
 
         //Activity record
         activity::create([
-            'users_id' => 1, //For now.
+            'users_id' => session()->get('idKey'),
             'activity_from' => $id,
             'activity_type' => 'group',
             'activity_description' => 'modified group profile',
@@ -423,7 +423,7 @@ class CommunityController extends Controller
 
         //Show record to group chat
         message::create([
-            'users_id' => 1, //For now
+            'users_id' => session()->get('idKey'),
             'groups_id' => $id,
             'message_body' => 'changed group profile',
             'message_type' => 'notification',
@@ -466,5 +466,40 @@ class CommunityController extends Controller
 
         message::destroy($id);
         return redirect('/community')->with('success_message', 'Message unsend');
+    }
+
+    public function leave($id)
+    {
+        groups_rel::destroy($id);
+
+        //Show record to group chat
+        message::create([
+            'users_id' => session()->get('idKey'),
+            'groups_id' => session()->get('groupKey'),
+            'message_body' => session()->get('usernameKey').' has been leave this group',
+            'message_type' => 'role',
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        //Activity record
+        activity::create([
+            'users_id' => session()->get('idKey'),
+            'activity_from' => session()->get('idKey'),
+            'activity_type' => 'group-leave',
+            'activity_description' => 'has been leave from "'.session()->get('groupKey').'" group',
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        //Get group name
+        $groups = DB::table('groups')
+            ->where('id', session()->get('groupKey'))->get();
+
+        foreach($groups as $g){
+            $groupname = $g->groups_name;
+        }
+
+        return redirect()->back()->with('success_message', 'You are no longer a part of "'.$groupname.'" group');
     }
 }

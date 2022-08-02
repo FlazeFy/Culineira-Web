@@ -93,7 +93,7 @@
                                         @endif
                                     @else
                                         <div class="col">
-                                            <form action="" method="POST">
+                                            <form action="community/leave/{{$m->id_rel}}" method="POST">
                                                 @csrf
                                                 <button class="btn btn-danger m-1 w-100" type="submit" style="font-size:12px;">Leave Group</button>
                                             </form>

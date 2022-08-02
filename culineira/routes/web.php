@@ -49,9 +49,9 @@ Route::post('/detail/forwardRecipe/{id}', [DetailController::class, 'forwardReci
 
 //Profile page.
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
-Route::post('/profile/updateSocmed/{id}', [ProfileController::class, 'updateSocmed']);
-Route::post('/profile/updateProfile/{id}', [ProfileController::class, 'updateProfile']);
-Route::post('/profile/updateImage/{id}', [ProfileController::class, 'updateImage']);
+Route::post('/profile/updateSocmed', [ProfileController::class, 'updateSocmed']);
+Route::post('/profile/updateProfile', [ProfileController::class, 'updateProfile']);
+Route::post('/profile/updateImage', [ProfileController::class, 'updateImage']);
 
 //My kitchen page.
 Route::get('/kitchen', [KitchenController::class, 'index'])->name('kitchen');
@@ -82,6 +82,7 @@ Route::post('/community/promote/{id}', [CommunityController::class, 'promote']);
 Route::post('/community/demote/{id}', [CommunityController::class, 'demote']);
 Route::post('/community/kick/{id}', [CommunityController::class, 'kick']);
 Route::post('/community/invite/{id}', [CommunityController::class, 'invite']);
+Route::post('/community/leave/{id}', [CommunityController::class, 'leave']);
 Route::post('/community/uninvite/{id}', [CommunityController::class, 'uninvite']);
 Route::post('/community/deleteGroup/{id}', [CommunityController::class, 'deleteGroup']);
 

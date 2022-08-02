@@ -1,6 +1,6 @@
 <div class="card-body">
     <div class="d-flex flex-column align-items-center text-center">
-        <form action="/profile/updateImage/<?php echo $u->id; ?>" method="POST" id="formImage" enctype="multipart/form-data">
+        <form action="/profile/updateImage" method="POST" id="formImage" enctype="multipart/form-data">
         @csrf
         <img id="frame" class="img logo rounded-circle shadow" src="http://127.0.0.1:8000/storage/{{ $u->image_url }}" alt='{{ $u->image_url }}'
             style='display: block; margin-left: auto; margin-right: auto; width:200px;'>

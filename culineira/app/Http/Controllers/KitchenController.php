@@ -102,7 +102,7 @@ class KitchenController extends Controller
         if($request->has('recipe_id')){
             //Create list with recipe
             $list = list_recipe::create([
-                'user_id' => 1, //For testing
+                'user_id' => session()->get('idKey'),
                 'list_name' => $request-> list_name,
                 'list_status' => 'null', //For now
                 'list_description' => $request-> list_description,
@@ -112,7 +112,7 @@ class KitchenController extends Controller
 
             //Activity record
             activity::create([
-                'users_id' => 1,
+                'users_id' => session()->get('idKey'),
                 'activity_from' => $list->id,
                 'activity_type' => 'list',
                 'activity_description' => 'created a list called "'.$request-> list_name.'"',
@@ -142,7 +142,7 @@ class KitchenController extends Controller
         } else {
             //Create list only
             $list = list_recipe::create([
-                'user_id' => 1, //For testing
+                'user_id' => session()->get('idKey'),
                 'list_name' => $request-> list_name,
                 'list_status' => 'null', //For now
                 'list_description' => $request-> list_description,
@@ -152,7 +152,7 @@ class KitchenController extends Controller
 
             //Activity record
             activity::create([
-                'users_id' => 1,
+                'users_id' => session()->get('idKey'),
                 'activity_from' => $list->id,
                 'activity_type' => 'list',
                 'activity_description' => 'created a list called "'.$request-> list_name.'"',
@@ -167,7 +167,7 @@ class KitchenController extends Controller
     {
         //Create item
         $item = shelf::create([
-            'users_id' => 1, //For testing
+            'users_id' => session()->get('idKey'),
             'item_name' => $request-> item_name,
             'item_description' => $request-> item_description,
             'item_qty' => $request-> item_qty,
@@ -177,7 +177,7 @@ class KitchenController extends Controller
 
         //Activity record
         activity::create([
-            'users_id' => 1,
+            'users_id' => session()->get('idKey'),
             'activity_from' => $item->id,
             'activity_type' => 'shelf',
             'activity_description' => 'added a new item to shelf called "'.$request-> item_name.'"',
@@ -216,7 +216,7 @@ class KitchenController extends Controller
 
         //Activity record
         activity::create([
-            'users_id' => 1, //for now.
+            'users_id' => session()->get('idKey'),
             'activity_from' => $id,
             'activity_type' => 'shelf',
             'activity_description' => 'updated "'.$request-> item_name.'" item from shelf',

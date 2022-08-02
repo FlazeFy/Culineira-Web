@@ -60,7 +60,7 @@ class RecipeController extends Controller
 
         //Recipe data.
         $id_recipe = recipe::create([
-            'user_id' => 1, //For testing
+            'user_id' => session()->get('idKey'), //For testing
             'recipe_name' => $request-> recipe_name,
             'recipe_calorie' => $request-> recipe_calorie,
             'recipe_desc' => $request-> recipe_desc,
@@ -78,7 +78,7 @@ class RecipeController extends Controller
 
         //Activity record
         activity::create([
-            'users_id' => 1,
+            'users_id' => session()->get('idKey'),
             'activity_from' => $id_recipe->id,
             'activity_type' => 'recipes',
             'activity_description' => 'created a recipe called "'.$request-> recipe_name.'"',
@@ -116,7 +116,7 @@ class RecipeController extends Controller
 
         //Recipe data.
         $recipeData = recipe::create([
-            'user_id' => 1, //For testing
+            'user_id' => session()->get('idKey'), //For testing
             'recipe_name' => $request-> recipe_name,
             'recipe_calorie' => $request-> recipe_calorie,
             'recipe_desc' => $request-> recipe_desc,
@@ -174,7 +174,7 @@ class RecipeController extends Controller
 
         //Activity record
         activity::create([
-            'users_id' => 1,
+            'users_id' => session()->get('idKey'),
             'activity_from' => $recipeData->id,
             'activity_type' => 'recipes',
             'activity_description' => 'created a recipe called "'.$request-> recipe_name.'"',
@@ -235,7 +235,7 @@ class RecipeController extends Controller
 
         //Activity record
         activity::create([
-            'users_id' => 1,
+            'users_id' => session()->get('idKey'),
             'activity_from' => $request-> recipe_id,
             'activity_type' => 'recipes',
             'activity_description' => 'modified "'.$recipeName.'" recipe dependencies',
@@ -331,7 +331,7 @@ class RecipeController extends Controller
 
         //Activity record
         activity::create([
-            'users_id' => 1,
+            'users_id' => session()->get('idKey'),
             'activity_from' => $id,
             'activity_type' => 'recipes',
             'activity_description' => 'modified "'.$recipeName.'" recipe data',
@@ -356,7 +356,7 @@ class RecipeController extends Controller
 
         //Activity record
         activity::create([
-            'users_id' => 1,
+            'users_id' => session()->get('idKey'),
             'activity_from' => $id,
             'activity_type' => 'recipes',
             'activity_description' => 'modified "'.$recipeName.'" recipe visibility',
@@ -385,7 +385,7 @@ class RecipeController extends Controller
 
             //Activity record
             activity::create([
-                'users_id' => 1,
+                'users_id' => session()->get('idKey'),
                 'activity_from' => $id,
                 'activity_type' => 'recipes',
                 'activity_description' => 'deleted "'.$recipeName.'" recipe',

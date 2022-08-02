@@ -4,7 +4,7 @@
 
 <ul class="list-group list-group-flush">
     @foreach($socmedId as $s)
-    <form action="/profile/updateSocmed/<?php echo $s->id; ?>" method="POST">
+    <form action="/profile/updateSocmed" method="POST">
         @csrf
         <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap border-0 bg-transparent">
             <h6 class="mb-2"><i class="fa-brands fa-facebook fa-lg"></i> Facebook</h6>

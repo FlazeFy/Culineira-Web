@@ -109,6 +109,7 @@ class LandingController extends Controller
 
                 //Pass session data.
                 $request->session()->put('usernameKey', $request-> username);
+                $request->session()->put('idKey', $user_id->id);
                 $request->session()->put('passwordKey', $request-> password);
                 return redirect()->route('recipe');
             } else {
@@ -127,7 +128,12 @@ class LandingController extends Controller
             ->where('password', $request-> password)
             ->get();
         if(count($check) != 0){
-            // $request->session()->put('idKey', $check->id);
+            //Get id
+            foreach($check as $c){
+                $id = $c->id;
+            }
+
+            $request->session()->put('idKey', $id);
             $request->session()->put('usernameKey', $request-> username);
             $request->session()->put('passwordKey', $request-> password);
             return redirect()->route('recipe');

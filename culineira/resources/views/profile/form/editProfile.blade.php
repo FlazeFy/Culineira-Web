@@ -39,7 +39,7 @@
 </style>
 
 <div class="card-body">
-    <form action="/profile/updateProfile/<?php echo $u->id; ?>" method="POST" autocomplete="off">
+    <form action="/profile/updateProfile" method="POST" autocomplete="off">
         @csrf
         <div class="row">
             <div class="col-sm-3">

@@ -76,13 +76,8 @@ class DetailController extends Controller
         }
         $results = $filterRecipe->get();
 
-        //Get user id
-        $users_id = DB::table('users')->where('username', session()->get('usernameKey'))->get();
-        foreach($users_id as $u){
-            $id_user = $u->id;
-        }
         //Retrive likes by recipe id and user id
-        $likesUser = DB::table('likes')->where('recipe_id', $id)->where('users_id', $id_user)->get();
+        $likesUser = DB::table('likes')->where('recipe_id', $id)->where('users_id', session()->get('idKey'))->get();
         $likesId = DB::table('likes')->where('recipe_id', $id)->get();
 
         return view ('recipe.detail.index')
@@ -124,13 +119,8 @@ class DetailController extends Controller
 
     public function likes($id)
     {
-        $users_id = DB::table('users')->where('username', session()->get('usernameKey'))->get();
-        foreach($users_id as $u){
-            $id_user = $u->id;
-        }
-
         //Check if recipe is liked or not
-        $check = DB::table('likes')->where('recipe_id', $id)->where('users_id', $id_user)->get();
+        $check = DB::table('likes')->where('recipe_id', $id)->where('users_id', session()->get('idKey'))->get();
         if($check->count() == 0){
             //Likes.
             likes::create([
@@ -157,12 +147,7 @@ class DetailController extends Controller
                 $id_likes = $c->id;
             }
 
-            $users_id = DB::table('users')->where('username', session()->get('usernameKey'))->get();
-            foreach($users_id as $us){
-                $id_user = $us->id;
-            }
-
-            $activity_id = DB::table('activity')->where('activity_from', $id)->where('users_id', $id_user)->get();
+            $activity_id = DB::table('activity')->where('activity_from', $id)->where('users_id', session()->get('idKey'))->get();
             foreach($activity_id as $as){
                 $ac_id = $as->id;
             }
@@ -194,7 +179,7 @@ class DetailController extends Controller
         }
 
         message::create([
-            'users_id' => 1, //for now
+            'users_id' => session()->get('idKey'),
             'groups_id' => $request->group_id,
             'message_body' => $id,
             'message_type' => "forward-recipe",
@@ -263,11 +248,6 @@ class DetailController extends Controller
      */
     public function sendComment(Request $request, $id)
     {
-        $users_id = DB::table('users')->where('username', session()->get('usernameKey'))->get();
-        foreach($users_id as $u){
-            $id_user = $u->id;
-        }
-
         if($request->hasFile('image')){
             //Validate image.
             $this->validate($request, [
@@ -285,7 +265,7 @@ class DetailController extends Controller
         comment::create([
             'recipe_id' => $id,
             'steps_id' => $request->steps_id,
-            'users_id' => $id_user,
+            'users_id' => session()->get('idKey'),
             'comment_body' => $request->comment_body,
             'comment_image' => $imageURL,
             'created_at' => date("Y-m-d h:m:i"),

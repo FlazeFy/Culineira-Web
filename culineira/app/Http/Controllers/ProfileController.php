@@ -237,9 +237,9 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updateSocmed(Request $request, $id)
+    public function updateSocmed(Request $request)
     {
-        socmed::where('id', $id)->update([
+        socmed::where('id', session()->get('idKey'))->update([
             'socmed_facebook' => $request-> socmed_facebook,
             'socmed_youtube' => $request-> socmed_youtube,
             'socmed_tiktok' => $request-> socmed_tiktok,
@@ -250,8 +250,8 @@ class ProfileController extends Controller
 
         //Activity record
         activity::create([
-            'users_id' => $id,
-            'activity_from' => $id,
+            'users_id' => session()->get('idKey'),
+            'activity_from' => session()->get('idKey'),
             'activity_type' => 'profile',
             'activity_description' => 'modified your social media data',
             'created_at' => date("Y-m-d h:m:i"),
@@ -261,9 +261,9 @@ class ProfileController extends Controller
         return redirect('/profile')->with('success_message', 'Social Media Updated');
     }
 
-    public function updateProfile(Request $request, $id)
+    public function updateProfile(Request $request)
     {
-        user::where('id', $id)->update([
+        user::where('id', session()->get('idKey'))->update([
             'password' => $request-> password,
             'description' => $request-> description,
             'country' => $request-> country,
@@ -272,8 +272,8 @@ class ProfileController extends Controller
 
         //Activity record
         activity::create([
-            'users_id' => $id,
-            'activity_from' => $id,
+            'users_id' => session()->get('idKey'),
+            'activity_from' => session()->get('idKey'),
             'activity_type' => 'profile',
             'activity_description' => 'modified your account data',
             'created_at' => date("Y-m-d h:m:i"),
@@ -283,9 +283,9 @@ class ProfileController extends Controller
         return redirect('/profile')->with('success_message', 'Account Updated');
     }
 
-    public function updateImage(Request $request, $id)
+    public function updateImage(Request $request)
     {
-        $users_id = DB::table('users')->where('username', session()->get('usernameKey'))->get();
+        $users_id = DB::table('users')->where('id', session()->get('idKey'))->get();
         //Get old image url.
         foreach($users_id as $u){
             $old_image = $u->image_url;
@@ -306,15 +306,15 @@ class ProfileController extends Controller
             Storage::delete('public/'.$old_image);
         }
 
-        user::where('id', $id)->update([
+        user::where('id', session()->get('idKey'))->update([
             'image_url' => $imageURL,
             'updated_at' => date("Y-m-d h:m:i"),
         ]);
 
         //Activity record
         activity::create([
-            'users_id' => $id,
-            'activity_from' => $id,
+            'users_id' => session()->get('idKey'),
+            'activity_from' => session()->get('idKey'),
             'activity_type' => 'profile',
             'activity_description' => 'changed your profile image',
             'created_at' => date("Y-m-d h:m:i"),
