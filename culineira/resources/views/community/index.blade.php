@@ -133,7 +133,7 @@
                     @include('community.mycommunity')
                 </div>
 
-                <div class="collapse show" id="globalCollapse" data-bs-parent="#accordionCommunity">
+                <div class="collapse" id="globalCollapse" data-bs-parent="#accordionCommunity">
                     <!--Global-->
                     @include('community.global')
                 </div>

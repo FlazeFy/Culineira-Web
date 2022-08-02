@@ -34,12 +34,12 @@ class CommunityController extends Controller
             ->where('username', session()->get('usernameKey'))->get();
 
         //Show user's groups.
-        $groupId = DB::table('groups-rel')
+        $groupId = DB::table('groups_rel')
             ->select('groups.id as id', 'groups_name', 'groups_description', 'groups_image' ,'groups.created_at as created_at', 'groups.groups_type as groups_type', 'groups.users_id as founder_id')
-            ->join('groups', 'groups.id', '=', 'groups-rel.groups_id')
-            ->join('users', 'users.id', '=', 'groups-rel.users_id')
+            ->join('groups', 'groups.id', '=', 'groups_rel.groups_id')
+            ->join('users', 'users.id', '=', 'groups_rel.users_id')
             ->where('username', session()->get('usernameKey'))
-            ->orderBy('groups-rel.created_at', 'ASC')->get();
+            ->orderBy('groups_rel.created_at', 'ASC')->get();
 
         //Show last message
         $lastMsg = DB::table('message')
@@ -50,12 +50,12 @@ class CommunityController extends Controller
 
         //Show community detail //CHECK AGAIN...
         if(session()->get('groupKey')){
-            $member = DB::table('groups-rel')
-            ->select('groups.id as id', 'groups-rel.id as id_rel', 'users.username', 'users.id as id_user', 'users.image_url  as image_url', 'groups.id as id', 'groups.users_id as founder_id', 'groups-rel.created_at as joined_at', 'groups-rel.groups_role as role')
-            ->join('groups', 'groups.id', '=', 'groups-rel.groups_id')
-            ->join('users', 'users.id', '=', 'groups-rel.users_id')
-            ->where('groups-rel.groups_id', session()->get('groupKey'))
-            ->orderBy('groups-rel.created_at', 'ASC')->get();
+            $member = DB::table('groups_rel')
+            ->select('groups.id as id', 'groups_rel.id as id_rel', 'users.username', 'users.id as id_user', 'users.image_url  as image_url', 'groups.id as id', 'groups.users_id as founder_id', 'groups_rel.created_at as joined_at', 'groups_rel.groups_role as role')
+            ->join('groups', 'groups.id', '=', 'groups_rel.groups_id')
+            ->join('users', 'users.id', '=', 'groups_rel.users_id')
+            ->where('groups_rel.groups_id', session()->get('groupKey'))
+            ->orderBy('groups_rel.created_at', 'ASC')->get();
 
             $message = DB::table('message')
             ->select('message.id as id', 'message.groups_id as groups_id',  'users.username', 'users.id as users_id' ,'users.image_url  as image_url', 'message.created_at', 'message.message_body', 'message.message_type')
@@ -65,11 +65,11 @@ class CommunityController extends Controller
             ->orderBy('message.created_at', 'ASC')->get();
         } else {
             //Initial state.
-            $member = DB::table('groups-rel')
-            ->select('groups.id as id', 'groups-rel.id as id_rel', 'users.username', 'users.id as id_user', 'users.image_url as image_url', 'groups.id as id', 'groups.users_id as founder_id', 'groups-rel.created_at as joined_at', 'groups-rel.groups_role as role')
-            ->join('groups', 'groups.id', '=', 'groups-rel.groups_id')
-            ->join('users', 'users.id', '=', 'groups-rel.users_id')
-            ->orderBy('groups-rel.created_at', 'ASC');
+            $member = DB::table('groups_rel')
+            ->select('groups.id as id', 'groups_rel.id as id_rel', 'users.username', 'users.id as id_user', 'users.image_url as image_url', 'groups.id as id', 'groups.users_id as founder_id', 'groups_rel.created_at as joined_at', 'groups_rel.groups_role as role')
+            ->join('groups', 'groups.id', '=', 'groups_rel.groups_id')
+            ->join('users', 'users.id', '=', 'groups_rel.users_id')
+            ->orderBy('groups_rel.created_at', 'ASC');
 
             $message = DB::table('message')
             ->select('message.id as id', 'message.groups_id as groups_id',  'users.username', 'users.id as users_id' , 'users.image_url  as image_url', 'message.created_at', 'message.message_body', 'message.message_type')
@@ -79,6 +79,38 @@ class CommunityController extends Controller
             ->limit(1)->get();
         }
 
+        $global_group = DB::table('groups')
+            ->select(
+                DB::raw('
+                    groups.groups_name as name,
+                    groups.groups_description as description,
+                    1 as cat,
+                    users.username as context,
+                    groups.groups_type as context2,
+                    groups.created_at as created_at,
+                    groups.groups_image as image,
+                    users.image_url as image2'
+                )
+            )
+            ->join('groups_rel', 'groups.id', '=', 'groups_rel.groups_id')
+            ->join('users', 'users.id', '=', 'groups.users_id');
+
+        $global = DB::table('users')
+            ->select(
+                DB::raw('
+                    username as name,
+                    description,
+                    2 as cat,
+                    country as context,
+                    null as context2,
+                    created_at as created_at,
+                    image_url as image,
+                    null as image2'
+                )
+            )
+            ->union($global_group)
+            ->get();
+
         return view ('community.index')
             ->with('user', $user)
             ->with('recipe', $recipe)
@@ -86,6 +118,7 @@ class CommunityController extends Controller
             ->with('member', $member)
             ->with('message', $message)
             ->with('lastMsg', $lastMsg)
+            ->with('global', $global)
             ->with('userId', $userId);
     }
 
@@ -218,11 +251,11 @@ class CommunityController extends Controller
                 ]);
 
                 //Get user login id & demote
-                $users_id = DB::table('groups-rel')
-                    ->select('groups-rel.id as id')
-                    ->join('users', 'groups-rel.users_id', '=', 'users.id')
+                $users_id = DB::table('groups_rel')
+                    ->select('groups_rel.id as id')
+                    ->join('users', 'groups_rel.users_id', '=', 'users.id')
                     ->where('users.username', session()->get('usernameKey'))
-                    ->where('groups-rel.groups_id', session()->get('groupKey'))->get();
+                    ->where('groups_rel.groups_id', session()->get('groupKey'))->get();
 
                 foreach($users_id as $u){
                     $id_rel = $u->id;
@@ -525,7 +558,7 @@ class CommunityController extends Controller
         }
 
         //Delete group, message, and relation
-        DB::table('groups-rel')->where('groups_id', session()->get('groupKey'))->delete();
+        DB::table('groups_rel')->where('groups_id', session()->get('groupKey'))->delete();
         DB::table('message')->where('groups_id', session()->get('groupKey'))->delete();
         groups::destroy(session()->get('groupKey'));
 

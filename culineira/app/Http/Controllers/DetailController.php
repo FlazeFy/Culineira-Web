@@ -42,12 +42,12 @@ class DetailController extends Controller
             ->get();
 
         //Show user's groups.
-        $groupId = DB::table('groups-rel')
+        $groupId = DB::table('groups_rel')
             ->select('groups.id as id', 'groups_name', 'groups_description', 'groups_image' ,'groups.created_at as created_at', 'groups.groups_type as groups_type', 'groups.users_id as founder_id')
-            ->join('groups', 'groups.id', '=', 'groups-rel.groups_id')
-            ->join('users', 'users.id', '=', 'groups-rel.users_id')
+            ->join('groups', 'groups.id', '=', 'groups_rel.groups_id')
+            ->join('users', 'users.id', '=', 'groups_rel.users_id')
             ->where('username', session()->get('usernameKey'))
-            ->orderBy('groups-rel.created_at', 'ASC')->get();
+            ->orderBy('groups_rel.created_at', 'ASC')->get();
 
         $comment = DB::table('comment')->where('recipe_id', $id)->orderBy('created_at', 'ASC')->get();
         $steps = DB::table('steps')->orderBy('id', 'ASC')->get();
