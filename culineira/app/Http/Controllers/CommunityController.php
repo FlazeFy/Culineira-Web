@@ -502,4 +502,49 @@ class CommunityController extends Controller
 
         return redirect()->back()->with('success_message', 'You are no longer a part of "'.$groupname.'" group');
     }
+
+    public function deleteGroup(Request $request){
+        //Get group name
+        $groups = DB::table('groups')
+            ->where('id', session()->get('groupKey'))->get();
+
+        foreach($groups as $g){
+            $groupname = $g->groups_name;
+            $image = $g->groups_image;
+        }
+
+        //Delete group message image
+        $msg = DB::table('message')
+            ->where('groups_id', session()->get('groupKey'))->get();
+
+        foreach($msg as $m){
+            $msgimage = $m->message_type;
+            if(($msgimage != "text")&&($msgimage != "role")||($msgimage != "notification")||($msgimage != "forward-recipe")){
+                Storage::delete('public/'.$msgimage);
+            }
+        }
+
+        //Delete group, message, and relation
+        DB::table('groups-rel')->where('groups_id', session()->get('groupKey'))->delete();
+        DB::table('message')->where('groups_id', session()->get('groupKey'))->delete();
+        groups::destroy(session()->get('groupKey'));
+
+        //Activity record
+        activity::create([
+            'users_id' => session()->get('idKey'),
+            'activity_from' => session()->get('groupKey'),
+            'activity_type' => 'group-delete',
+            'activity_description' => 'deleted "'.$groupname.'" group',
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        //Delete session key
+        $request->session()->forget('groupKey');
+
+        //Delete group image
+        Storage::delete('public/'.$image);
+
+        return redirect('/community')->with('success_message', $groupname.' group has been deleted!');
+    }
 }

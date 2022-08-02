@@ -92,12 +92,20 @@
                                             </div>
                                         @endif
                                     @else
-                                        <div class="col">
-                                            <form action="community/leave/{{$m->id_rel}}" method="POST">
+                                        @if(count($member) != 1)
+                                            <div class="col">
+                                                <form action="community/leave/{{$m->id_rel}}" method="POST">
+                                                    @csrf
+                                                    <button class="btn btn-danger m-1 w-100" type="submit" style="font-size:12px;">Leave Group</button>
+                                                </form>
+                                            </div>
+                                        @else
+                                            <!--If only one member left in group-->
+                                            <form action="/community/deleteGroup" method="POST">
                                                 @csrf
-                                                <button class="btn btn-danger m-1 w-100" type="submit" style="font-size:12px;">Leave Group</button>
+                                                <button type="submit" class="btn btn-danger m-1 w-100" style="font-size:12px;"><i class="fa-solid fa-triangle-exclamation"></i> Delete Group</button>
                                             </form>
-                                        </div>
+                                        @endif
                                     @endif
                                 </div>
                             </div>

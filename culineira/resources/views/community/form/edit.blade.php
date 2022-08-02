@@ -1,3 +1,11 @@
+<!--Get user login role-->
+@php($me = "")
+@foreach($member as $m)
+    @if($m->username == session()->get('usernameKey'))
+        @php($me = $m->role)
+    @endif
+@endforeach
+
 @foreach($groupId as $g)
     @if($g->id == session()->get('groupKey'))
     <div class="modal fade" id="editGroup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -8,6 +16,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    @if(($me == "founder")||($me == "admin"))
                     <form action="/community/editGroup/{{$g->id}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row mb-2">
@@ -38,7 +47,19 @@
                             </div>
                         </div>
                     </form>
+                    @else
+                        <a><i class="fa-solid fa-circle-info"></i> Sorry, you don't have access to edit this group. Contact your group's admin or founder for more information</a>
+                    @endif
                 </div>
+                @if($me == "founder")
+                <div class="modal-footer">
+                    <form action="/community/deleteGroup" method="POST">
+                        @csrf
+                        <a><i class="fa-solid fa-circle-info"></i> Delete group also remove all the member, recipes, and messages in this group. You can't recover the deleted group</a><br>
+                        <button type="submit" class="btn btn-danger m-1"><i class="fa-solid fa-triangle-exclamation"></i> Delete Group</button>
+                    </form>
+                </div>
+                @endif
             </div>
         </div>
     </div>
