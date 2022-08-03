@@ -13,6 +13,7 @@ use App\Models\list;
 use App\Models\list_rel;
 use App\Models\ingredients;
 use App\Models\activity;
+use App\Models\follower;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -80,6 +81,16 @@ class DetailController extends Controller
         $likesUser = DB::table('likes')->where('recipe_id', $id)->where('users_id', session()->get('idKey'))->get();
         $likesId = DB::table('likes')->where('recipe_id', $id)->get();
 
+        //For sidebar mini profile
+        $following = DB::table('follower')
+            ->where('user_id_1', session()->get('idKey'))->get();
+
+        $followers = DB::table('follower')
+            ->where('user_id_2', session()->get('idKey'))->get();
+
+        $myrecipes = DB::table('recipes')
+            ->where('user_id', session()->get('idKey'))->get();
+
         return view ('recipe.detail.index')
             ->with('recipeId', $recipeId)
             ->with('recipe', $recipe)
@@ -93,6 +104,9 @@ class DetailController extends Controller
             ->with('list', $list)
             ->with('listRel', $listRel)
             ->with('groupId', $groupId)
+            ->with('following', $following)
+            ->with('followers', $followers)
+            ->with('myrecipes', $myrecipes)
             ->with('likesId', $likesId);
     }
 

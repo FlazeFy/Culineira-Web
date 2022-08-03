@@ -11,6 +11,7 @@ use App\Models\classroom;
 use App\Models\message;
 use App\Models\likes;
 use App\Models\groups;
+use App\Models\follower;
 use App\Models\groups_rel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -82,6 +83,7 @@ class CommunityController extends Controller
         $global_group = DB::table('groups')
             ->select(
                 DB::raw('
+                    groups.id as id,
                     groups.groups_name as name,
                     groups.groups_description as description,
                     1 as cat,
@@ -98,6 +100,7 @@ class CommunityController extends Controller
         $global = DB::table('users')
             ->select(
                 DB::raw('
+                    id as id,
                     username as name,
                     description,
                     2 as cat,
@@ -111,6 +114,21 @@ class CommunityController extends Controller
             ->union($global_group)
             ->get();
 
+        $allFollower = follower::all();
+
+        $allRecipes = DB::table('recipes')
+            ->where('user_id', '!=' ,session()->get('idKey'))->get();
+
+        //For sidebar mini profile
+        $following = DB::table('follower')
+            ->where('user_id_1', session()->get('idKey'))->get();
+
+        $followers = DB::table('follower')
+            ->where('user_id_2', session()->get('idKey'))->get();
+
+        $myrecipes = DB::table('recipes')
+            ->where('user_id', session()->get('idKey'))->get();
+
         return view ('community.index')
             ->with('user', $user)
             ->with('recipe', $recipe)
@@ -119,6 +137,11 @@ class CommunityController extends Controller
             ->with('message', $message)
             ->with('lastMsg', $lastMsg)
             ->with('global', $global)
+            ->with('following', $following)
+            ->with('followers', $followers)
+            ->with('myrecipes', $myrecipes)
+            ->with('allFollower', $allFollower)
+            ->with('allRecipes', $allRecipes)
             ->with('userId', $userId);
     }
 
@@ -499,6 +522,25 @@ class CommunityController extends Controller
 
         message::destroy($id);
         return redirect('/community')->with('success_message', 'Message unsend');
+    }
+
+    public function follow(Request $request, $id)
+    {
+        follower::create([
+            'user_id_1' => session()->get('idKey'),
+            'user_id_2' => $id,
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        message::destroy($id);
+        return redirect('/community')->with('success_message', 'You have followed '.$request->username.' ');
+    }
+
+    public function unfollow(Request $request, $id)
+    {
+        follower::destroy($id);
+        return redirect('/community')->with('success_message', 'You have unfollowed '.$request->username.' ');
     }
 
     public function leave($id)

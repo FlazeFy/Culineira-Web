@@ -18,16 +18,16 @@
             <p class="text-muted font-size-sm">{{$u->description}}</p>
             <div class='row' style='justify-content:center;'>
                 <div class='col-md-3'>
-                    <a style='font-size:15px; font-weight:bold; text-align:center;'>25</a>
-                    <a style='font-size:12px; white-space:nowrap;'>Following</a>
+                    <a style='font-size:15px; font-weight:bold; text-align:center;'>{{@count($following)}}</a>
+                    <a style='font-size:12px;'>Following</a>
                 </div>
                 <div class='col-md-3'>
-                    <a style='font-size:15px; font-weight:bold; text-align:center;'>300</a>
-                    <a style='font-size:12px; white-space:nowrap;'>Followers</a>
+                    <a style='font-size:15px; font-weight:bold; text-align:center;'>{{@count($followers)}}</a>
+                    <a style='font-size:12px;'>Followers</a>
                 </div>
                 <div class='col-md-3'>
-                    <a style='font-size:15px; font-weight:bold; text-align:center;'>3</a>
-                    <a style='font-size:12px; white-space:nowrap;'>Recipes</a>
+                    <a style='font-size:15px; font-weight:bold; text-align:center;'>{{@count($myrecipes)}}</a>
+                    <a style='font-size:12px;'>Recipes</a>
                 </div>
             </div>
         </div>

@@ -31,15 +31,39 @@
             <h6 class="category text-primary"><i class="fa fa-globe "></i> {{$gl->context}}</h6>
             <div class='row' style='justify-content:center;'>
                 <div class='col-md-4'>
-                    <a style='font-size:15px; font-weight:bold; text-align:center;'>25</a>
+                    <a style='font-size:15px; font-weight:bold; text-align:center;'>
+                        @php($follow = 0)
+                        @foreach($allFollower as $afw)
+                            @if($afw->user_id_1 == $gl->id)
+                                @php($follow++)
+                            @endif
+                        @endforeach
+                        {{$follow}}
+                    </a>
                     <a style='font-size:12px;'>Following</a>
                 </div>
                 <div class='col-md-4'>
-                    <a style='font-size:15px; font-weight:bold; text-align:center;'>300</a>
+                    <a style='font-size:15px; font-weight:bold; text-align:center;'>
+                        @php($follow = 0)
+                        @foreach($allFollower as $afw)
+                            @if($afw->user_id_2 == $gl->id)
+                                @php($follow++)
+                            @endif
+                        @endforeach
+                        {{$follow}}
+                    </a>
                     <a style='font-size:12px;'>Followers</a>
                 </div>
                 <div class='col-md-4'>
-                    <a style='font-size:15px; font-weight:bold; text-align:center;'>3</a>
+                    <a style='font-size:15px; font-weight:bold; text-align:center;'>
+                        @php($rcp = 0)
+                        @foreach($allRecipes as $rc)
+                            @if($rc->user_id == $gl->id)
+                                @php($rcp++)
+                            @endif
+                        @endforeach
+                        {{$rcp}}
+                    </a>
                     <a style='font-size:12px;'>Recipes</a>
                 </div>
             </div>
@@ -55,7 +79,24 @@
             </div>
             <div class="row mt-4 mx-1">
                 <div class="col-md-6">
-                    <button class="btn btn-primary bg-transparent w-100" style="color:#EB4776;">Follow</button>
+                    @php($i = 0)
+                    @foreach($following as $fsw)
+                        @if($fsw->user_id_2 == $gl->id)
+                            <form action="/community/unfollow/{{$fsw->id}}" method="POST">
+                                @csrf
+                                <input hidden name="username" value="{{$gl->name}}">
+                                <button class="btn btn-primary w-100 border-0" type="submit" style="background:#EB7336;"><i class="fa-solid fa-check"></i> UnFollow</button>
+                            </form>
+                            @php($i++)
+                        @endif
+                    @endforeach
+                    @if($i == 0)
+                        <form action="/community/follow/{{$gl->id}}" method="POST">
+                            @csrf
+                            <input hidden name="username" value="{{$gl->name}}">
+                            <button class="btn btn-primary bg-transparent w-100" type="submit" style="color:#EB7336;">Follow</button>
+                        </form>
+                    @endif
                 </div>
                 <div class="col-md-6">
                     <button class="btn btn-info w-100 text-white" style="background:#00B6AB; border-color:#00B6AB;"><i class="fa-solid fa-arrow-right"></i> View</button>

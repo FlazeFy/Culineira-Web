@@ -85,4 +85,6 @@ Route::post('/community/invite/{id}', [CommunityController::class, 'invite']);
 Route::post('/community/leave/{id}', [CommunityController::class, 'leave']);
 Route::post('/community/uninvite/{id}', [CommunityController::class, 'uninvite']);
 Route::post('/community/deleteGroup', [CommunityController::class, 'deleteGroup']);
+Route::post('/community/follow/{id}', [CommunityController::class, 'follow']);
+Route::post('/community/unfollow/{id}', [CommunityController::class, 'unfollow']);
 

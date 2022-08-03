@@ -213,10 +213,14 @@
                     @if($i % 2 == 0)
                         <div class="col-md-4">
                             @include('community.global_content')
+                            @php($i++)
                     @else
-                        @include('community.global_content')
+                        @if($gl->id != session()->get('idKey'))
+                            @include('community.global_content')
+                            @php($i++)
+                        @endif
                     @endif
-                    @php($i++)
+
                     @if($i % 2 == 0)
                         </div>
                     @endif

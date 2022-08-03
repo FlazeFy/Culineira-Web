@@ -12,6 +12,7 @@ use App\Models\likes;
 use App\Models\ingredients;
 use App\Models\socmed;
 use App\Models\classroom;
+use App\Models\follower;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
@@ -64,6 +65,16 @@ class ProfileController extends Controller
             ->join('users', 'users.id', '=', 'activity.users_id')
             ->where('username', session()->get('usernameKey'))->get();
 
+        //For sidebar mini profile
+        $following = DB::table('follower')
+        ->where('user_id_1', session()->get('idKey'))->get();
+
+        $followers = DB::table('follower')
+            ->where('user_id_2', session()->get('idKey'))->get();
+
+        $myrecipes = DB::table('recipes')
+            ->where('user_id', session()->get('idKey'))->get();
+
         return view ('profile.index')
             ->with('userId', $userId)
             ->with('recipeId', $recipeId)
@@ -73,6 +84,9 @@ class ProfileController extends Controller
             ->with('user', $user)
             ->with('socmedId', $socmedId)
             ->with('activityId', $activityId)
+            ->with('following', $following)
+            ->with('followers', $followers)
+            ->with('myrecipes', $myrecipes)
             ->with('achievement1', $this->achievement1())
             ->with('achievement2', $this->achievement2())
             ->with('achievement3', $this->achievement3())

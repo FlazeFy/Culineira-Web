@@ -9,6 +9,7 @@ use App\Models\shelf;
 use App\Models\activity;
 use App\Models\list_recipe;
 use App\Models\list_rel;
+use App\Models\follower;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -45,11 +46,24 @@ class KitchenController extends Controller
             ->orderBy('shelf.updated_at', 'ASC')
             ->get();
 
+        //For sidebar mini profile
+        $following = DB::table('follower')
+            ->where('user_id_1', session()->get('idKey'))->get();
+
+        $followers = DB::table('follower')
+            ->where('user_id_2', session()->get('idKey'))->get();
+
+        $myrecipes = DB::table('recipes')
+            ->where('user_id', session()->get('idKey'))->get();
+
         return view ('kitchen.index')
             ->with('recipe', $recipe)
             ->with('recipeInList', $recipeInList)
             ->with('user', $user)
             ->with('shelf', $shelf)
+            ->with('following', $following)
+            ->with('followers', $followers)
+            ->with('myrecipes', $myrecipes)
             ->with('list', $list);
 
     }

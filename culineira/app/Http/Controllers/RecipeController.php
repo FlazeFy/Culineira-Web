@@ -8,6 +8,7 @@ use App\Models\user;
 use App\Models\steps;
 use App\Models\activity;
 use App\Models\ingredients;
+use App\Models\follower;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -24,10 +25,24 @@ class RecipeController extends Controller
         $recipe = recipe::all();
         $steps = steps::all();
         $ingredients = ingredients::all();
+
+        //For sidebar mini profile
+        $following = DB::table('follower')
+            ->where('user_id_1', session()->get('idKey'))->get();
+
+        $followers = DB::table('follower')
+            ->where('user_id_2', session()->get('idKey'))->get();
+
+        $myrecipes = DB::table('recipes')
+            ->where('user_id', session()->get('idKey'))->get();
+
         return view ('recipe.index')
             ->with('recipe', $recipe)
             ->with('user', $user)
             ->with('steps', $steps)
+            ->with('following', $following)
+            ->with('followers', $followers)
+            ->with('myrecipes', $myrecipes)
             ->with('ingredients', $ingredients);
     }
 
