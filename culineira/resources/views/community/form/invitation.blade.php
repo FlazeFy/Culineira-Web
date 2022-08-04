@@ -21,7 +21,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md">
-                            <h5>From My Following</h5>
+                            <h5>To My Following</h5>
                             <div id="follower_holder">
                             @foreach($following as $flw)
                                 @foreach($user as $u)
@@ -37,10 +37,24 @@
                                                 <a id="userDesc">{{$u->description}}</a>
                                             </div>
                                             <div class="col-md-2">
-                                                <form action="/community/invite/{{$flw->user_id_2}}" method="POST">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-success mx-1"><i class="fa-solid fa-envelope"></i></button>
-                                                </form>
+                                                @php($wait = false)
+                                                @foreach($invitWait as $iw)
+                                                    @if($iw->users_id_2 == $u->id)
+                                                        <form action="/community/uninvite/{{$iw->id}}" method="POST">
+                                                            @csrf
+                                                            <input hidden name="username" value="{{$u->username}}">
+                                                            <button type="submit" class="btn btn-danger mx-1" title="UnSend Invitation"><i class="fa-solid fa-xmark fa-xl"></i></button>
+                                                        </form>
+                                                        @php($wait = true)
+                                                    @endif
+                                                @endforeach
+                                                @if(!$wait)
+                                                    <form action="/community/invite/{{$flw->user_id_2}}" method="POST">
+                                                        @csrf
+                                                        <input hidden name="username" value="{{$u->username}}">
+                                                        <button type="submit" class="btn btn-success mx-1" title="Send Invitation"><i class="fa-solid fa-envelope"></i></button>
+                                                    </form>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -50,7 +64,7 @@
                             </div>
                         </div>
                         <div class="col-md">
-                            <h5>From My Followers</h5>
+                            <h5>To My Followers</h5>
                             <div id="follower_holder">
                             @foreach($followers as $flr)
                                 @foreach($user as $u2)
@@ -66,11 +80,24 @@
                                                 <a id="userDesc">{{$u2->description}}</a>
                                             </div>
                                             <div class="col-md-2">
-                                                <form action="/community/invite/{{$flr->user_id_1}}" method="POST">
-                                                    @csrf
-                                                    <input hidden name="username" value="{{$u2->username}}">
-                                                    <button type="submit" class="btn btn-success mx-1"><i class="fa-solid fa-envelope"></i></button>
-                                                </form>
+                                                @php($wait = false)
+                                                @foreach($invitWait as $iw2)
+                                                    @if($iw2->users_id_2 == $u2->id)
+                                                        <form action="/community/uninvite/{{$iw2->id}}" method="POST">
+                                                            @csrf
+                                                            <input hidden name="username" value="{{$u2->username}}">
+                                                            <button type="submit" class="btn btn-danger mx-1" title="UnSend Invitation"><i class="fa-solid fa-xmark fa-xl"></i></button>
+                                                        </form>
+                                                        @php($wait = true)
+                                                    @endif
+                                                @endforeach
+                                                @if(!$wait)
+                                                    <form action="/community/invite/{{$flr->user_id_1}}" method="POST">
+                                                        @csrf
+                                                        <input hidden name="username" value="{{$u2->username}}">
+                                                        <button type="submit" class="btn btn-success mx-1" title="Send Invitation"><i class="fa-solid fa-envelope"></i></button>
+                                                    </form>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

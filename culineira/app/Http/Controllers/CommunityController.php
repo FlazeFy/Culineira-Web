@@ -130,6 +130,15 @@ class CommunityController extends Controller
         $myrecipes = DB::table('recipes')
             ->where('user_id', session()->get('idKey'))->get();
 
+        //For invitation
+        $invitWait = DB::table('invitation')
+            ->where('users_id', session()->get('idKey'))
+            ->where('groups_id', session()->get('groupKey'))->get();
+
+        $myInvit =  DB::table('invitation')
+            ->join('groups', 'groups.id', '=', 'invitation.groups_id')
+            ->where('users_id_2', session()->get('idKey'))->get();
+
         return view ('community.index')
             ->with('user', $user)
             ->with('recipe', $recipe)
@@ -143,6 +152,8 @@ class CommunityController extends Controller
             ->with('myrecipes', $myrecipes)
             ->with('allFollower', $allFollower)
             ->with('allRecipes', $allRecipes)
+            ->with('invitWait', $invitWait)
+            ->with('myInvit', $myInvit)
             ->with('userId', $userId);
     }
 
@@ -548,6 +559,13 @@ class CommunityController extends Controller
         ]);
 
         return redirect('/community')->with('success_message', 'You have sended invitation to '.$request->username.' ');
+    }
+
+    public function uninvite(Request $request, $id)
+    {
+        invitation::destroy($id);
+
+        return redirect('/community')->with('success_message', 'You have unsend invitation to '.$request->username.' ');
     }
 
     public function unfollow(Request $request, $id)

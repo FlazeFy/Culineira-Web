@@ -85,6 +85,22 @@
         </form>
         <div class="container-fluid rounded shadow mt-2 p-2 w-100" id="scroll_contact">
             @php($count = 0)
+            @php($count_invit = 0)
+            @foreach($myInvit as $mi)
+                <div class="container-fluid w-100 rounded p-2 my-1" id="communityBox"
+                    style="background:#EB7336;">
+                    <h6 class="mb-0 text-white" id="communityTitle">{{$mi->groups_name}}</h6>
+                    <a class="text-white"><i class="fa-solid fa-circle-info"></i> You have an incoming invitation</a>
+                    <div class="row">
+                        <div class="col-md">
+                            <button class="btn btn-danger d-block mx-auto w-75" title="Reject Invitation"><i class="fa-solid fa-xmark fa-lg"></i></button>
+                        </div>
+                        <div class="col-md">
+                            <button class="btn btn-success d-block mx-auto w-75" title="Accept Invitation"><i class="fa-solid fa-check fa-lg"></i></button>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
             @foreach($groupId as $g)
             <form action="/community/openChat/{{$g->id}}" method="POST">
                 @csrf
