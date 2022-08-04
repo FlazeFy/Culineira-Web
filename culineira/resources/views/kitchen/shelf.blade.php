@@ -32,6 +32,12 @@
         <a class="fst-italic" style="font-size:12px;">last updated: {{$s->updated_at}}</a>
     </li>
     @endforeach
+
+    @if(@count($shelf) == 0)
+        <img class="d-block mx-auto mt-4" src="{{asset('assets/storyset/Empty.png')}}" style="width:280px;">
+        <h2 class="text-center mx-3" style="color:#Eb7336;">Shelf is empty</h2>
+        <h6 class="text-center mx-3">You haven't create any item yet</h6>
+    @endif
 </div>
 
 <script>

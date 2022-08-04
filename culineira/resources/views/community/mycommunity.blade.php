@@ -86,6 +86,7 @@
         <div class="container-fluid rounded shadow mt-2 p-2 w-100" id="scroll_contact">
             @php($count = 0)
             @php($count_invit = 0)
+            <!--Invitation-->
             @foreach($myInvit as $mi)
                 <div class="container-fluid w-100 rounded p-2 my-1" id="communityBox"
                     style="background:#EB7336;">
@@ -93,14 +94,25 @@
                     <a class="text-white"><i class="fa-solid fa-circle-info"></i> You have an incoming invitation</a>
                     <div class="row">
                         <div class="col-md">
-                            <button class="btn btn-danger d-block mx-auto w-75" title="Reject Invitation"><i class="fa-solid fa-xmark fa-lg"></i></button>
+                            <form method="POST" action="/community/reject/{{$mi->invit_id}}">
+                                @csrf
+                                <input name="groupname" value="{{$mi->groups_name}}" hidden>
+                                <button type="submit" class="btn btn-danger d-block mx-auto w-75" title="Reject Invitation"><i class="fa-solid fa-xmark fa-lg"></i></button>
+                            </form>
                         </div>
                         <div class="col-md">
-                            <button class="btn btn-success d-block mx-auto w-75" title="Accept Invitation"><i class="fa-solid fa-check fa-lg"></i></button>
+                            <form method="POST" action="/community/accept/{{$mi->groups_id}}">
+                                @csrf
+                                <input name="invitation_id" value="{{$mi->invit_id}}" hidden>
+                                <input name="groupname" value="{{$mi->groups_name}}" hidden>
+                                <button type="submit" class="btn btn-success d-block mx-auto w-75" title="Accept Invitation"><i class="fa-solid fa-check fa-lg"></i></button>
+                            </form>
                         </div>
                     </div>
                 </div>
             @endforeach
+
+            <!--Group list-->
             @foreach($groupId as $g)
             <form action="/community/openChat/{{$g->id}}" method="POST">
                 @csrf
@@ -147,13 +159,18 @@
                         <button class="btn btn-success bg-transparent border-0 float-end" data-bs-toggle="modal" data-bs-target="#invitation"
                             title="Invitation" style="margin-top:-20px;"><i class="fa-solid fa-envelope"></i></button>
                         <div class="row">
+                            @php($me = "")
                             @foreach($member as $m)
-                            <div class="card border-gray mx-1" id='member_image' type='button'>
-                                <a href="">
-                                <img class="img logo rounded-circle" src="http://127.0.0.1:8000/storage/{{$m->image_url}}" alt='{{$m->image_url}}' title="{{$m->username}}" class="rounded-circle mr-1"
-                                    style='display: block; margin-left: auto; margin-right: auto; width:40px;'>
-                                </a>
-                            </div>
+                                <div class="card border-gray mx-1" id='member_image' type='button'>
+                                    <a href="">
+                                    <img class="img logo rounded-circle" src="http://127.0.0.1:8000/storage/{{$m->image_url}}" alt='{{$m->image_url}}' title="{{$m->username}}" class="rounded-circle mr-1"
+                                        style='display: block; margin-left: auto; margin-right: auto; width:40px;'>
+                                    </a>
+                                </div>
+                                <!--Get user login role-->
+                                @if($m->username == session()->get('usernameKey'))
+                                    @php($me = $m->role)
+                                @endif
                             @endforeach
 
                             <!--Edit groups-->

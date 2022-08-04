@@ -3,7 +3,6 @@
 </style>
 
 <div class="scrolling-wrapper">
-    @php($count = 0)
     @foreach($list as $l)
     <div class="card border-gray p-2 border m-2" style='width:260px; height:410px;' id="list_box{{$l->id}}">
         <div class='row' style='justify-content:center; width:110%;'>
@@ -65,10 +64,9 @@
         <a class="btn btn-success my-2" id="add_recipe_list" data-bs-toggle="modal" data-bs-target="#addRecipeList{{$l->id}}"><i class="fa-solid fa-plus"></i> Add Recipe</a>
         <a class='btn btn-primary' href="{{ url('/kitchen/browse-list/' . $l->id) }}"><i class="fa-solid fa-arrow-right"></i> Browse</a>
     </div><!--End of list card.-->
-    @php($count++)
     @endforeach
 
-    @if($count == 0)
+    @if(@count($list) == 0)
         <img class="d-block mx-auto mt-4" src="{{asset('assets/storyset/Empty.png')}}" style="width:280px;">
         <h2 class="text-center mx-3" style="color:#Eb7336;">List Not Found</h2>
         <h6 class="text-center mx-3">You haven't create any list yet</h6>

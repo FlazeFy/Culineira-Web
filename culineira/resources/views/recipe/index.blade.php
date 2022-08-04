@@ -188,7 +188,13 @@
 
                                             <div class="tab-pane fade rounded show active p-2" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                                                 <!--My Recipes.-->
-                                                @include('recipe.myrecipe')
+                                                @if(@count($myrecipes) != 0)
+                                                    @include('recipe.myrecipe')
+                                                @else
+                                                    <img class="d-block mx-auto mt-4" src="{{asset('assets/storyset/Empty.png')}}" style="width:280px;">
+                                                    <h2 class="text-center mx-3" style="color:#Eb7336;">Recipe Not Found</h2>
+                                                    <h6 class="text-center mx-3">You haven't create any recipe yet</h6>
+                                                @endif
                                             </div>
 
                                             <!--Favorites.-->

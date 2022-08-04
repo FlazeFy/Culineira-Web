@@ -10,14 +10,6 @@
                 <div class="modal-body">
                     <h6>Manage Member</h6>
                     <div class="row">
-                        <!--Get user login role-->
-                        @php($me = "")
-                        @foreach($member as $m)
-                            @if($m->username == session()->get('usernameKey'))
-                                @php($me = $m->role)
-                            @endif
-                        @endforeach
-
                         <!--Manage based role-->
                         @foreach($member as $m)
                             <div class="card border-gray m-1 p-2" style="width:23%;" type='button'>

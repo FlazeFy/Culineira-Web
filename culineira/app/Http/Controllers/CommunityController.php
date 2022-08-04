@@ -136,6 +136,7 @@ class CommunityController extends Controller
             ->where('groups_id', session()->get('groupKey'))->get();
 
         $myInvit =  DB::table('invitation')
+            ->select('groups.id as groups_id', 'invitation.id as invit_id', 'groups.groups_name', 'groups.groups_type')
             ->join('groups', 'groups.id', '=', 'invitation.groups_id')
             ->where('users_id_2', session()->get('idKey'))->get();
 
@@ -607,6 +608,53 @@ class CommunityController extends Controller
         }
 
         return redirect()->back()->with('success_message', 'You are no longer a part of "'.$groupname.'" group');
+    }
+
+    public function accept(Request $request, $id)
+    {
+        //Auto open group
+        $request->session()->put('groupKey', $id);
+
+        //Delete invitation
+        invitation::destroy($request->invitation_id);
+
+        //Group relation
+        groups_rel::create([
+            'users_id' => session()->get('idKey'),
+            'groups_id' => session()->get('groupKey'),
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+            'groups_role' => 'member',
+        ]);
+
+        //Show record to group chat
+        message::create([
+            'users_id' => session()->get('idKey'),
+            'groups_id' => session()->get('groupKey'),
+            'message_body' => session()->get('usernameKey').' has joined to the group',
+            'message_type' => 'role',
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        //Activity record
+        activity::create([
+            'users_id' => session()->get('idKey'),
+            'activity_from' => session()->get('groupKey'),
+            'activity_type' => 'group-join',
+            'activity_description' => 'has been joined "'.session()->get('groupKey').'" group',
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        return redirect()->back()->with('success_message', 'You are now a member of "'.$request->groupname.'" group');
+    }
+
+    public function reject(Request $request, $id)
+    {
+        invitation::destroy($id);
+
+        return redirect()->back()->with('success_message', 'You have rejected invitation from "'.$request->groupname.'" group');
     }
 
     public function deleteGroup(Request $request){
