@@ -13,6 +13,7 @@ use App\Models\likes;
 use App\Models\groups;
 use App\Models\follower;
 use App\Models\groups_rel;
+use App\Models\invitation;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
@@ -533,8 +534,20 @@ class CommunityController extends Controller
             'updated_at' => date("Y-m-d h:m:i"),
         ]);
 
-        message::destroy($id);
         return redirect('/community')->with('success_message', 'You have followed '.$request->username.' ');
+    }
+
+    public function invite(Request $request, $id)
+    {
+        invitation::create([
+            'users_id' => session()->get('idKey'),
+            'groups_id' => session()->get('groupKey'),
+            'users_id_2' => $id,
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        return redirect('/community')->with('success_message', 'You have sended invitation to '.$request->username.' ');
     }
 
     public function unfollow(Request $request, $id)
