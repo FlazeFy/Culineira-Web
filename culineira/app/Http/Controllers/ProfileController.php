@@ -30,11 +30,10 @@ class ProfileController extends Controller
         $user = user::all();
         $recipe = recipe::all();
 
-        //Show public recipe in profile.
+        //Show recipe in profile.
         $recipeId = DB::table('recipes')
             ->join('users', 'users.id', '=', 'recipes.user_id')
             ->where('username', session()->get('usernameKey'))
-            ->where('recipe_visibility', 'Public')
             ->orderBy('recipes.updated_at', 'ASC')->get();
 
         //Show classroom in profile.

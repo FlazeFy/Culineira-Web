@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KitchenController;
 use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\Browse\ListController;
+use App\Http\Controllers\Browse\ViewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,6 +73,11 @@ Route::post('/kitchen/starred/{id}', [KitchenController::class, 'starred']);
     Route::post('/kitchen/browse-list/deleteRecipeList/{id}', [ListController::class, 'deleteRecipeList']); //For delete recipe in a list
     Route::post('/kitchen/browse-list/addRecipeToList/{id}', [ListController::class, 'addRecipeToList']);
 
+    //Other user
+    Route::get('/community/view/{name}', [ViewController::class, 'index']);
+    Route::post('/community/view/follow/{id}', [ViewController::class, 'follow']);
+    Route::post('/community/view/unfollow/{id}', [ViewController::class, 'unfollow']);
+
 //Community page.
 Route::get('/community', [CommunityController::class, 'index'])->name('community');
 Route::post('/community/openChat/{id}', [CommunityController::class, 'openChat']);
@@ -89,4 +95,5 @@ Route::post('/community/follow/{id}', [CommunityController::class, 'follow']);
 Route::post('/community/unfollow/{id}', [CommunityController::class, 'unfollow']);
 Route::post('/community/accept/{id}', [CommunityController::class, 'accept']);
 Route::post('/community/reject/{id}', [CommunityController::class, 'reject']);
+
 

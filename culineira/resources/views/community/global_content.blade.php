@@ -99,7 +99,8 @@
                     @endif
                 </div>
                 <div class="col-md-6">
-                    <button class="btn btn-info w-100 text-white" style="background:#00B6AB; border-color:#00B6AB;"><i class="fa-solid fa-arrow-right"></i> View</button>
+                    <a class="btn btn-info w-100 text-white p-1 mt-2" href="{{ url('/community/view/' . $gl->name) }}"
+                        style="background:#00B6AB; border-color:#00B6AB;"><i class="fa-solid fa-arrow-right"></i> View</a>
                 </div>
             </div>
         </div>

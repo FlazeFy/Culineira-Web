@@ -139,14 +139,14 @@ class DetailController extends Controller
             //Likes.
             likes::create([
                 'recipe_id' => $id,
-                'users_id' => $id_user,
+                'users_id' => session()->get('idKey'),
                 'created_at' => date("Y-m-d h:m:i"),
                 'updated_at' => date("Y-m-d h:m:i"),
             ]);
 
             //Activity record
             activity::create([
-                'users_id' => $id_user,
+                'users_id' => session()->get('idKey'),
                 'activity_from' => $id,
                 'activity_type' => 'recipes',
                 'activity_description' => 'liked your recipes',
