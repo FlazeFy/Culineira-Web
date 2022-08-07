@@ -210,9 +210,14 @@ class DetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function compare(Request $request, $id)
     {
-        //
+        if($request->section == 1){
+            $request->session()->put('compare1Key', $id);
+        } else {
+            $request->session()->put('compare2Key', $id);
+        }
+        return redirect()->back()->with('success_message', 'Recipe added to compare');;
     }
 
     public function updateList(Request $request, $id)

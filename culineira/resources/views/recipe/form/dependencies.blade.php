@@ -36,15 +36,13 @@
                                     <!--Ingredients.-->
                                     <div class="tab-pane fade rounded p-2" id="v-pills-steps<?php echo "_".$data->id; ?>" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                                         <h5>Steps</h5>
-                                        <?php
-                                            $i = 1;
-                                            foreach($steps as $dataStp){
-                                                if($dataStp->recipe_id == $data->id){
-                                                    echo"<p class='text-secondary'><b>".$i.".</b> ".$dataStp->steps_body."</p>";
-                                                }
-                                                $i++;
-                                            }
-                                        ?>
+                                        @php($i = 1)
+                                        @foreach($steps as $dataStp)
+                                            @if($dataStp->recipe_id == $data->id)
+                                                <p class='text-secondary'><b>{{$i}}. </b> {{$dataStp->steps_body}}</p>
+                                                @php($i++)
+                                            @endif
+                                        @endforeach
                                     </div>
 
                                     <!--Add.-->

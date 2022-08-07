@@ -210,6 +210,44 @@
                                             @endforeach
                                         </ul>
                                     </a>
+                                    <a class="ms-3">
+                                        <button class="btn btn-primary bg-transparent border-0 p-0 " style="margin-top:-5px; color:#B35387;" title="Forward to group" id="compareDD" data-bs-toggle="dropdown">
+                                            <i class="fa-solid fa-down-left-and-up-right-to-center"></i> Compare</button>
+                                        <ul class="dropdown-menu p-2" aria-labelledby="compareDD">
+                                            <form action="/detail/compare/{{$data->id}}" method="POST">
+                                                @csrf
+                                                <li><input hidden name="section" value="1">
+                                                    <button class="dropdown-item" type="submit">
+                                                        @if(session()->get('compare1Key') != "")
+                                                            @foreach($recipe as $r)
+                                                                @if($r->id == session()->get('compare1Key'))
+                                                                    {{$r->recipe_name}}
+                                                                @endif
+                                                            @endforeach
+                                                        @else
+                                                            Item 1 (Empty)
+                                                        @endif
+                                                    </button>
+                                                </li>
+                                            </form>
+                                            <form action="/detail/compare/{{$data->id}}" method="POST">
+                                                @csrf
+                                                <li><input hidden name="section" value="2"><button class="dropdown-item" type="submit">
+                                                        @if(session()->get('compare2Key') != "")
+                                                            @foreach($recipe as $r)
+                                                                @if($r->id == session()->get('compare2Key'))
+                                                                    {{$r->recipe_name}}
+                                                                @endif
+                                                            @endforeach
+                                                        @else
+                                                            Item 2 (Empty)
+                                                        @endif
+                                                    </button>
+                                                </li>
+                                            </form>
+                                            <li><button class="btn btn-primary mt-1 py-1"><i class="fa-solid fa-arrow-right"></i> See Compare</button></li>
+                                        </ul>
+                                    </a>
                                 </span>
                             </h3>
                             <div class="row">

@@ -47,6 +47,7 @@ Route::post('/detail/sendComment/{id}', [DetailController::class, 'sendComment']
 Route::post('/detail/likes/{id}', [DetailController::class, 'likes']);
 Route::post('/detail/updateList/{id}', [DetailController::class, 'updateList']);
 Route::post('/detail/forwardRecipe/{id}', [DetailController::class, 'forwardRecipe']);
+Route::post('/detail/compare/{id}', [DetailController::class, 'compare']);
 
 //Profile page.
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');

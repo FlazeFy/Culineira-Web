@@ -26,6 +26,25 @@ class RecipeController extends Controller
         $steps = steps::all();
         $ingredients = ingredients::all();
 
+        //Show user's groups.
+        $groupId = DB::table('groups_rel')
+            ->select('groups.id as id', 'groups_name', 'groups_description', 'groups_image' ,'groups.created_at as created_at', 'groups.groups_type as groups_type', 'groups.users_id as founder_id')
+            ->join('groups', 'groups.id', '=', 'groups_rel.groups_id')
+            ->join('users', 'users.id', '=', 'groups_rel.users_id')
+            ->where('username', session()->get('usernameKey'))
+            ->orderBy('groups_rel.created_at', 'ASC')->get();
+
+        //Compare recipes
+        $compare1 = DB::table('recipes')
+            ->where('id', session()->get('compare1Key'))->get();
+        $compare2 = DB::table('recipes')
+            ->where('id', session()->get('compare2Key'))->get();
+
+        $likesId1 = DB::table('likes')
+            ->where('recipe_id', session()->get('compare1Key'))->get();
+        $likesId2 = DB::table('likes')
+            ->where('recipe_id', session()->get('compare2Key'))->get();
+
         //For sidebar mini profile
         $following = DB::table('follower')
             ->where('user_id_1', session()->get('idKey'))->get();
@@ -40,10 +59,15 @@ class RecipeController extends Controller
             ->with('recipe', $recipe)
             ->with('user', $user)
             ->with('steps', $steps)
+            ->with('groupId', $groupId)
+            ->with('likesId1', $likesId1)
+            ->with('likesId2', $likesId2)
             ->with('following', $following)
             ->with('followers', $followers)
             ->with('myrecipes', $myrecipes)
-            ->with('ingredients', $ingredients);
+            ->with('ingredients', $ingredients)
+            ->with('compare1', $compare1)
+            ->with('compare2', $compare2);
     }
 
     /**

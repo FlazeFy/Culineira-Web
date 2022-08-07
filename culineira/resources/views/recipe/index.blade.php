@@ -124,7 +124,7 @@
                                     <a class="nav-link" href="" role="button" data-bs-toggle="collapse" data-bs-target="#myrecipesCollapse" aria-expanded="false" aria-controls="CollapseExample2">My Recipes</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="" role="button" data-bs-toggle="collapse" data-bs-target="#aboutCollapse" aria-expanded="false" aria-controls="CollapseExample2">About</a>
+                                    <a class="nav-link" href="" role="button" data-bs-toggle="collapse" data-bs-target="#compareCollapse" aria-expanded="false" aria-controls="CollapseExample2">Compare</a>
                                 </li>
                             </ul>
                         </div>
@@ -220,14 +220,15 @@
                             </div>
                         </section>
 
-                    </div><!--End of container-->
+                    </div>
                 </div><!--End of collapse-->
 
-                <div class="collapse" id="aboutCollapse" data-bs-parent="#accordionRecipe">
+                <div class="collapse" id="compareCollapse" data-bs-parent="#accordionRecipe">
                     <div class='container-fluid mb-3'>
-                        <h3 class="mb-2">About</h3>
-
-                    </div><!--End of container-->
+                        <h3 class="mb-2">Compare</h3>
+                        <!--Compare-->
+                        @include('recipe.compare')
+                    </div>
                 </div><!--End of collapse-->
 
                 <!--Footer-->

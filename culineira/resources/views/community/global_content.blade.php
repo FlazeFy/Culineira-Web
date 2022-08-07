@@ -1,8 +1,8 @@
 @if($gl->cat == 1)
-    <div class="card card-blog mb-4">
+    <li class="card card-blog mb-4">
         <div class="card-image shadow">
             <a href="#"> <img class="img" src="http://127.0.0.1:8000/storage/{{$gl->image}}" >
-                <div class="card-caption shadow">{{$gl->name}}</div>
+                <span class="card-caption shadow" id="global_name">{{$gl->name}}</span>
             </a>
             <div class="ripple-cont"></div>
         </div>
@@ -19,7 +19,7 @@
             <p class="card-description">{{$gl->description}}</p>
             <div class="ftr">
                 <div class="author">
-                    <a href="#"> <img src="http://127.0.0.1:8000/storage/{{$gl->image2}}" alt="..." class="avatar img-raised"> <span>{{$gl->context}}</span> </a>
+                    <a href="#"> <img src="http://127.0.0.1:8000/storage/{{$gl->image2}}" alt="..." class="avatar img-raised"> {{$gl->context}} </a>
                 </div>
                 <div class="stats"> <i class="fa-solid fa-people-group"></i> 10 Member </div>
             </div>
@@ -33,7 +33,7 @@
                 <form method="POST" action="/community/join/{{$gl->id}}">
                     @csrf
                     <input name="groupname" value="{{$gl->name}}" hidden>
-                    <button type="submit" class="btn btn-primary my-0 w-50 mt-2"><i class="fa-solid fa-arrow-down"></i> Join Now</button>
+                    <button type="submit" class="btn btn-primary my-0 w-50 py-0 mt-2"><i class="fa-solid fa-arrow-down"></i> Join Now</button>
                 </form>
             @elseif (($gl->context2 == "Private")&&($i == 0))
                 <form method="POST" action="/community/request/{{$gl->id}}">
@@ -44,9 +44,9 @@
             @endif
 
         </div>
-    </div>
+    </li>
 @else
-    <div class="card mb-4">
+    <li class="card mb-4">
         <div class="table">
             <h6 class="category text-primary"><i class="fa fa-globe "></i> {{$gl->context}}</h6>
             <div class='row' style='justify-content:center;'>
@@ -124,5 +124,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </li>
 @endif

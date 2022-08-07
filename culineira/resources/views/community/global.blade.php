@@ -205,9 +205,15 @@
 </style>
 
 <div class="col-md-12">
+
+    <div class="mt-5">
+        <!--Control section.-->
+        @include('others.control_community')
+    </div>
+
     <div class="cards-1 section-gray">
         <div class="container">
-            <div class="row">
+            <div class="row" id="global_list_holder">
                 @php($i = 0)
                 @foreach($global as $gl)
                     @if($i % 2 == 0)
