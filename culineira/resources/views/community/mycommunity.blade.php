@@ -188,7 +188,7 @@
                         @php($c=0)
                         @foreach($message as $msg)
                             @foreach($user as $u)
-                                @if(($u->id == $msg->users_id)&&($msg->message_type != "notification")&&($msg->message_type != "forward-recipe")&&($msg->message_type != "role"))
+                                @if(($u->id == $msg->users_id)&&($msg->message_type != "notification")&&($msg->message_type != "forward-recipe")&&($msg->message_type != "role")&&($msg->message_type != "request"))
                                     <div class="chat-message-<?php if($u->username == session()->get('usernameKey')){echo "right ms-5 ps-5";}else{echo "left me-5 pe-5";}?> pb-4">
                                         <div>
                                             <img src="http://127.0.0.1:8000/storage/{{ $u->image_url }}" alt='{{ $u->image_url }}' class="rounded-circle mr-1 shadow" width="35" >
@@ -223,6 +223,29 @@
                                     <div class="container w-50 px-5 mx-auto text-center d-block rounded">
                                         <a style="color:#EB7336; font-style:italic; font-size:14px;">- {{$msg->message_body}} -</a><br>
                                         <a class="text-secondary fst-italic" id="dateMsg">{{$msg->created_at}}</a>
+                                    </div>
+                                    @php($c++)
+                                @elseif(($u->id == $msg->users_id)&&($msg->message_type == "request"))
+                                    <div class="container p-2 mx-auto text-center d-block rounded" style="background:#Eb7336; width:40%;">
+                                        <a style="color:white; font-size:14px;">- {{$msg->message_body}} -</a><br>
+                                        <div class="row">
+                                            <div class="col-md">
+                                                <form method="POST" action="/community/rejectReq/{{$msg->id}}">
+                                                    @csrf
+                                                    <input name="username" value="{{$u->username}}" hidden>
+                                                    <button type="submit" class="btn btn-danger d-block mx-auto w-50" title="Reject Request"><i class="fa-solid fa-xmark fa-lg"></i></button>
+                                                </form>
+                                            </div>
+                                            <div class="col-md">
+                                                <form method="POST" action="/community/acceptReq/{{$msg->id}}">
+                                                    @csrf
+                                                    <input name="username" value="{{$u->username}}" hidden>
+                                                    <button type="submit" class="btn btn-success d-block mx-auto w-50" title="Accept Request"><i class="fa-solid fa-check fa-lg"></i></button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </button>
+                                        <a class="text-white fst-italic" id="dateMsg">{{$msg->created_at}}</a>
                                     </div>
                                     @php($c++)
                                 @elseif(($u->id == $msg->users_id)&&($msg->message_type == "forward-recipe"))

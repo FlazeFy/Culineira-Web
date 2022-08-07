@@ -1,6 +1,6 @@
 @if($gl->cat == 1)
     <div class="card card-blog mb-4">
-        <div class="card-image">
+        <div class="card-image shadow">
             <a href="#"> <img class="img" src="http://127.0.0.1:8000/storage/{{$gl->image}}" >
                 <div class="card-caption shadow">{{$gl->name}}</div>
             </a>
@@ -23,6 +23,26 @@
                 </div>
                 <div class="stats"> <i class="fa-solid fa-people-group"></i> 10 Member </div>
             </div>
+            @php($i = 0)
+            @foreach($groupId as $gi)
+                @if($gi->id == $gl->id)
+                    @php($i++)
+                @endif
+            @endforeach
+            @if(($gl->context2 == "Public")&&($i == 0))
+                <form method="POST" action="/community/join/{{$gl->id}}">
+                    @csrf
+                    <input name="groupname" value="{{$gl->name}}" hidden>
+                    <button type="submit" class="btn btn-primary my-0 w-50 mt-2"><i class="fa-solid fa-arrow-down"></i> Join Now</button>
+                </form>
+            @elseif (($gl->context2 == "Private")&&($i == 0))
+                <form method="POST" action="/community/request/{{$gl->id}}">
+                    @csrf
+                    <input name="groupname" value="{{$gl->name}}" hidden>
+                    <button type="submit" class="btn btn-primary my-0 w-75 py-0 mt-2"><i class="fa-solid fa-arrow-down"></i> Request Join</button>
+                </form>
+            @endif
+
         </div>
     </div>
 @else
@@ -77,7 +97,7 @@
                 </div>
                 <div class="stats"> Joined : {{date('m/d/Y', strtotime($gl->created_at))}}</div>
             </div>
-            <div class="row mt-4 mx-1">
+            <div class="row mt-1 mx-1">
                 <div class="col-md-6">
                     @php($i = 0)
                     @foreach($following as $fsw)

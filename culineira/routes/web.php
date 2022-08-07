@@ -95,5 +95,9 @@ Route::post('/community/follow/{id}', [CommunityController::class, 'follow']);
 Route::post('/community/unfollow/{id}', [CommunityController::class, 'unfollow']);
 Route::post('/community/accept/{id}', [CommunityController::class, 'accept']);
 Route::post('/community/reject/{id}', [CommunityController::class, 'reject']);
+Route::post('/community/join/{id}', [CommunityController::class, 'join']);
+Route::post('/community/request/{id}', [CommunityController::class, 'request']);
+Route::post('/community/acceptReq/{id}', [CommunityController::class, 'acceptReq']);
+Route::post('/community/rejectReq/{id}', [CommunityController::class, 'rejectReq']);
 
 

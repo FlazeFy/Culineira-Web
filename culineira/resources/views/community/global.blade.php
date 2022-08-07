@@ -215,7 +215,12 @@
                             @include('community.global_content')
                             @php($i++)
                     @else
-                        @if($gl->id != session()->get('idKey'))
+                        @if($gl->cat == 2)
+                            @if($gl->id != session()->get('idKey'))
+                                @include('community.global_content')
+                                @php($i++)
+                            @endif
+                        @else
                             @include('community.global_content')
                             @php($i++)
                         @endif

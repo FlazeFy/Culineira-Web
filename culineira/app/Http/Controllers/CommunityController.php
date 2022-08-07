@@ -657,6 +657,108 @@ class CommunityController extends Controller
         return redirect()->back()->with('success_message', 'You have rejected invitation from "'.$request->groupname.'" group');
     }
 
+    public function join(Request $request, $id)
+    {
+        //Auto open group
+        $request->session()->put('groupKey', $id);
+
+        //Group relation
+        groups_rel::create([
+            'users_id' => session()->get('idKey'),
+            'groups_id' => session()->get('groupKey'),
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+            'groups_role' => 'member',
+        ]);
+
+        //Show record to group chat
+        message::create([
+            'users_id' => session()->get('idKey'),
+            'groups_id' => session()->get('groupKey'),
+            'message_body' => session()->get('usernameKey').' has joined to the group',
+            'message_type' => 'role',
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        //Activity record
+        activity::create([
+            'users_id' => session()->get('idKey'),
+            'activity_from' => session()->get('groupKey'),
+            'activity_type' => 'group-join',
+            'activity_description' => 'has been joined "'.session()->get('groupKey').'" group',
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        return redirect()->back()->with('success_message', 'You are now a member of "'.$request->groupname.'" group');
+    }
+
+    public function request(Request $request, $id)
+    {
+        //Show record to group chat
+        message::create([
+            'users_id' => session()->get('idKey'),
+            'groups_id' => $id,
+            'message_body' => session()->get('usernameKey').' want to join this group',
+            'message_type' => 'request',
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        return redirect()->back()->with('success_message', 'Request sended to "'.$request->groupname.'" group');
+    }
+
+    public function acceptReq(Request $request, $id)
+    {
+        //Get id
+        $users_id = DB::table('users')->where('username', $request->username)->get();
+        foreach($users_id as $u){
+            $id_user = $u->id;
+        }
+
+        //Delete invitation
+        message::destroy($id);
+
+        //Group relation
+        groups_rel::create([
+            'users_id' => $id_user,
+            'groups_id' => session()->get('groupKey'),
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+            'groups_role' => 'member',
+        ]);
+
+        //Show record to group chat
+        message::create([
+            'users_id' => $id_user,
+            'groups_id' => session()->get('groupKey'),
+            'message_body' => $request->username.' has joined to the group',
+            'message_type' => 'role',
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        //Activity record
+        activity::create([
+            'users_id' => $id_user,
+            'activity_from' => session()->get('groupKey'),
+            'activity_type' => 'group-join',
+            'activity_description' => 'has been joined "'.session()->get('groupKey').'" group',
+            'created_at' => date("Y-m-d h:m:i"),
+            'updated_at' => date("Y-m-d h:m:i"),
+        ]);
+
+        return redirect()->back()->with('success_message', 'You have accepted the request from '.$request->username.' ');
+    }
+
+    public function rejectReq(Request $request, $id)
+    {
+        message::destroy($id);
+
+        return redirect()->back()->with('success_message', 'You have rejected the request from '.$request->username.'');
+    }
+
     public function deleteGroup(Request $request){
         //Get group name
         $groups = DB::table('groups')
