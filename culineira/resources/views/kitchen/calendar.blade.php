@@ -16,10 +16,15 @@
         border:calc(var(--fc-daygrid-event-dot-width,8px)/ 2) solid var(--fc-event-border-color, #198553);
     }
     .fc .fc-daygrid-day.fc-day-today{
-        background:#eb7336;
-        opacity:40%;
+        background: rgba(235, 115, 54, 0.4);
+    }
+    .fc-event-time{
+        display:none;
     }
 
+    .fc-day-today .fc-event-title{
+        color: #414141 !important;
+    }
 </style>
 
 <div id="calendar"></div>
@@ -86,6 +91,43 @@
     </div>
 </div>
 
+<!-- Recipe detail -->
+<div class="modal fade" id="recipeDetailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <img src="" alt='' id="recipeImage"
+                style='margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
+            <h5 style='font-size:16px; text-align:center;' id="recipeName"></h5>
+            <div class='container' id='headingCard' style='padding:5px;'>
+                <div class='row' style='justify-content:center; width:110%;'>
+                    <div class='col-md-5'>
+                        <a style='font-size:12px; color:#5cb85c;' id="recipeLevel"></a>
+                    </div>
+                    <div class='col-md-5'>
+                        <a style='font-size:12px;' id="recipeType"></a>
+                    </div>
+                </div>
+            </div>
+            <div class='container mt-2'>
+                <div class='row' style='justify-content:center; width:110%;'>
+                    <div class='col-md-3'>
+                        <a style='font-size:15px; font-weight:bold; text-align:center;' id="recipeTimeSpend"></a>
+                        <p style='font-size:12px;'>min</p>
+                    </div>
+                    <div class='col-md-3'>
+                        <a style='font-size:15px; font-weight:bold; text-align:center;' id="recipeCal"></a>
+                        <p style='font-size:12px;'>cal</p>
+                    </div>
+                    <div class='col-md-4'>
+                        <p style='font-size:12px; justify-content:center; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical;' id="recipeMainIng"></p>
+                    </div>
+                </div>
+            </div>
+            <a class='btn btn-primary' id="recipeHref" href=""><i class="fa-solid fa-arrow-right"></i> See More</a>
+        </div>
+    </div>
+</div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
@@ -100,53 +142,51 @@
         },
         selectable: true,
         events: [
-        // {
-        //     title: 'All Day Event',
-        //     start: '2022-07-01'
-        // },
-        // {
-        //     title: 'Long Event',
-        //     start: '2022-07-07',
-        //     end: '2022-07-10'
-        // },
-        // {
-        //     groupId: '999',
-        //     title: 'Repeating Event',
-        //     start: '2022-07-09T16:00:00'
-        // },
-        // {
-        //     groupId: '999',
-        //     title: 'Repeating Event',
-        //     start: '2022-07-16T16:00:00'
-        // },
-        // {
-        //     title: 'Conference',
-        //     start: '2022-07-11',
-        //     end: '2022-07-13'
-        // },
-        // {
-        //     title: 'Meeting',
-        //     start: '2022-07-12T10:30:00',
-        //     end: '2022-07-12T12:30:00'
-        // },
-        // {
-        //     title: 'Lunch',
-        //     start: '2022-07-12T12:00:00'
-        // },
-        // {
-        //     title: 'Meeting',
-        //     start: '2022-07-12T14:30:00'
-        // },
-        // {
-        //     title: 'Birthday Party',
-        //     start: '2022-07-13T07:00:00'
-        // },
-        // {
-        //     title: 'Click for Google',
-        //     url: 'http://google.com/',
-        //     start: '2022-07-28'
-        // }
+            // {
+            //     groupId: '992',
+            //     title: 'All Day Test',
+            //     start: '2022-07-09'
+            // },
+            // {
+            //     groupId: '992',
+            //     title: 'Long Event',
+            //     start: '2022-07-09T16:00:00'
+            // },
+            <?php
+                foreach($calendar as $cl){
+                    echo"
+                        {
+                            title: '".$cl->recipe_name."',
+                            start: '".$cl->created_at."',
+                            extendedProps: {
+                                id: '/detail/".$cl->id_recipe."',
+                                level: '".$cl->level."',
+                                type: '".$cl->type."',
+                                timeSpend: '".$cl->timeSpend."',
+                                cal: '".$cl->cal."',
+                                mainIng: '".$cl->mainIng."',
+                                image: 'http://127.0.0.1:8000/storage/".$cl->image."'
+                            },
+                        },
+                    ";
+                }
+            ?>
         ],
+
+        //Show recipe detail
+        eventClick:  function(info, jsEvent, view) {
+            $('#recipeName').html(info.event.title);
+            $('#recipeLevel').html(info.event.extendedProps.level);
+            $('#recipeType').html(info.event.extendedProps.type);
+            $('#recipeTimeSpend').html(info.event.extendedProps.timeSpend);
+            $('#recipeCal').html(info.event.extendedProps.cal);
+            $('#recipeMainIng').html(info.event.extendedProps.mainIng);
+            document.getElementById("recipeImage").src = info.event.extendedProps.image;
+            document.getElementById("recipeHref").href = info.event.extendedProps.id;
+            $('#recipeDetailModal').modal('show');
+        },
+
+        //Add daily dish
         dateClick: function(info, date) {
             document.getElementById("modalDate").defaultValue = info.dateStr;
             $('#addDailyModal').modal('show');

@@ -33,6 +33,13 @@ class KitchenController extends Controller
             ->orderBy('list-rel.updated_at', 'ASC')
             ->get();
 
+        $calendar = DB::table('calendar')
+            ->select('calendar.id', 'recipes.id as id_recipe', 'calendar.created_at as created_at', 'recipes.recipe_name', 'recipes.recipe_level as level', 'recipes.recipe_type as type', 'recipes.recipe_calorie as cal', 'recipes.recipe_main_ing as mainIng', 'recipes.recipe_time_spend as timeSpend', 'recipes.recipe_url as image')
+            ->join('recipes', 'calendar.recipe_id', '=', 'recipes.id')
+            ->join('users', 'calendar.users_id', '=', 'users.id')
+            ->where('users.id', session()->get('idKey'))
+            ->get();
+
         $list = DB::table('list')
             ->select('list.id', 'list_name', 'list_name', 'list_status', 'list_description', 'list.created_at as created_at', 'list.updated_at as updated_at')
             ->join('users', 'users.id', '=', 'list.user_id')
@@ -65,6 +72,7 @@ class KitchenController extends Controller
             ->with('following', $following)
             ->with('followers', $followers)
             ->with('myrecipes', $myrecipes)
+            ->with('calendar', $calendar)
             ->with('list', $list);
 
     }
