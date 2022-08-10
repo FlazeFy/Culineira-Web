@@ -59,6 +59,7 @@ Route::post('/profile/updateImage', [ProfileController::class, 'updateImage']);
 Route::get('/kitchen', [KitchenController::class, 'index'])->name('kitchen');
 Route::post('/kitchen/addRecipeToList', [KitchenController::class, 'addRecipeToList']);
 Route::post('/kitchen/addNewList', [KitchenController::class, 'addNewList']);
+Route::post('/kitchen/addDishCalendar', [KitchenController::class, 'addDishCalendar']);
 Route::post('/kitchen/addItemShelf', [KitchenController::class, 'addItemShelf']);
 Route::post('/kitchen/deleteList', [KitchenController::class, 'deleteList']);
 Route::post('/kitchen/deleteItemShelf', [KitchenController::class, 'deleteItemShelf']);
