@@ -141,7 +141,14 @@ class ProfileController extends Controller
     }
     public function achievement2()
     {
-
+        $check = DB::table('follower')
+            ->where('user_id_2', session()->get('idKey'))
+            ->get();
+        if(count($check) >= 50){
+            return 'http://127.0.0.1:8000/assets/achievement/achievement-2.png';
+        } else {
+            return 'http://127.0.0.1:8000/assets/achievement/achievement-lock.png';
+        }
     }
     public function achievement3()
     {
@@ -149,7 +156,20 @@ class ProfileController extends Controller
     }
     public function achievement4()
     {
-
+        $check = DB::table('recipes')
+            ->join('users', 'users.id', '=', 'recipes.user_id')
+            ->join('ingredients', 'ingredients.recipe_id', '=', 'recipes.id')
+            ->where('users.id', session()->get('idKey'))
+            ->whereRaw("lower(ingredients_name) LIKE '%milk%'
+                or lower(ingredients_name) like '%ice%'
+                or lower(ingredients_name) like '%water%'
+                or lower(ingredients_name) like '%juice%'")
+            ->get();
+        if(count($check) > 0){
+            return 'http://127.0.0.1:8000/assets/achievement/achievement-2.png';
+        } else {
+            return 'http://127.0.0.1:8000/assets/achievement/achievement-lock.png';
+        }
     }
     public function achievement5()
     {

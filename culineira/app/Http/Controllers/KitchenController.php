@@ -110,6 +110,12 @@ class KitchenController extends Controller
         }
     }
 
+    public function deleteDishCalendar(Request $request)
+    {
+        calendar::destroy($request->id);
+        return redirect()->back()->with('success_message', 'Successfully remove '.$request->recipe_name.' from calendar!');
+    }
+
     /**
      * Store a newly created resource in storage.
      *

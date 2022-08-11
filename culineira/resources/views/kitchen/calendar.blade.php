@@ -97,6 +97,13 @@
         <div class="modal-content">
             <img src="" alt='' id="recipeImage"
                 style='margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
+            <form action="/kitchen/deleteDishCalendar" method="POST">
+                @csrf
+                <input hidden name="recipe_name" value="" id="i_recipe_name">
+                <input hidden name="id" value="" id="i_id_calendar">
+                <button type="submit" class="btn btn-transparent p-0 float-end" title="Remove from calendar" style="position:relative; right:20px; top:-70px;"
+                    ><i class="fa-solid fa-trash-can fa-lg text-danger"></i></button>
+            </form>
             <h5 style='font-size:16px; text-align:center;' id="recipeName"></h5>
             <div class='container' id='headingCard' style='padding:5px;'>
                 <div class='row' style='justify-content:center; width:110%;'>
@@ -159,6 +166,7 @@
                             title: '".$cl->recipe_name."',
                             start: '".$cl->created_at."',
                             extendedProps: {
+                                id_calendar: '".$cl->id."',
                                 id: '/detail/".$cl->id_recipe."',
                                 level: '".$cl->level."',
                                 type: '".$cl->type."',
@@ -183,6 +191,8 @@
             $('#recipeMainIng').html(info.event.extendedProps.mainIng);
             document.getElementById("recipeImage").src = info.event.extendedProps.image;
             document.getElementById("recipeHref").href = info.event.extendedProps.id;
+            document.getElementById("i_recipe_name").value = info.event.title;
+            document.getElementById("i_id_calendar").value = info.event.extendedProps.id_calendar;
             $('#recipeDetailModal').modal('show');
         },
 

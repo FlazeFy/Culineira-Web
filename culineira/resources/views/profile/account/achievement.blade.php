@@ -9,7 +9,7 @@
             title="Good start!" data-bs-content="Get first like in your recipe">
     </div>
     <div class="card border-0 bg-transparent m-0">
-        <img class="img rounded-circle m-1 border-0 shadow" style="width:65px;" src="http://127.0.0.1:8000/assets/achievement/achievement-2.png" type="button" role="button" data-bs-toggle="popover"
+        <img class="img rounded-circle m-1 border-0 shadow" style="width:65px;" src="{{$achievement2}}" type="button" role="button" data-bs-toggle="popover"
             title="You are Rockstar!" data-bs-content="Have 50 Followers">
     </div>
     <div class="card border-0 bg-transparent m-0">
@@ -17,7 +17,7 @@
             title="Are you a chef?" data-bs-content="Have your recipes on the top list">
     </div>
     <div class="card border-0 bg-transparent m-0">
-        <img class="img rounded-circle m-1 border-0 shadow" style="width:65px;" src="http://127.0.0.1:8000/assets/achievement/achievement-4.png" type="button" role="button" data-bs-toggle="popover"
+        <img class="img rounded-circle m-1 border-0 shadow" style="width:65px;" src="{{$achievement4}}" type="button" role="button" data-bs-toggle="popover"
             title="I'm thirsty" data-bs-content="Have first drinkable recipe">
     </div>
     <div class="card border-0 bg-transparent m-0">
