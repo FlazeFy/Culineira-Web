@@ -8,6 +8,7 @@ use App\Http\Controllers\DetailController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KitchenController;
 use App\Http\Controllers\CommunityController;
+use App\Http\Controllers\GlobalController;
 use App\Http\Controllers\Browse\ListController;
 use App\Http\Controllers\Browse\ViewController;
 
@@ -77,9 +78,9 @@ Route::post('/kitchen/starred/{id}', [KitchenController::class, 'starred']);
     Route::post('/kitchen/browse-list/addRecipeToList/{id}', [ListController::class, 'addRecipeToList']);
 
     //Other user
-    Route::get('/community/view/{name}', [ViewController::class, 'index']);
-    Route::post('/community/view/follow/{id}', [ViewController::class, 'follow']);
-    Route::post('/community/view/unfollow/{id}', [ViewController::class, 'unfollow']);
+    Route::get('/global/view/{name}', [ViewController::class, 'index']);
+    Route::post('/global/view/follow/{id}', [ViewController::class, 'follow']);
+    Route::post('/global/view/unfollow/{id}', [ViewController::class, 'unfollow']);
 
 //Community page.
 Route::get('/community', [CommunityController::class, 'index'])->name('community');
@@ -94,13 +95,16 @@ Route::post('/community/invite/{id}', [CommunityController::class, 'invite']);
 Route::post('/community/leave/{id}', [CommunityController::class, 'leave']);
 Route::post('/community/uninvite/{id}', [CommunityController::class, 'uninvite']);
 Route::post('/community/deleteGroup', [CommunityController::class, 'deleteGroup']);
-Route::post('/community/follow/{id}', [CommunityController::class, 'follow']);
-Route::post('/community/unfollow/{id}', [CommunityController::class, 'unfollow']);
 Route::post('/community/accept/{id}', [CommunityController::class, 'accept']);
 Route::post('/community/reject/{id}', [CommunityController::class, 'reject']);
-Route::post('/community/join/{id}', [CommunityController::class, 'join']);
-Route::post('/community/request/{id}', [CommunityController::class, 'request']);
 Route::post('/community/acceptReq/{id}', [CommunityController::class, 'acceptReq']);
 Route::post('/community/rejectReq/{id}', [CommunityController::class, 'rejectReq']);
+
+//Global page.
+Route::get('/global', [GlobalController::class, 'index'])->name('global');
+Route::post('/global/follow/{id}', [GlobalController::class, 'follow']);
+Route::post('/global/unfollow/{id}', [GlobalController::class, 'unfollow']);
+Route::post('/global/join/{id}', [GlobalController::class, 'join']);
+Route::post('/global/request/{id}', [GlobalController::class, 'request']);
 
 

@@ -73,33 +73,7 @@
 		<div class="wrapper d-flex align-items-stretch">
 
         <!--Sidebar.-->
-        <nav id="sidebar">
-            <div class="p-4 pt-2">
-                <img class="w-100" src="{{asset('assets/Culineira_FullLogo.png')}}" alt='logo'
-                    style='display: block; margin-left: auto; margin-right: auto;'>
-
-                <!--Profil section.-->
-                @include('others.miniprofile')
-
-                <!--Main Navbar.-->
-                <ul class="list-unstyled components mb-3">
-                    <li class="active">
-                        <a href="{{ url('/recipe') }}"><i class="fa-solid fa-book"></i> Recipes</a>
-                    </li>
-                    <li>
-                    <a href="{{ url('/kitchen') }}"><i class="fa-solid fa-kitchen-set"></i> My Kitchen</a>
-                    </li>
-                    <li>
-                        <a href="{{ url('/community') }}"><i class="fa-solid fa-people-group"></i> Community</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa-solid fa-circle-info"></i> Guide</a>
-                    </li>
-                </ul>
-                <button class="btn btn-danger" style='margin-top:-10px;' onclick="location.href='{{ url('/') }}'">Sign-Out</button>
-                <button class="btn btn-primary" style='margin-top:-10px;' id="theme-toggle"><span id="theme"></span> Mode</button>
-            </div>
-    	</nav>
+        @include('sidebar')
 
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5" style='width:100%; max-height: calc(90vh - 140px); overflow-x: auto;'>
@@ -200,7 +174,8 @@
                                             <!--Favorites.-->
                                             <div class="tab-pane fade rounded p-2" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                                                 <h5>Favorites</h5>
-
+                                                <!--Favorite recipe by likes.-->
+                                                @include('recipe.favorite')
                                             </div>
 
                                             <div class="tab-pane fade rounded p-2" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">

@@ -102,33 +102,7 @@
 		<div class="wrapper d-flex align-items-stretch">
 
         <!--Sidebar.-->
-        <nav id="sidebar">
-            <div class="p-4 pt-2">
-                <img class="w-100" src="{{asset('assets/Culineira_FullLogo.png')}}" alt='logo'
-                    style='display: block; margin-left: auto; margin-right: auto;'>
-
-                <!--Profil section.-->
-                @include('others.miniprofile')
-
-                <!--Main Navbar.-->
-                <ul class="list-unstyled components mb-3">
-                    <li>
-                        <a href="{{ url('/recipe') }}"><i class="fa-solid fa-book"></i> Recipes</a>
-                    </li>
-                    <li class="active">
-                        <a href="{{ url('/kitchen') }}"><i class="fa-solid fa-kitchen-set"></i> My Kitchen</a>
-                    </li>
-                    <li>
-                        <a href="{{ url('/community') }}"><i class="fa-solid fa-people-group"></i> Community</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa-solid fa-circle-info"></i> Guide</a>
-                    </li>
-                </ul>
-                <button class="btn btn-danger" style='margin-top:-10px;' onclick="location.href='{{ url('/') }}'">Sign-Out</button>
-                <button class="btn btn-primary" style='margin-top:-10px;' id="theme-toggle"><span id="theme"></span> Mode</button>
-            </div>
-    	</nav>
+        @include('sidebar')
 
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5" style='width:100%; max-height: calc(90vh - 140px); overflow-x: auto;'>
@@ -158,7 +132,7 @@
                 <div class='container-fluid bg-transparent mb-3'>
                     <h3 class="mb-2">Recipe List</h3>
                     <div class="row">
-                        <div class="col-md-2">
+                        <div class="col-2">
                             <!--List Control.-->
                             <div class="card border-gray p-2 border-0 m-2" style='width:160px; background-image: linear-gradient(to right, #eb7336, #eb8d36);'>
                                 <h5 style='font-size:16px; text-align:center; color:white;'>Make New List</h5>
@@ -171,7 +145,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-10">
+                        <div class="col-10">
                             <!--Recipe List.-->
                             @include('kitchen.list')
                         </div>

@@ -64,6 +64,9 @@ class KitchenController extends Controller
         $myrecipes = DB::table('recipes')
             ->where('user_id', session()->get('idKey'))->get();
 
+        //Set active nav
+        session()->put('active_nav', 'kitchen');
+
         return view ('kitchen.index')
             ->with('recipe', $recipe)
             ->with('recipeInList', $recipeInList)

@@ -73,33 +73,7 @@
 		<div class="wrapper d-flex align-items-stretch">
 
         <!--Sidebar.-->
-        <nav id="sidebar">
-            <div class="p-4 pt-2">
-                <img class="w-100" src="{{asset('assets/Culineira_FullLogo.png')}}" alt='logo'
-                    style='display: block; margin-left: auto; margin-right: auto;'>
-
-                <!--Profil section.-->
-                @include('others.miniprofile')
-
-                <!--Main Navbar.-->
-                <ul class="list-unstyled components mb-3">
-                    <li>
-                        <a href="{{ url('/recipe') }}"><i class="fa-solid fa-book"></i> Recipes</a>
-                    </li>
-                    <li>
-                        <a href="{{ url('/kitchen') }}"><i class="fa-solid fa-kitchen-set"></i> My Kitchen</a>
-                    </li>
-                    <li  class="active">
-                        <a href="{{ url('/community') }}"><i class="fa-solid fa-people-group"></i> Community</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa-solid fa-circle-info"></i> Guide</a>
-                    </li>
-                </ul>
-                <button class="btn btn-danger" style='margin-top:-10px;' onclick="location.href='{{ url('/') }}'">Sign-Out</button>
-                <button class="btn btn-primary" style='margin-top:-10px;' id="theme-toggle"><span id="theme"></span> Mode</button>
-            </div>
-    	</nav>
+        @include('sidebar')
 
         <!-- Page Content  -->
         <div id="content" class="px-5 pt-3" style='width:100%; max-height: calc(90vh - 140px); overflow-x: auto;'>
@@ -120,9 +94,6 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="" role="button" data-bs-toggle="collapse" data-bs-target="#mycommunityCollapse" aria-expanded="false" aria-controls="CollapseExample2">My Community</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="" role="button" data-bs-toggle="collapse" data-bs-target="#globalCollapse" aria-expanded="false" aria-controls="CollapseExample2" >Global</a>
-                                </li>
                             </ul>
                         </div>
                     </div>
@@ -131,11 +102,6 @@
                 <div class="collapse show" id="mycommunityCollapse" data-bs-parent="#accordionCommunity">
                     <!--My Community-->
                     @include('community.mycommunity')
-                </div>
-
-                <div class="collapse" id="globalCollapse" data-bs-parent="#accordionCommunity">
-                    <!--Global-->
-                    @include('community.global')
                 </div>
 
             </div><!--End of accordion-->

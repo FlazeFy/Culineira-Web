@@ -44,6 +44,12 @@ class RecipeController extends Controller
             ->where('recipe_id', session()->get('compare1Key'))->get();
         $likesId2 = DB::table('likes')
             ->where('recipe_id', session()->get('compare2Key'))->get();
+            
+        $favorite = DB::table('likes')
+            ->select('recipes.id', 'users.username', 'recipe_name', 'recipe_calorie', 'recipe_desc', 'recipe_country', 'recipe_type', 'recipe_time_spend', 'recipe_main_ing', 'recipe_level', 'recipes.created_at', 'recipes.updated_at', 'recipe_visibility', 'recipe_url', 'recipe_video', 'users.image_url as user_image')
+            ->join('recipes', 'recipes.id', '=', 'likes.recipe_id')
+            ->join('users', 'users.id', '=', 'likes.users_id')
+            ->where('users_id', session()->get('idKey'))->get();
 
         //For sidebar mini profile
         $following = DB::table('follower')
@@ -55,6 +61,9 @@ class RecipeController extends Controller
         $myrecipes = DB::table('recipes')
             ->where('user_id', session()->get('idKey'))->get();
 
+        //Set active nav
+        session()->put('active_nav', 'recipe');
+
         return view ('recipe.index')
             ->with('recipe', $recipe)
             ->with('user', $user)
@@ -64,6 +73,7 @@ class RecipeController extends Controller
             ->with('likesId2', $likesId2)
             ->with('following', $following)
             ->with('followers', $followers)
+            ->with('favorite', $favorite)
             ->with('myrecipes', $myrecipes)
             ->with('ingredients', $ingredients)
             ->with('compare1', $compare1)

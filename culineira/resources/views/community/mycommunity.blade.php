@@ -257,13 +257,13 @@
                                                     <div>
                                                         <img src="http://127.0.0.1:8000/storage/{{ $u->image_url }}" alt='{{ $u->image_url }}' class="rounded-circle mr-1 shadow" width="35" >
                                                     </div>
-                                                    <li class="card border-gray p-2 border m-3 shadow" style='width:300px;'>
+                                                    <li class="card border-gray p-2 border m-3 shadow position-relative" style='width:300px;'>
                                                         <img src="http://127.0.0.1:8000/storage/{{ $r->recipe_url }}?>" alt='{{$r->recipe_url}}'
                                                             style='margin-top:-60px; width:50%; display: block; margin-left: auto; margin-right: auto;'>
                                                         <img src="http://127.0.0.1:8000/storage/{{ $ru->image_url }}" alt='{{ $ru->image_url }}'
                                                             style='border-radius:100%; margin-top:-40px; margin-left:20px; width:40px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
                                                         <img src="http://127.0.0.1:8000/assets/image/country/<?php echo $r->recipe_country;?>.png" alt='<?php echo $r->recipe_country.".png";?>' title='<?php echo $r->recipe_country;?>'
-                                                            style='border-radius:100%; width:40px; margin-top:40px; margin-left:220px; position:absolute; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
+                                                            style='border-radius:100%; width:40px; position:absolute; top:60px; right:25px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;'>
                                                         <h5 style='font-size:16px; text-align:center;'>{{$r->recipe_name}}</h5>
                                                         <div class='container' id='headingCard' style='padding:5px;'>
                                                             <div class='row' style='justify-content:center; width:110%;'>

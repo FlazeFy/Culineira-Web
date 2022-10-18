@@ -74,6 +74,9 @@ class ProfileController extends Controller
         $myrecipes = DB::table('recipes')
             ->where('user_id', session()->get('idKey'))->get();
 
+        //Set active nav
+        session()->put('active_nav', 'profile');
+
         return view ('profile.index')
             ->with('userId', $userId)
             ->with('recipeId', $recipeId)

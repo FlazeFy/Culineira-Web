@@ -91,6 +91,9 @@ class DetailController extends Controller
         $myrecipes = DB::table('recipes')
             ->where('user_id', session()->get('idKey'))->get();
 
+        //Set active nav
+        session()->put('active_nav', 'recipe');
+
         return view ('recipe.detail.index')
             ->with('recipeId', $recipeId)
             ->with('recipe', $recipe)
