@@ -3,16 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\recipe;
-use App\Models\comment;
 use App\Models\user;
-use App\Models\steps;
 use App\Models\activity;
-use App\Models\likes;
-use App\Models\ingredients;
 use App\Models\socmed;
-use App\Models\classroom;
-use App\Models\follower;
+use App\Models\recipe;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
@@ -61,6 +55,7 @@ class ProfileController extends Controller
 
         //Show user login data in profile.
         $activityId = DB::table('activity')
+            ->select('activity.id', 'activity_type', 'username', 'activity.created_at', 'activity_description')
             ->join('users', 'users.id', '=', 'activity.users_id')
             ->where('username', session()->get('usernameKey'))->get();
 
@@ -102,25 +97,18 @@ class ProfileController extends Controller
             ->with('achievement11', $this->achievement11());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function deleteActivity($id)
     {
-        //
+        activity::destroy($id);
+
+        return redirect()->back()->with('success_message', 'Activity has been deleted');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function deleteAllActivity()
     {
-        //
+        DB::table('activity')->where('users_id', '=', session()->get('idKey'))->delete();
+
+        return redirect()->back()->with('success_message', 'All Activity has been deleted');
     }
 
     /**

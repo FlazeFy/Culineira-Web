@@ -103,7 +103,7 @@
                 flex-grow: 0!important;
             }
             .border-top {
-                border-top: 1px solid #dee2e6!important;
+                border-top: 1px solid #dee2e6 !important;
             }
 
             .image-upload>input {
@@ -173,52 +173,52 @@
                     <div class='container-fluid mb-3'>
                         <h3 class="mb-2">Profile</h3>
                         @foreach($userId as $u)
-                        <div class="row gutters-sm">
-                            <div class="col-md-4 mb-3">
-                                <div class="container-fluid rounded border-gray border" >
-                                    <!-- Edit Profile Image -->
-                                    @include('profile.form.editImage')
-                                </div>
-                                <div class="container-fluid mt-3 rounded border-gray border">
-                                    <!-- Edit Socmed -->
-                                    @include('profile.form.editSocmed')
-                                </div>
-                                <div class="container-fluid mt-3 p-3 rounded border-gray border">
-                                    <!-- Achievement -->
-                                    @include('profile.account.achievement')
-                                </div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="container-fluid mb-3 rounded border-gray border">
-                                    <!-- Edit Profile -->
-                                    @include('profile.form.editProfile')
-                                </div>
-
                             <div class="row gutters-sm">
-                                <div class="col-sm-6 mb-3">
-                                    <!-- Recipe -->
-                                    @include('profile.account.recipe')
+                                <div class="col-md-4 mb-3">
+                                    <div class="container-fluid rounded border-gray border" >
+                                        <!-- Edit Profile Image -->
+                                        @include('profile.form.editImage')
+                                    </div>
+                                    <div class="container-fluid mt-3 rounded border-gray border">
+                                        <!-- Edit Socmed -->
+                                        @include('profile.form.editSocmed')
+                                    </div>
+                                    <div class="container-fluid mt-3 p-3 rounded border-gray border">
+                                        <!-- Achievement -->
+                                        @include('profile.account.achievement')
+                                    </div>
                                 </div>
-                                <div class="col-sm-6 mb-3">
-                                    <!-- Classroom -->
-                                    @include('profile.account.classroom')
+                                <div class="col-md-8">
+                                    <div class="container-fluid mb-3 rounded border-gray border">
+                                        <!-- Edit Profile -->
+                                        @include('profile.form.editProfile')
+                                    </div>
+
+                                <div class="row gutters-sm">
+                                    <div class="col-sm-6 mb-3">
+                                        <!-- Recipe -->
+                                        @include('profile.account.recipe')
+                                    </div>
+                                    <div class="col-sm-6 mb-3">
+                                        <!-- Classroom -->
+                                        @include('profile.account.classroom')
+                                    </div>
+                                </div>
+
+                                <div class="container-fluid rounded border-gray border p-2 mb-3">
+                                    <!-- Community -->
+                                    @include('profile.account.community')
+                                </div>
+
                                 </div>
                             </div>
-
-                            <div class="container-fluid rounded border-gray border p-2 mb-3">
-                                <!-- Community -->
-                                @include('profile.account.community')
-                            </div>
-
-                            </div>
-                        </div>
                         @endforeach
 
                     </div>
                 </div>
                 <div class="collapse" id="activityCollapse" data-bs-parent="#accordionProfile">
                     @foreach($userId as $u)
-                    <div class='container-fluid mb-3'>
+                    <div class='container-fluid mb-3 position-relative'>
                         <!-- Activity -->
                         @include('profile.activity.list')
                     </div>

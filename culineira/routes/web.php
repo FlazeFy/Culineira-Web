@@ -55,6 +55,8 @@ Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 Route::post('/profile/updateSocmed', [ProfileController::class, 'updateSocmed']);
 Route::post('/profile/updateProfile', [ProfileController::class, 'updateProfile']);
 Route::post('/profile/updateImage', [ProfileController::class, 'updateImage']);
+Route::post('/profile/deleteActivity/{id}', [ProfileController::class, 'deleteActivity']);
+Route::post('/profile/deleteAllActivity', [ProfileController::class, 'deleteAllActivity']);
 
 //My kitchen page.
 Route::get('/kitchen', [KitchenController::class, 'index'])->name('kitchen');
